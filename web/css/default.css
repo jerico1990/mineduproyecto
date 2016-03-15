@@ -1,0 +1,169 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+.jumbotron
+{
+    padding: 10px;
+    margin: 0px;
+}
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+    .wrap > .container
+    {
+        padding: 40px 15px 20px;
+    }
+    .slide
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+    
+    .img-slider
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+    
+    .img-contenido
+    {
+        width: 200px !important;
+        height: 200px !important;
+        
+    }
+    .col-md-4
+    {
+        width:33.33333333%;
+        padding-right:10px;
+        padding-left:10px;
+    }
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .wrap > .container
+    {
+        padding: 40px 15px 20px;
+    }
+    .slide
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+    
+    .img-slider
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    .wrap > .container
+    {
+        padding: 40px 15px 20px;
+    }
+    .slide
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+    
+    .img-slider
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    
+    .wrap > .container
+    {
+        padding: 40px 15px 20px;
+    }
+    .slide
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+    
+    .img-slider
+    {
+        width: 487px;
+        height: 252px !important;
+    }
+    
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+
+    .wrap > .container
+    {
+        padding: 40px 15px 20px;
+    }
+    .slide
+    {
+        width: 325px;
+        height: 252px !important;
+    }
+    
+    .img-slider
+    {
+        width: 325px;
+        height: 252px !important;
+    }
+}
+
+
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
