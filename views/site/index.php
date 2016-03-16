@@ -19,15 +19,12 @@ Modal::begin([
 
 Modal::end();
 $variable="prueba";
-$resultlados=Resultados::find()->all();
+$resultados=Resultados::find()->all();
 ?>
-
-
     <div id="fullpage">
-        
 	<div class="section" id="section0">
-            
 	    <div class="slide" id="slide0">
+		<?php if($resultados){ ?>
                 <div style="float: right">
                     <ul class="nav navbar-nav" >
                         <li class="dropdown ingresar">
@@ -36,25 +33,7 @@ $resultlados=Resultados::find()->all();
                             <li>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <?php $form = ActiveForm::begin(['action'=>['login/index']]); ?>
-                                            
-                                            <?= Html::label('Correo electrónico', 'LoginForm[username]', ['class' => '']) ?>
-                                            <?= Html::input('email', 'LoginForm[username]', '', ['id'=>'loginform-username','class' => 'form-control']) ?>
-                                            <div>&nbsp</div>
-                                            <?= Html::label('Contraseña', 'LoginForm[password]', ['class' => '']) ?>
-                                            <?= Html::input('password', 'LoginForm[password]', '', ['id'=>'loginform-password','class' => 'form-control']) ?>
-                                            <div>&nbsp</div>
-                                            
-                                          
-                                            <div class="form-group">
-                                               <button type="submit" class="btn btn-success btn-block">Ingresar</button>
-                                            </div>
-                                            <?php if($resultlados){ ?>
-                                            <div>
-                                                <?= Html::a('Registrate',['registrar/index'],[]);?>
-                                            </div>
-                                            <?php } ?>
-                                        <?php ActiveForm::end(); ?>
+                                        <?= \app\widgets\login\LoginWidget::widget(['tipo'=>2]); ?>
                                     </div>
                                 </div>
                             </li>
@@ -63,6 +42,7 @@ $resultlados=Resultados::find()->all();
                       </li>
                    </ul>
                 </div>
+		<?php }?>
                 <div class="intro">
                     
                     <h1>Presentación 1</h1>
@@ -150,13 +130,31 @@ $resultlados=Resultados::find()->all();
                 <h4 class="modal-title" id="myModalLabel">Votar</h4>
             </div>
             <div class="modal-body">
-                <div style="display: none" class="alert alert-danger" role="alert"></div>
-                <?php //= $form->field($model, 'dni')->textInput(['maxlength' => true]) ?>
-                <?= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
-                <?= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
+		<div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="form-group field-voto-dni required">
+			<label class="control-label" for="voto-dni">DNI: *</label>
+			<input type="text" id="voto-dni" class="form-control numerico" name="Voto[dni]" placeholder="DNI" maxlength="8" pattern=".{8,8}">
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="form-group field-voto-region required">
+			<label class="control-label" for="voto-region">Región: *</label>
+			<select id="voto-region" class="form-control" name="Voto[region]" >
+			    <option value>Seleccionar</option>
+			    <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
+				<option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
+			    <?php } ?>
+			</select>
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+		
+                <?php //= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
+                <?php //= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
                 
-                <?= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
-                <?= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
+                <?php //= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
+                <?php //= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -176,7 +174,7 @@ $resultlados=Resultados::find()->all();
 <?php
     $url= Yii::$app->getUrlManager()->createUrl('voto/validardni');
     $urlinsert= Yii::$app->getUrlManager()->createUrl('voto/registrar');
-    if(!$resultlados){
+    if(!$resultados){
     $this->registerJs(
     "$('document').ready(function(){
     
@@ -194,11 +192,17 @@ $resultlados=Resultados::find()->all();
 	    if(myArray.length<3)
 	    {
 		$.notify({
-			// options
-			message: 'Debe seleccionar 3 proyectos' 
+		    // options
+		    
+		    message: 'Debe seleccionar 3 proyectos' 
 		},{
-			// settings
-			type: 'danger'
+		    // settings
+		    type: 'danger',
+		    z_index: 1000000,
+		    placement: {
+			    from: 'bottom',
+			    align: 'right'
+		    },
 		});
 		return false;
 	    }
@@ -210,10 +214,8 @@ $resultlados=Resultados::find()->all();
 	
         var myNumeracion=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33];
 	jQuery.each(myNumeracion , function(index, value){
-            $( '#proyectolg'+value ).click(function() { myfunction(value,'proyectolg'+value); });
-            $( '#proyectomd'+value ).click(function() { myfunction(value,'proyectomd'+value); });
-            $( '#proyectosm'+value ).click(function() { myfunction(value,'proyectosm'+value); });
-            $( '#proyectoxs'+value+'c' ).click(function() { myfunction(value,'proyectoxs'+value); });
+            
+	    $( '#proyecto'+value+'c' ).click(function() { myfunction(value,'proyecto'+value); });
         });
         
 	
@@ -225,8 +227,8 @@ $resultlados=Resultados::find()->all();
             if(notificacion!=-1)
             {
                 $(elemntIndentificar).each(function(indice, elemento) {
-                    $( '#proyecto'+elemento+value ).css( 'color', 'white' );
-                    $( '#proyecto'+elemento+value ).css( 'background-color', '#777' );
+                    $( '#proyecto'+value ).css( 'color', 'white' );
+                    $( '#proyecto'+value ).css( 'background-color', '#777' );
                 });
                 myArray.splice(notificacion, 1);
                 $.notify({
@@ -264,8 +266,8 @@ $resultlados=Resultados::find()->all();
 	    {
 		elemntIndentificar=['lg','md','sm','xs'];
 		$(elemntIndentificar).each(function(indice, elemento) {
-		    $( '#proyecto'+elemento+value ).css( 'color', 'white' );
-		    $( '#proyecto'+elemento+value ).css( 'background-color', 'green' );
+		    $( '#proyecto'+value ).css( 'color', 'white' );
+		    $( '#proyecto'+value ).css( 'background-color', 'green' );
 		});
 		
 		
@@ -319,6 +321,7 @@ $resultlados=Resultados::find()->all();
                     success: function(data){
                         if(data==1)
                         {
+			    $('.field-voto-dni').addClass('has-error');
                             $.notify({
                                 // options
                                 message: 'El DNI ya existe' 
@@ -332,6 +335,7 @@ $resultlados=Resultados::find()->all();
                                 },
                             });
                             $('#voto-dni').val('');
+			    
                             return false;
                         }
                     }
@@ -346,21 +350,46 @@ $resultlados=Resultados::find()->all();
             var error='';
 	    if($('#voto-dni').val()=='')
             {
-                error='*Ingrese DNI <br>';
+                error='Ingrese DNI <br>';
+		$('.field-voto-dni').addClass('has-error');
             }
+	    else
+	    {
+		$('.field-voto-dni').addClass('has-success');
+		$('.field-voto-dni').removeClass('has-error');
+	    }
+	    
             if($('#voto-region').val()=='')
             {
-                
-                error=error+'*Ingrese Región <br>';
+                error=error+'Ingrese Región <br>';
+		$('.field-voto-region').addClass('has-error');
             }
+	    else
+	    {
+		$('.field-voto-region').addClass('has-success');
+		$('.field-voto-region').removeClass('has-error');
+	    }
+	    
             if(error!='')
             {
-                $('.alert').show();
-                $('.alert').html(error);
+		$.notify({
+		    message: error 
+		},{
+		    type: 'danger',
+		    z_index: 1000000,
+		    placement: {
+			from: 'bottom',
+			align: 'right'
+		    },
+		});
                 return false;
             }
             else
             {
+		$('.field-voto-dni').addClass('has-success');
+		$('.field-voto-dni').removeClass('has-error');
+		$('.field-voto-region').addClass('has-success');
+		$('.field-voto-region').removeClass('has-error');
                 $.ajax({
                     url: '$urlinsert',
                     type: 'GET',

@@ -213,7 +213,10 @@ class VotoController extends Controller
     {
         //var_dump($_REQUEST);die;
         $table="";
-        $resultados=Voto::find()->limit(3)->select(['concat("Asunto"," ",asunto_id) as asuntod','asunto_id','COUNT(asunto_id) contador'])
+        $resultados=Voto::find()
+                    ->limit(3)
+                    ->select(['asunto.descripcion_cabecera as asuntod','asunto_id','COUNT(asunto_id) contador'])
+                    ->innerJoin('asunto','voto.asunto_id=asunto.id')
                     ->where('region_id=:region_id',[':region_id'=>$region])
                     ->groupBy('asuntod ,asunto_id')
                     ->orderBy('contador desc ')
@@ -226,8 +229,8 @@ class VotoController extends Controller
             <thead>
                 <tr>
                         <th>#</th>
-                        <th>Year</th>
-                        <th>Quarter</th>
+                        <th>Asunto</th>
+                        <th>Resultado</th>
                 </tr>
             </thead>
             <tbody>

@@ -6,7 +6,9 @@
 
 use yii\helpers\Html;
 use app\models\Asunto;
+use app\models\Resultados;
 
+$resultados=Resultados::find()->all();
 ?>
 
 <?php
@@ -25,12 +27,15 @@ use app\models\Asunto;
             <div class="modal-body">
                 <?= $asunto->descripcion_larga ?>
             </div>
+            <?php if(!$resultados){ ?>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="proyectoxs<?= $asunto->id ?>c">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="proyecto<?= $asunto->id ?>c">Guardar</button>
             </div>
+            <?php } ?>
         </div>
     </div>
 </div>
+
 
 <?php } ?>

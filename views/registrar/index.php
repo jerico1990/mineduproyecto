@@ -7,6 +7,7 @@ use app\models\Ubigeo ;
 
 //var_dump($registrar->errors);
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <?php $form = ActiveForm::begin(['options' => [],]); ?>
 <h2>Inscripción</h2>
@@ -17,9 +18,6 @@ use app\models\Ubigeo ;
         Gracias por Registrarte
     </div>
     <?php else: ?>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <?= Html::errorSummary($registrar, ['class' => 'errors alert alert-danger','role'=>'alert']) ?>
-    </div>
     
     
     <div class="col-xs-12 col-sm-7 col-md-5">

@@ -291,7 +291,6 @@ class EquipoController extends Controller
                 //var_dump($integrante);
                 if($integrante)
                 {
-                    var_dump($integrante->nombres_apellidos);
                     $datos[] =  ["bandera"=>1,"nombres_apellidos"=>$integrante->nombres_apellidos];
                     //$bandera=1;
                 }

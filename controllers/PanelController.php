@@ -16,6 +16,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\models\Resultados;
+
 
 /**
  * ParticipanteController implements the CRUD actions for Participante model.
@@ -57,6 +59,11 @@ class PanelController extends Controller
     public function actionIndex()
     {
         $this->layout='registrar';
+        if(\Yii::$app->user->can('administrador'))
+        {
+            return $this->redirect(['acciones']);
+        }
+        
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $estudiante=Estudiante::find()->where('id=:id',[':id'=>$usuario->estudiante_id])->one();
         //$lider=Integrante::find()->where('estudiante_id=:estudiante_id and rol=1',[':estudiante_id'=>$estudiante->id])->one();
@@ -80,17 +87,24 @@ class PanelController extends Controller
                             ]);
     }
     
-    public function actionCerrarvotos()
+    public function actionAcciones()
     {
-        return $this->render('cerrarvotos');
+        $this->layout='registrar';
+        $resutaldos=Resultados::find()->all();
+        $disabled='';
+        if($resutaldos)
+        {
+            $disabled='disabled';
+        }
+        return $this->render('acciones',['disabled'=>$disabled]);
     }
     
     public function actionCerrar($bandera)
     {
-        
+        $resutaldos=Resultados::find()->all();
         $connection = \Yii::$app->db;
         $ubigeos=Ubigeo::find()->select('department_id,department')->groupBy('department_id')->orderBy('department desc')->all();
-        if($bandera==1)
+        if($bandera==1 && !$resutaldos)
         {
             foreach($ubigeos as $ubigeo)
             {
@@ -104,7 +118,13 @@ class PanelController extends Controller
                 ");
                 
                 $command->execute();
+                
             }
+            echo 1;
+        }
+        else
+        {
+            echo 2;
         }
     }
     
