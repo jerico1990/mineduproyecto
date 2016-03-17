@@ -85,7 +85,7 @@ class PreForumBoard extends \yii\db\ActiveRecord
             ->where('t.board_id=:id', [':id' => $this->id])
             ->orderBy('t.updated_at DESC');
             
-        $result = Yii::$app->tools->Pagination($query);
+        $result = \Yii::$app->tools->Pagination($query);
         //var_dump($result['result']);die;
         return ['threads' => $result['result'], 'pages' => $result['pages']];
     }

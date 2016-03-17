@@ -94,4 +94,22 @@ return array (
       '@unclead/widgets' => $vendorDir . '/unclead/yii2-multiple-input/src',
     ),
   ),
+  'shiyang/yii2-umeditor' => 
+  array (
+    'name' => 'shiyang/yii2-umeditor',
+    'version' => '1.2.0.0',
+    'alias' => 
+    array (
+      '@shiyang/umeditor' => $vendorDir . '/shiyang/yii2-umeditor',
+    ),
+  ),
+  'shiyang/yii2-infinite-scroll' => 
+  array (
+    'name' => 'shiyang/yii2-infinite-scroll',
+    'version' => '1.2.0.0',
+    'alias' => 
+    array (
+      '@shiyang/infinitescroll' => $vendorDir . '/shiyang/yii2-infinite-scroll',
+    ),
+  ),
 );

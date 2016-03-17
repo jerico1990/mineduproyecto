@@ -16,6 +16,8 @@ return array(
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
     'unclead\\widgets\\examples\\' => array($vendorDir . '/unclead/yii2-multiple-input/examples'),
     'unclead\\widgets\\' => array($vendorDir . '/unclead/yii2-multiple-input/src'),
+    'shiyang\\umeditor\\' => array($vendorDir . '/shiyang/yii2-umeditor'),
+    'shiyang\\infinitescroll\\' => array($vendorDir . '/shiyang/yii2-infinite-scroll'),
     'kartik\\growl\\' => array($vendorDir . '/kartik-v/yii2-widget-growl'),
     'kartik\\grid\\' => array($vendorDir . '/kartik-v/yii2-grid'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),

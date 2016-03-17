@@ -34,6 +34,12 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl'=>['site/index'],
         ],
+        'tools' => [
+            'class' => 'app\components\Tools'
+        ],
+        'userData' => [
+            'class' => 'app\models\PreUserData',
+        ],
         'urlManager' => [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
@@ -61,6 +67,7 @@ $config = [
                 ],
  
         ],
+        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

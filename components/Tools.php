@@ -84,7 +84,7 @@ class Tools extends \yii\base\Object
         $result = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
-            //var_dump($result);die;
+            
         return ['pages' => $pages, 'result' => $result];
     }
 

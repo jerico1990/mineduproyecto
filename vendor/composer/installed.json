@@ -1050,7 +1050,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/ea7bd283f086b06bec2f5705f642855cfca9088e",
+            "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/aee1795980be62974a5c35a61fd596c61c0fae6b",
             "reference": "ea7bd283f086b06bec2f5705f642855cfca9088e",
             "shasum": ""
         },
@@ -1135,6 +1135,136 @@
             "yii2 multiple field",
             "yii2 multiple input",
             "yii2 tabular input"
+        ]
+    },
+    {
+        "name": "shiyang/yii2-umeditor",
+        "version": "v1.2",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/shi-yang/yii2-umeditor.git",
+            "reference": "755c8139ff7a8fa04ba83bb03d7bfbb378509ea9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/shi-yang/yii2-umeditor/zipball/755c8139ff7a8fa04ba83bb03d7bfbb378509ea9",
+            "reference": "755c8139ff7a8fa04ba83bb03d7bfbb378509ea9",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "*"
+        },
+        "time": "2016-02-01 10:47:37",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "shiyang\\umeditor\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Shiyang",
+                "email": "dr@shiyang.me"
+            }
+        ],
+        "description": "UMeditor is a simple version ueditor.",
+        "keywords": [
+            "extension",
+            "umeditor",
+            "yii2"
+        ]
+    },
+    {
+        "name": "bower-asset/jquery-infinite-scroll",
+        "version": "2.1.0",
+        "version_normalized": "2.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/infinite-scroll/infinite-scroll.git",
+            "reference": "f0d9eecb55a428b2fd4027964a22b84633ba6e3e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/infinite-scroll/infinite-scroll/zipball/f0d9eecb55a428b2fd4027964a22b84633ba6e3e",
+            "reference": "f0d9eecb55a428b2fd4027964a22b84633ba6e3e",
+            "shasum": ""
+        },
+        "type": "bower-asset-library",
+        "extra": {
+            "bower-asset-main": "jquery.infinitescroll.js",
+            "bower-asset-ignore": [
+                "**/.*",
+                "node_modules",
+                "bower_components",
+                "test",
+                "tests"
+            ]
+        },
+        "installation-source": "dist",
+        "license": [
+            "MIT"
+        ],
+        "description": "jQuery Infinite Scroll Plugin",
+        "keywords": [
+            "infinitescroll",
+            "jquery"
+        ]
+    },
+    {
+        "name": "shiyang/yii2-infinite-scroll",
+        "version": "v1.2",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/shi-yang/yii2-infinite-scroll.git",
+            "reference": "83e2cd6eac6213241471827f78f6cc991fdc2b32"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/shi-yang/yii2-infinite-scroll/zipball/83e2cd6eac6213241471827f78f6cc991fdc2b32",
+            "reference": "83e2cd6eac6213241471827f78f6cc991fdc2b32",
+            "shasum": ""
+        },
+        "require": {
+            "bower-asset/jquery-infinite-scroll": "*",
+            "yiisoft/yii2": "*"
+        },
+        "time": "2015-04-20 02:44:47",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "shiyang\\infinitescroll\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Shiyang",
+                "email": "dr@shiyang.me"
+            }
+        ],
+        "description": "Yii2 extension for infinite-scroll jQuery plugin",
+        "keywords": [
+            "infinite-scroll",
+            "jquery",
+            "plugin",
+            "widget",
+            "yii2"
         ]
     }
 ]
