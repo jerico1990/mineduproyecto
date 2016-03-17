@@ -260,6 +260,7 @@ class EquipoController extends Controller
         }
         elseif($integrante==4)
         {
+            
             Integrante::updateAll(['estado' => 2], 'estado = 1 and equipo_id=:equipo_id',
                               [':equipo_id'=>$id]);
             

@@ -308,6 +308,7 @@ $resultados=Resultados::find()->all();
                                         align: 'right'
                                 },
                             });
+		    $('.field-voto-dni').addClass('has-error');
                     $('#voto-dni').val('');
                     return false;
                 }

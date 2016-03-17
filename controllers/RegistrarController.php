@@ -75,7 +75,7 @@ class RegistrarController extends Controller
             $subject="Sistema de evaluación CSE – Confirmación de creación de cuenta";
             $content="Estimado/a docente:<br><br>
                      ¡Bienvenido/a al sistema de evaluación por competencias socioemocionales CSE!
-                     Para finalizar el proceso de inscripción, por favor ingrese al siguiente <a href='http://jazzper.org/ept/web/'>enlace</a>.
+                     Para finalizar el proceso de inscripción, por favor ingrese al siguiente <a href='http://jorgepc.com/mineduproyecto/web/'>enlace</a>.
                      <br><br>
                      Los datos de su cuenta son:<br><br>
                      <b>Usuario:</b> $usuario->username <br>
@@ -85,7 +85,7 @@ class RegistrarController extends Controller
                      ";
             Yii::$app->mail->compose('@app/mail/layouts/html',['content'=>$content])
            ->setFrom('cesar.gago.egocheaga@gmail.com')
-           ->setTo('cesar.gago.egocheaga@gmail.com')
+           ->setTo($registrar->email)
            ->setSubject($subject)
            ->send();
         
@@ -277,6 +277,34 @@ class RegistrarController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    public function actionValidardni()
+    {
+        $dni=$_POST['dni'];
+        $estudiante=Estudiante::find()->where('dni=:dni',[':dni'=>$dni])->one();
+        if($estudiante)
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+    }
+    
+    public function actionValidaremail()
+    {
+        $email=$_POST['email'];
+        $estudiante=Estudiante::find()->where('email=:email',[':email'=>$email])->one();
+        if($estudiante)
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
         }
     }
 }
