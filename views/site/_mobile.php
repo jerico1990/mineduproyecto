@@ -20,9 +20,10 @@ $resultados=Resultados::find()->all();
 <div class="modal fade" id="myModalAsunto<?= $asunto->id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><?= $asunto->descripcion_cabecera ?></h4>
+                <h2 class="modal-title" id="myModalLabel"><?= $asunto->descripcion_cabecera ?></h2><br>
+                <h4><i><?= $asunto->descripcion_corta ?></i></h4>
             </div>
             <div class="modal-body">
                 <?= $asunto->descripcion_larga ?>

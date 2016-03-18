@@ -25,7 +25,48 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    
+    <div class="container">
+    <div class="row">
+	<div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <a href="que-es">
+		    <button type="button" class="btn btn-nav">
+			<span class="glyphicon glyphicon-folder-close"></span>
+    			<p>¿Qué es?</p>
+		    </button>
+		</a>
+            </div>
+            <div class="btn-group">
+		<a href="etapas">
+		    <button type="button" class="btn btn-nav">
+			<span class="glyphicon glyphicon-calendar"></span>
+			    <p>Etapas</p>
+		    </button>
+		</a>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-nav">
+                    <span class="glyphicon glyphicon-globe"></span>
+    			<p>Bases</p>
+                </button>
+            </div>
+            <div class="btn-group">
+		<a href="asuntos-publicos">
+		    <button type="button" class="btn btn-nav">
+			<span class="glyphicon glyphicon-leaf"></span>
+			    <p>Asuntos Públicos</p>
+		    </button>
+		</a>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-nav">
+                    <span class="glyphicon glyphicon-time"></span>
+    			<p>Apuntate</p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="container">
         <?= $content ?>
     </div>

@@ -50,7 +50,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->layout='minedu';
+        $this->layout='index';
         if (!\Yii::$app->user->isGuest) {
             return $this->redirect(['panel/index']);
         }
@@ -101,5 +101,22 @@ class SiteController extends Controller
     public function actionPrueba()
     {
         return $this->render('prueba');
+    }
+    public function actionQueEs()
+    {
+        $this->layout='minedu';
+        return $this->render('que-es');
+    }
+    
+    public function actionEtapas()
+    {
+        $this->layout='minedu';
+        return $this->render('etapas');
+    }
+    
+    public function actionAsuntosPublicos()
+    {
+        $this->layout='minedu';
+        return $this->render('asuntos-publicos');
     }
 }

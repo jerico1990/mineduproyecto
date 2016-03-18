@@ -7,9 +7,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\widgets\ActiveForm;
-use app\models\Ubigeo;
-use app\models\Asunto;
 use yii\helpers\ArrayHelper;
+use app\models\Asunto;
 use app\models\Resultados;
 Modal::begin([
     'header' => '<h2>Hello world</h2>',
@@ -18,158 +17,97 @@ Modal::begin([
 
 
 Modal::end();
-$variable="prueba";
+
 $resultados=Resultados::find()->all();
 ?>
-    <div id="fullpage">
-	<div class="section" id="section0">
-	    <div class="slide" id="slide0">
-		<?php if($resultados){ ?>
-                <div style="float: right">
-                    <ul class="nav navbar-nav" >
-                        <li class="dropdown ingresar">
-                            <a href="#" class="dropdown-toggle btn btn-small btn-default" data-toggle="dropdown">Ingresar</a>
-                            <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;left:-165px !important;" >
-                            <li>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <?= \app\widgets\login\LoginWidget::widget(['tipo'=>2]); ?>
-                                    </div>
-                                </div>
-                            </li>
-                           
-                         </ul>
-                      </li>
-                   </ul>
-                </div>
-		<?php }?>
-                <div class="intro">
-                    
-                    <h1>Presentación 1</h1>
-                    <p>
-                        1
-                    </p>
-                </div>
-	    </div>
-	    <div class="slide" id="slide1">
-		<h1>Presentación 2</h1>
-                <p>
-                    2
-                </p>
-	    </div>
-            <div class="slide" id="slide2">
-		<h1>Presentación 3</h1>
-                <p>
-                    3
-                </p>
-	    </div>
-            <div class="slide" id="slide3">
-		<h1>Presentación 4</h1>
-                <p>
-                    4
-                </p>
-	    </div>
-	</div>
-        <div class="section " id="section1" style="padding-left:30px;padding-right:20px">
-            <?= $this->render('_section1') ?>
-        </div>
-	<div class="section" id="section2" style="padding-left:30px;padding-right:20px">
-            <?= $this->render('_section2') ?>
-        </div>
-        <div class="section" id="section3" style="padding-left:30px;padding-right:20px">
-            <div class="slide" id="slide4">
-                <div class="intro">
-                    
-                    <?= $this->render('_section3') ?>
-                </div>
-	    </div>
-            <div class="slide" id="slide5">
-                <div class="intro">
-                    <?= $this->render('_resultados') ?>
-                </div>
-	    </div>
-            
-        </div>
+<h1>
+¿Qué son los asuntos públicos?
+</h1>
+<p class="text-justify">
+Todo tema que resulta de interés general porque compromete nuestros derechos fundamentales y el bienestar
+colectivo, relacionado con aspectos  sociales, políticos, económicos, éticos, culturales y medio ambientales.
+</p>
+<p class="text-justify">
+Por ejemplo:
+<ul>
+    <li>La contaminación ambiental causada por el arrojo de desperdicios en los ríos.</li>
+    <li>El alto índice de abandono escolar entre las adolescentes que han sido madres.</li>
+</ul>
+</p>
+<p class="text-justify">
+<b>Ejemplo específico</b><br>
+Manolo se ha percatado que en algunos locales de entretenimiento de su localidad no permiten el ingreso de
+personas con rasgos amazónicos. Además, observa que esto sucede sin que nadie proteste, lo que genera que
+algunas se sientan excluidas, prácticamente invisibilizados. A Manolo le queda claro que la discriminación
+impide el bienestar colectivo al generar malestar en algunas personas y violar los derechos fundamentales
+que les pertenecen a todos, él piensa que sin duda es un asunto público que debe ser discutido y solucionado.
+</p>
+<p class="text-justify">
+<b>REDACCIÓN DE ASUNTOS PÚBLICOS</b>
+Hay un listado de 33 asuntos públicos. Cada uno debe tener:
+<ul>
+    <li>Qué es un asunto público (40 palabras)</li>
+    <li>Enunciado de cada asunto público con lenguaje más cercano al estudiante</li>
+    <li>2 o 3 ejemplos concretos del asunto público</li>
+    <li>Redacción de 60 palabras explicando el asunto público</li>
+</ul>
+</p>
+
+
+<h1>
+¿Cúales son?
+</h1>
+<p class="text-justify">
+    <b>Asuntos públicos en nuestro día a día</b><br>
+    <b>Relacionados a las vivencias de los niños y niñas y adolescentes</b><br>
+    En el día a día los niños, las niñas  y los jóvenes nos enfrentamos con diversas situaciones que resultan
+    complicadas, incluso para los adultos; sin embargo, nosotros no tenemos miedo a enfrentarlas y estamos
+    dispuestos a buscar soluciones.
+    <div class="">
+        <?php
+            $categorias1=Asunto::find()->where('padre_id=:padre_id',[':padre_id'=>1])->all();
+            foreach($categorias1 as $categoria1)
+            {
+                echo '<span data-toggle="modal" data-target="#myModalAsunto'.$categoria1->id.'"  id="proyecto'.$categoria1->id.'" class="" style="cursor: pointer" ><u>'.$categoria1->descripcion_cabecera.'</u></span> <br>';
+            }
+        ?>
     </div>
-    
+</p>
 
-<?php
-    $asuntos=Asunto::find()->all();
-    foreach($asuntos as $asunto)
-    {
-?>
-
-<div class="modal fade" id="myModalCompleto<?= $asunto->id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><?= $asunto->descripcion_cabecera ?></h4>
-            </div>
-            <div class="modal-body">
-                <?= $asunto->descripcion_larga ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="proyectoxs1c">Save changes</button>
-            </div>
-        </div>
+<p class="text-justify">
+    <b>Relacionados a la cultura escolar</b><br>
+    Para nosotros la escuela en verdad es un segundo hogar, y a veces como en todo hogar hay problemas que
+    nos mueven el piso, situaciones que nos fastidian; son esos momentos  en los que debemos actuar para
+    recuperar la armonía, porque también depende de nosotros que las cosas marchen bien.
+    <div class="">
+        <?php
+            $categorias2=Asunto::find()->where('padre_id=:padre_id',[':padre_id'=>2])->all();
+            foreach($categorias2 as $categoria2)
+            {
+                echo '<span data-toggle="modal" data-target="#myModalAsunto'.$categoria2->id.'"  id="proyecto'.$categoria2->id.'" class="" style="cursor: pointer" ><u>'.$categoria2->descripcion_cabecera.'</u></span> <br>';
+            }
+        ?>
     </div>
-</div>
+</p>
 
-<?php } ?>
-
-    
-<!-- Modal Votar -->
-<?php $form = ActiveForm::begin(); ?>
-<div class="modal fade" id="myModalVotar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Votar</h4>
-            </div>
-            <div class="modal-body">
-		<div class="col-xs-12 col-sm-12 col-md-12">
-		    <div class="form-group field-voto-dni required">
-			<label class="control-label" for="voto-dni">DNI: *</label>
-			<input type="text" id="voto-dni" class="form-control numerico" name="Voto[dni]" placeholder="DNI" maxlength="8" pattern=".{8,8}">
-		    </div>
-		</div>
-		<div class="clearfix"></div>
-		<div class="col-xs-12 col-sm-12 col-md-12">
-		    <div class="form-group field-voto-region required">
-			<label class="control-label" for="voto-region">Región: *</label>
-			<select id="voto-region" class="form-control" name="Voto[region]" >
-			    <option value>Seleccionar</option>
-			    <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
-				<option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
-			    <?php } ?>
-			</select>
-		    </div>
-		</div>
-		<div class="clearfix"></div>
-		
-                <?php //= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
-                <?php //= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
-                
-                <?php //= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
-                <?php //= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="votar2">Votar</button>
-            </div>
-        </div>
+<p class="text-justify">
+    <b>Asuntos públicos sobre mi realidad local, regional y nacional</b><br>
+    <b>Relacionados a la vida local, regional y nacional</b><br>
+    Sabemos que somos una parte importante de nuestra nación, y que los ojos de muchos están puestos en nosotros
+    porque nos llaman futuro. Pues, es hora que sepan que también somos presente y valemos también por lo que
+    hacemos hoy.
+    <div class="">
+        <?php
+            $categorias3=Asunto::find()->where('padre_id=:padre_id',[':padre_id'=>3])->all();
+            foreach($categorias3 as $categoria3)
+            {
+                echo '<span data-toggle="modal" data-target="#myModalAsunto'.$categoria3->id.'"  id="proyecto'.$categoria3->id.'" class="" style="cursor: pointer" ><u>'.$categoria3->descripcion_cabecera.'</u></span> <br>';
+            }
+        ?>
     </div>
-</div>
-<?php ActiveForm::end(); ?>
+</p>
 
-
-<!-- Modal Asuntos mobil solo para celulares -->
 <?= $this->render('_mobile') ?>
-
-
 
 <?php
     $url= Yii::$app->getUrlManager()->createUrl('voto/validardni');
