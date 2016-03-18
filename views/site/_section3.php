@@ -13,7 +13,7 @@ foreach($asuntos as $asunto)
 {
     $mensajecorto[]=[$asunto->id=>$asunto->descripcion_corta];
 }
-$resultlados=Resultados::find()->all();
+$resultados=Resultados::find()->all();
 ?>
 
 <!--
@@ -210,7 +210,7 @@ An easy and beautiful way to navigate throw the sections An easy and beautiful w
     </div>
 </div>
 <div class="clearfix"></div>
-<?php if(!$resultlados){ ?>
+<?php if(!$resultados){ ?>
 <div>
     <button id="votar" type="button" class="btn btn-small btn-primary" >votar</button>
 </div>

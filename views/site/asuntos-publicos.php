@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Asunto;
 use app\models\Resultados;
+use app\models\Ubigeo;
 Modal::begin([
     'header' => '<h2>Hello world</h2>',
    // 'toggleButton' => ['label' => 'click me'],
@@ -107,6 +108,12 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
     </div>
 </p>
 
+<?php if(!$resultados){ ?>
+<div>
+    <button id="votar" type="button" class="btn btn-small btn-primary" >votar</button>
+</div>
+
+<?php } ?>
 <?= $this->render('_mobile') ?>
 
 <?php
@@ -385,4 +392,48 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
     }
 ?>
     
-    
+
+<!-- Modal Votar -->
+<?php $form = ActiveForm::begin(); ?>
+<div class="modal fade" id="myModalVotar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Votar</h4>
+            </div>
+            <div class="modal-body">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="form-group field-voto-dni required">
+			<label class="control-label" for="voto-dni">DNI: *</label>
+			<input type="text" id="voto-dni" class="form-control numerico" name="Voto[dni]" placeholder="DNI" maxlength="8" pattern=".{8,8}">
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="form-group field-voto-region required">
+			<label class="control-label" for="voto-region">Región: *</label>
+			<select id="voto-region" class="form-control" name="Voto[region]" >
+			    <option value>Seleccionar</option>
+			    <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
+				<option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
+			    <?php } ?>
+			</select>
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+		
+                <?php //= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
+                <?php //= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
+                
+                <?php //= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
+                <?php //= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="votar2">Votar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php ActiveForm::end(); ?>
