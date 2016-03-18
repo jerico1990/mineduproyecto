@@ -50,7 +50,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->layout='index';
+        $this->layout='minedu';
         if (!\Yii::$app->user->isGuest) {
             return $this->redirect(['panel/index']);
         }
