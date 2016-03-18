@@ -171,6 +171,10 @@ class InscripcionController extends Controller
         $invitacionContador=Invitacion::find()->where('estado=1 and equipo_id=:equipo_id ',
                                               [':equipo_id'=>$equipo->id])->count();
         
+        $integranteContador=Integrante::find()->where('equipo_id=:equipo_id ',
+                                              [':equipo_id'=>$equipo->id])->count();
+        
+        $invitacionContador=$invitacionContador+$integranteContador;
         if ($equipo->load(Yii::$app->request->post()) && $equipo->validate()) {
             $equipo->update();
             if(isset($equipo->invitaciones))

@@ -171,6 +171,8 @@ class EquipoController extends Controller
         else
         {
             Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one()->delete();
+            Invitacion::updateAll(['estado' => 0], 'estudiante_invitado_id=:estudiante_invitado_id',
+                              [':estudiante_invitado_id'=>$id]);
         }
         echo 1;
     }
@@ -214,8 +216,21 @@ class EquipoController extends Controller
     
     public function actionEliminarintegrante($id)
     {
-        Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one()->delete();
-        echo 1;
+        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one();
+        if($integrante)
+        {
+            $integrante->delete();
+            
+            Invitacion::updateAll(['estado' => 0], 'estudiante_invitado_id=:estudiante_invitado_id and estado=2',
+                              [':estudiante_invitado_id'=>$id]);
+            echo 1;
+        }
+        else
+        {
+            echo 2;
+        }
+        
+        
     }
     public function actionValidarunirme($id)
     {
@@ -256,11 +271,11 @@ class EquipoController extends Controller
     public function actionFinalizarequipo($id)
     {
         $integrante=Integrante::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$id])->count();
-        if($integrante<4)
+        if($integrante<3)
         {
             echo 2; 
         }
-        elseif($integrante==4)
+        elseif($integrante>=3)
         {
             $equipo=Equipo::findOne($id);
             $equipo->estado=1;
@@ -323,7 +338,10 @@ class EquipoController extends Controller
         
         $invitacionContador=Invitacion::find()->where('estado=1 and equipo_id=:equipo_id ',
                                               [':equipo_id'=>(integer) $equipo])->count();
-        //var_dump($invitacionContador);die;
+        
+        $integranteContador=Integrante::find()->where('equipo_id=:equipo_id ',
+                                              [':equipo_id'=>(integer) $equipo])->count();
+        $invitacionContador=$invitacionContador+$integranteContador;
         $bandera=0;
         if($integrante)
         {
@@ -361,12 +379,12 @@ class EquipoController extends Controller
             if($integrante)
             {
                 $bandera=1;
-                $error=$integrante->estudiante->nombres_apellidos." ya pertence a un equipo <br>".$error;
+                $error=$integrante->estudiante->nombres_apellidos." ya pertenece a un equipo <br>".$error;
             }
             
             if($invitacion)
             {
-                $error=$invitacion->estudiante->nombres_apellidos." ya le has enviado una invitación <br>".$error;
+                $error=$invitacion->estudianteInvitado->nombres_apellidos." ya ha recibido una invitación tuya <br>".$error;
                 $bandera=1;
             }
         }

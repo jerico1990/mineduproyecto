@@ -223,14 +223,17 @@ if($equipo->id)
                                     align: 'right'
                             },
                         });
+                        setTimeout(function(){
+                            window.location.reload(1);
+                        }, 2000);
                     }
                 }); 
                 return false;
             }
-            return false;
             
         }
         
+           
         
         return true;
     });
@@ -238,7 +241,8 @@ if($equipo->id)
     function validar(estudiante,equipo,elemento)
     {
         var invitaciones=($('input[name=\'Equipo[invitaciones][]\']:checked').length) + contador;
-        if (invitaciones==5) {
+        
+        if (invitaciones>=5) {
             elemento.prop( "checked", false );
             $.notify({
                 // options

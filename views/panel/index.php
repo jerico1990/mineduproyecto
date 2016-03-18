@@ -488,18 +488,35 @@ function eliminarintegrante(id) {
         async: true,
         data: {id:id},
         success: function(data){
-            $.notify({
-                // options
-                message: 'Porque me scas si soy parte del equipo, malooooo :v :v :3' 
-            },{
-                // settings
-                type: 'success',
-                z_index: 1000000,
-                placement: {
-                        from: 'bottom',
-                        align: 'right'
-                },
-            });
+            if (data==1) {
+                $.notify({
+                    // options
+                    message: 'Has retirado al integrante' 
+                },{
+                    // settings
+                    type: 'success',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                }); 
+            }
+            else if (data==2) {
+                $.notify({
+                    // options
+                    message: 'El integrante se ha retirado' 
+                },{
+                    // settings
+                    type: 'success',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                }); 
+            }
+            
             setTimeout(function(){
                 window.location.reload(1);
             }, 2000);
@@ -532,7 +549,7 @@ function finalizarequipo(id) {
             else if (data==1) {
                 $.notify({
                     // options
-                    message: 'Ha finaliado su equipo' 
+                    message: 'Ha finalizado su equipo' 
                 },{
                     // settings
                     type: 'success',
