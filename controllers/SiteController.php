@@ -51,7 +51,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout='index';
-        
+        if (!\Yii::$app->user->isGuest) {
+            return $this->redirect(['panel/index']);
+        }
         return $this->render('index');
     }
 

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+
+use app\models\Usuario;
 use app\models\Integrante;
 use app\models\Invitacion;
 use app\models\Equipo;
@@ -260,11 +262,17 @@ class EquipoController extends Controller
         }
         elseif($integrante==4)
         {
+            $equipo=Equipo::findOne($id);
+            $equipo->estado=1;
+            $equipo->update();
             
             Integrante::updateAll(['estado' => 2], 'estado = 1 and equipo_id=:equipo_id',
                               [':equipo_id'=>$id]);
             
-            $invitacion=Invitacion::find()
+            Invitacion::updateAll(['estado' => 0,'fecha_rechazo'=>date("Y-m-d H:i:s")], 'estado = 1 and equipo_id=:equipo_id',
+                              [':equipo_id'=>$id]);
+            
+            /*$invitacion=Invitacion::find()
                         ->where('estado=1 and equipo_id=:equipo_id',
                                 [':equipo_id'=>$id])->one();
             if($invitacion)
@@ -272,7 +280,7 @@ class EquipoController extends Controller
                 $invitacion->estado=0;
                 $invitacion->fecha_rechazo=date("Y-m-d H:i:s");
                 $invitacion->update();
-            }
+            }*/
             echo 1;
         }
     }
@@ -289,14 +297,105 @@ class EquipoController extends Controller
                             ->select('estudiante.nombres_apellidos')
                             ->innerJoin('estudiante','estudiante.id=integrante.estudiante_id')
                             ->where('estudiante_id=:estudiante_id',[':estudiante_id'=>(integer) $key])->one();
-                //var_dump($integrante);
                 if($integrante)
                 {
                     $datos[] =  ["bandera"=>1,"nombres_apellidos"=>$integrante->nombres_apellidos];
-                    //$bandera=1;
                 }
             }
         }
         echo json_encode($datos);
+    }
+    
+    public function actionValidarinvitacioneintegrante($estudiante,$equipo)
+    {
+        $lider=Usuario::findOne(\Yii::$app->user->id);
+        
+        $lider_integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$lider->estudiante_id])->one();
+        
+        if($lider_integrante && $equipo==0)
+        {
+            $equipo=$lider_integrante->equipo_id;
+        }
+        
+        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$estudiante])->one();
+        $invitacion=Invitacion::find()->where('estudiante_invitado_id=:estudiante_invitado_id and estado=1 and equipo_id=:equipo_id ',
+                                              [':estudiante_invitado_id'=>(integer) $estudiante,':equipo_id'=>(integer) $equipo])->one();
+        
+        $invitacionContador=Invitacion::find()->where('estado=1 and equipo_id=:equipo_id ',
+                                              [':equipo_id'=>(integer) $equipo])->count();
+        //var_dump($invitacionContador);die;
+        $bandera=0;
+        if($integrante)
+        {
+            $bandera=1;
+        }
+        
+        if($invitacion)
+        {
+            $bandera=2;
+        }
+        if($invitacionContador>3)
+        {
+            $bandera=3;
+        }
+        
+        echo $bandera;
+    }
+    
+    
+    public function actionValidarinvitacioneintegrante2()
+    {
+        $error="";
+        $bandera=0;
+        $equipo= new Equipo;
+        $equipo->load(Yii::$app->request->post());
+        $countEstudiantes=count($equipo->invitaciones);
+        //var_dump($countEstudiantes);
+        for($i=0;$i<$countEstudiantes;$i++)
+        {
+            $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$equipo->invitaciones[$i]])->one();
+            
+            $invitacion=Invitacion::find()->where('estudiante_invitado_id=:estudiante_invitado_id and estado=1 and equipo_id=:equipo_id ',
+                                              [':estudiante_invitado_id'=>$equipo->invitaciones[$i],':equipo_id'=>$equipo->id])->one();
+            //var_dump($equipo->invitaciones[$i]);die;
+            if($integrante)
+            {
+                $bandera=1;
+                $error=$integrante->estudiante->nombres_apellidos." ya pertence a un equipo <br>".$error;
+            }
+            
+            if($invitacion)
+            {
+                $error=$invitacion->estudiante->nombres_apellidos." ya le has enviado una invitación <br>".$error;
+                $bandera=1;
+            }
+        }
+        
+        //var_dump($equipo->tipo);die;
+        if($equipo->tipo==1 && $bandera==1)
+        {
+            echo 1;
+        }
+        if($equipo->tipo==2)
+        {
+            echo $error;
+        }
+        
+        
+        
+        
+    }
+    
+    public function actionExisteequipo()
+    {
+        $bandera=0;
+        $lider=Usuario::findOne(\Yii::$app->user->id);
+        $lider_integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$lider->estudiante_id])->one();
+        $equipo=Equipo::findOne($lider_integrante->equipo_id);
+        if($equipo)
+        {
+            $bandera=1;    
+        }
+        echo $bandera;
     }
 }

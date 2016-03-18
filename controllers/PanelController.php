@@ -83,7 +83,6 @@ class PanelController extends Controller
         return $this->render('index', ['invitaciones'=>$invitaciones,
                                        'integrante'=>$integrante,
                                        'estudiante'=>$estudiante,
-                                       //'lider'=>$lider,
                             ]);
     }
     

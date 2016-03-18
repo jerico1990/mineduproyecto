@@ -51,7 +51,7 @@ class InscripcionController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout='registrar';
+        $this->layout='equipo';
         
         $equipo=new Equipo;
         
@@ -73,6 +73,8 @@ class InscripcionController extends Controller
             return $this->redirect(['panel/index']);
         }
         
+        $invitacionContador=0;
+        
         if ($equipo->load(Yii::$app->request->post()) && $equipo->validate() ) {
             $bandera=true;
             $nombres="";
@@ -90,61 +92,57 @@ class InscripcionController extends Controller
             Invitacion::updateAll(['estado' => 0], 'estado = 1 and estudiante_invitado_id=:estudiante_invitado_id',
                               [':estudiante_invitado_id'=>$institucion->estudiante_id]);
             
-            if(isset($_REQUEST['Invitacion']))
+            if(isset($equipo->invitaciones))
             {
-                foreach($_REQUEST['Invitacion'] as $invitados => $key)
+                $countInvitaciones=count($equipo->invitaciones);
+                for($i=0;$i<$countInvitaciones;$i++)
                 {
                     $invitacion=new Invitacion;
                     $integrante=Integrante::find()
                     ->select('estudiante.nombres_apellidos')
                     ->innerJoin('estudiante','estudiante.id=integrante.estudiante_id')
-                    ->where('integrante.estudiante_id=:estudiante_id',[':estudiante_id'=>(integer) $key])->one();
+                    ->where('integrante.estudiante_id=:estudiante_id',[':estudiante_id'=>$equipo->invitaciones[$i]])->one();
                     if(!$integrante)
                     {
                         $invitacion->estudiante_id=$institucion->estudiante_id;
                         $invitacion->equipo_id=$equipo->id;
-                        $invitacion->estudiante_invitado_id=(integer) $key;
+                        $invitacion->estudiante_invitado_id=$equipo->invitaciones[$i];
                         $invitacion->estado=1;
                         $invitacion->fecha_invitacion=date("Y-m-d H:i:s");
                         $invitacion->save();
-                    }
+                    }/*
                     else
                     {
                         $bandera=false;
                         $nombres=$nombres." ".$integrante->nombres_apellidos." ";
-                    }
-                    
+                    }*/
                 }
             }
-            if($bandera)
-            {
+            //if($bandera)
+            //{
                 return $this->redirect(['panel/index']);
-            }
-            else
+            //}
+            /*else
             {
                 $actualizar= Yii::$app->getUrlManager()->createUrl('inscripcion/actualizar?id='.$institucion->estudiante_id);
                 echo "<script>
                             alert('".$nombres." ya  estan en un equipo');
                             window.location.href = '$actualizar';
                             
-                        </script>";
-                       
-            }
-            
+                        </script>";          
+            }  */ 
         }
-        
         return $this->render('index',[
                                       'equipo'=>$equipo,
-                                      'estudiantes'=>$estudiantes]);
+                                      'estudiantes'=>$estudiantes,
+                                      'invitacionContador'=>$invitacionContador]);
     }
-    
     
     public function actionParticipante($q = null) {
         
         $participantes=  Estudiante::find()
                     ->where('nombres_apellidos like "%'.$q.'%"')
                     ->all();
-       
         $out = [];
         foreach ($participantes as $participante) {
             $out[] = ['value' => $participante->id,'label' => $participante->nombres_apellidos." ".$participante->dni];
@@ -154,18 +152,14 @@ class InscripcionController extends Controller
     
     public function actionActualizar($id)
     {
-        $this->layout='registrar';
+        $this->layout='equipo';
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one();
         $equipo=Equipo::find()->where('id=:id',[':id'=>$integrante->equipo_id])->one();
-        
-        
         $institucion=Institucion::find()
                     ->select('institucion.id,estudiante.id as estudiante_id')
                     ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
                     ->where('estudiante.id='.$id.'')
                     ->one();
-        //$integrantes=Integrante
-        
         $estudiantes=Estudiante::find()
                     ->where('estudiante.institucion_id=:institucion_id and estudiante.id
                             not in (select estudiante_invitado_id from invitacion where estudiante_id='.$institucion->estudiante_id.' and estado=1)
@@ -174,17 +168,20 @@ class InscripcionController extends Controller
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
                     ->all();
         
+        $invitacionContador=Invitacion::find()->where('estado=1 and equipo_id=:equipo_id ',
+                                              [':equipo_id'=>$equipo->id])->count();
+        
         if ($equipo->load(Yii::$app->request->post()) && $equipo->validate()) {
-            
             $equipo->update();
-            if(isset($_REQUEST['Invitacion']))
+            if(isset($equipo->invitaciones))
             {
-                foreach($_REQUEST['Invitacion'] as $invitados => $key)
+                $countInvitaciones=count($equipo->invitaciones);
+                for($i=0;$i<$countInvitaciones;$i++)
                 {
                     $invitacion=new Invitacion;
                     $invitacion->estudiante_id=$institucion->estudiante_id;
                     $invitacion->equipo_id=$equipo->id;
-                    $invitacion->estudiante_invitado_id=(integer) $key;
+                    $invitacion->estudiante_invitado_id=$equipo->invitaciones[$i];
                     $invitacion->estado=1;
                     $invitacion->fecha_invitacion=date("Y-m-d H:i:s");
                     $invitacion->save();
@@ -192,15 +189,11 @@ class InscripcionController extends Controller
             }
             
             return $this->redirect(['panel/index']);
-            //die;
-            //$invitacion->equipo_id=$equipo->id;
-            //$invitacion->estudiante_id=$institucion->estudiante_id;
-            
         }
-        
         return $this->render('index',[
                                       'equipo'=>$equipo,
-                                      'estudiantes'=>$estudiantes]);
+                                      'estudiantes'=>$estudiantes,
+                                      'invitacionContador'=>$invitacionContador]);
     }
 
 }

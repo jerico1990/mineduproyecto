@@ -6,8 +6,11 @@ use yii\helpers\ArrayHelper;
 use app\models\Resultados;
 use yii\widgets\Pjax;
 use yii\web\JsExpression;
-
-
+$equipoid=0;
+if($equipo->id)
+{
+    $equipoid=$equipo->id;
+}
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -25,8 +28,7 @@ use yii\web\JsExpression;
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-equipo-descripcion required">
             <label class="control-label" for="equipo-descripcion">Danos una breve descripción de tu equipo: *</label>
-            <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?>
-            </textarea>
+            <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?></textarea>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -71,7 +73,7 @@ use yii\web\JsExpression;
                             foreach($estudiantes as $estudiante)
                             {
                                 echo "<tr>
-                                        <td><input name='Invitacion[invitacion_$i]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id)'></td>
+                                        <td><input name='Equipo[invitaciones][]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id,$equipoid,$(this))'></td>
                                         <td><span id='snum'>$i</span></td>
                                         <td>$estudiante->nombres_apellidos</td>
                                 </tr>";
@@ -99,96 +101,119 @@ use yii\web\JsExpression;
 
 
 <?php
-    $validarintegrante= Yii::$app->getUrlManager()->createUrl('equipo/validarintegrante');
+    //$validarintegrante= Yii::$app->getUrlManager()->createUrl('equipo/validarintegrante');
+    $validarinvitacioneintegrante= Yii::$app->getUrlManager()->createUrl('equipo/validarinvitacioneintegrante');
+    $validarinvitacioneintegrante2= Yii::$app->getUrlManager()->createUrl('equipo/validarinvitacioneintegrante2');
     $validarintegrante2= Yii::$app->getUrlManager()->createUrl('equipo/validarintegrante2');
+    $existeequipo=Yii::$app->getUrlManager()->createUrl('equipo/existeequipo');
     
     $this->registerJs(
     "$('document').ready(function(){
         
         
-        $( '#btnequipo' ).click(function( event ) {
-            var error='';
-            var bandera=true;
-            if($('#equipo-descripcion_equipo').val()=='')
-            {
-                error=error+'ingrese descripcion del equipo <br>';
-                $('.field-equipo-descripcion_equipo').addClass('has-error');
-            }
-            
-            if($('#equipo-descripcion').val()=='')
-            {
-                error=error+'ingrese descripcion del proyecto <br>';
-                $('.field-equipo-descripcion').addClass('has-error');
-            }
-            
-            if($('#equipo-asunto_id').val()=='')
-            {
-                error=error+'ingrese asunto <br>';
-                $('.field-equipo-asunto_id').addClass('has-error');
-            }
-            
-            
-            
-            if(error!='')
-            {
-                $.notify({
-                    message: error 
-                },{
-                    type: 'danger',
-                    z_index: 1000000,
-                    placement: {
-                        from: 'bottom',
-                        align: 'right'
-                    },
-                });
-                return false;
-            }
-            /*
-            function calledFromAjaxSuccess(result) {
-                $.ajax({
-                    url: '$validarintegrante2',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: $('#w0').serialize(),
-                    success: function(key,value){
-                        calledFromAjaxSuccess(false);
-                        if(key[0]['bandera']==1)
-                        {
-                            $.notify({
-                            // options
-                            message: 'El invitado'+key[0]['nombres_apellidos']+' ya es miembro de un equipo' 
-                            },{
-                                // settings
-                                type: 'danger',
-                                z_index: 1000000,
-                                placement: {
-                                    from: 'bottom',
-                                    align: 'right'
-                                },
-                            });
-                        }
-                    }
-                });
-            }
-            return calledFromAjaxSuccess;*/
-        });
+        
     })");
 ?>
 
 <script>
-    function validar(id)
+    var contador=<?= $invitacionContador ?>;
+    var equipo=<?= $invitacionContador ?>;
+    $( '#btnequipo' ).click(function( event ) {
+        var error='';
+        var bandera=true;
+        if($('#equipo-descripcion_equipo').val()=='')
         {
-            $.ajax({
-                url: '<?= $validarintegrante ?>',
+            error=error+'ingrese descripcion del equipo <br>';
+            $('.field-equipo-descripcion_equipo').addClass('has-error');
+        }
+        
+        if($('#equipo-descripcion').val()=='')
+        {
+            error=error+'ingrese descripcion del proyecto <br>';
+            $('.field-equipo-descripcion').addClass('has-error');
+        }
+        
+        if($('#equipo-asunto_id').val()=='')
+        {
+            error=error+'ingrese asunto <br>';
+            $('.field-equipo-asunto_id').addClass('has-error');
+        }
+        
+        
+        if(error!='')
+        {
+            $.notify({
+                message: error 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            return false;
+        }
+        
+        
+        if (equipo==0)
+        {
+            var existeequipo=$.ajax({
+                url: '<?= $existeequipo ?>',
                 type: 'GET',
-                async: true,
-                data: {id:id},
+                async: false,
+                //data: {},
                 success: function(data){
-                    if(data==0)
-                    {
+                    
+                }
+            });
+            
+            if (existeequipo.responseText==1) {
+                $.notify({
+                    // options
+                    message: 'Ya creastes un equipo' 
+                },{
+                    // settings
+                    type: 'danger',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                });
+                setTimeout(function(){
+                    window.location.reload(1);
+                }, 2000);
+                return false;
+            }
+        }
+        else
+        {
+            var estudiantes = $('input[name="Equipo[invitaciones][]"]:checked').map(function(){ 
+                    return this.value; 
+                }).get();
+            var validarestudiantes=$.ajax({
+                url: '<?= $validarinvitacioneintegrante2 ?>',
+                type: 'POST',
+                async: false,
+                data: {'Equipo[invitaciones][]':estudiantes,'Equipo[id]':<?= $equipoid ?>,'Equipo[tipo]':1},
+                success: function(data){
+                    
+                }
+            });
+            //console.log(validarestudiantes.responseText);
+            //return false;
+            if (validarestudiantes.responseText==1) {
+                
+                $.ajax({
+                    url: '<?= $validarinvitacioneintegrante2 ?>',
+                    type: 'POST',
+                    async: true,
+                    data: {'Equipo[invitaciones][]':estudiantes,'Equipo[id]':<?= $equipoid ?>,'Equipo[tipo]':2},
+                    success: function(data){
                         $.notify({
                             // options
-                            message: 'Oe ya pues, ya pertenece a un equipo no seas vivo por tu f5 :v ' 
+                            message: data 
                         },{
                             // settings
                             type: 'danger',
@@ -198,11 +223,100 @@ use yii\web\JsExpression;
                                     align: 'right'
                             },
                         });
-                        setTimeout(function(){
-                            window.location.reload(1);
-                        }, 2000);
                     }
-                }
-            });
+                }); 
+                return false;
+            }
+            return false;
+            
         }
+        
+        
+        return true;
+    });
+    
+    function validar(estudiante,equipo,elemento)
+    {
+        var invitaciones=($('input[name=\'Equipo[invitaciones][]\']:checked').length) + contador;
+        if (invitaciones==5) {
+            elemento.prop( "checked", false );
+            $.notify({
+                // options
+                message: 'No puede realizar mas invitaciones' 
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+            return false;
+        }
+        
+        $.ajax({
+            url: '<?= $validarinvitacioneintegrante ?>',
+            type: 'GET',
+            async: true,
+            data: {estudiante:estudiante,equipo:equipo},
+            success: function(data){
+                if(data==1)
+                {
+                    $.notify({
+                        // options
+                        message: 'Ya pertenece a un equipo ' 
+                    },{
+                        // settings
+                        type: 'danger',
+                        z_index: 1000000,
+                        placement: {
+                                from: 'bottom',
+                                align: 'right'
+                        },
+                    });
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+                }
+                else if (data==2)
+                {
+                    $.notify({
+                        // options
+                        message: 'Ya le has enviado una invitación ' 
+                    },{
+                        // settings
+                        type: 'danger',
+                        z_index: 1000000,
+                        placement: {
+                                from: 'bottom',
+                                align: 'right'
+                        },
+                    });
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+                }
+                else if (data==3)
+                {
+                    $.notify({
+                        // options
+                        message: 'Solo se permite 4 invitaciones como máximo' 
+                    },{
+                        // settings
+                        type: 'danger',
+                        z_index: 1000000,
+                        placement: {
+                                from: 'bottom',
+                                align: 'right'
+                        },
+                    });
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+                }
+            }
+        });
+        return true;
+    }
 </script>
