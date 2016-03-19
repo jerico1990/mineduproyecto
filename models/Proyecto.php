@@ -53,7 +53,7 @@ class Proyecto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
+            [['id','actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
             [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id'], 'integer'],
             [['titulo'], 'string', 'max' => 20],
             [['resumen','beneficiario'], 'string', 'max' => 25000],

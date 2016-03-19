@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $user['username'];
             ]);
         ?>
     </div>
+    <!--
     <div class="col-sm-3">
         <aside class="user-info">
             <div class="hidden-xs">
@@ -72,4 +73,5 @@ $this->params['breadcrumbs'][] = $user['username'];
             </div>
         </aside>
     </div>
+    -->
 </div>

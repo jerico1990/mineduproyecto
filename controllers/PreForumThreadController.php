@@ -53,7 +53,7 @@ class PreForumThreadController extends Controller
      */
     public function actionView($id)
     {
-        $this->layout='registrar';
+        $this->layout='equipo';
         $model = $this->findModel($id);
         $newPost = new PreForumPost();
         

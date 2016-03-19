@@ -29,20 +29,16 @@ AppAsset::register($this);
     <div class="row">
 	<div class="btn-group btn-group-justified">
             <div class="btn-group">
-                <a href="que-es">
-		    <button type="button" class="btn btn-nav">
+		<?= Html::a('<button type="button" class="btn btn-nav">
 			<span class="glyphicon glyphicon-folder-close"></span>
     			<p>¿Qué es?</p>
-		    </button>
-		</a>
+		    </button>',['site/que-es'],[]);?>
             </div>
             <div class="btn-group">
-		<a href="etapas">
-		    <button type="button" class="btn btn-nav">
+		<?= Html::a('<button type="button" class="btn btn-nav">
 			<span class="glyphicon glyphicon-calendar"></span>
 			    <p>Etapas</p>
-		    </button>
-		</a>
+		    </button>',['site/etapas'],[]);?>
             </div>
             <div class="btn-group">
                 <button type="button" class="btn btn-nav">
@@ -51,18 +47,16 @@ AppAsset::register($this);
                 </button>
             </div>
             <div class="btn-group">
-		<a href="asuntos-publicos">
-		    <button type="button" class="btn btn-nav">
+		<?= Html::a('<button type="button" class="btn btn-nav">
 			<span class="glyphicon glyphicon-leaf"></span>
 			    <p>Asuntos Públicos</p>
-		    </button>
-		</a>
+		    </button>',['site/asuntos-publicos'],[]);?>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-nav">
-                    <span class="glyphicon glyphicon-time"></span>
-    			<p>Apuntate</p>
-                </button>
+		<?= Html::a('<button type="button" class="btn btn-nav">
+			<span class="glyphicon glyphicon-time"></span>
+			    <p>Apuntate</p>
+		    </button>',['site/login'],[]);?>
             </div>
         </div>
     </div>

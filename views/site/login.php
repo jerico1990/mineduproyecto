@@ -18,7 +18,7 @@ $this->title = 'Login';
     <div class="panel panel-default" >
         <div class="panel-heading">Login</div>
         <div class="panel-body">
-            <?= \app\widgets\login\LoginWidget::widget(['tipo'=>1]); ?>
+            <?= \app\widgets\login\LoginWidget::widget(['tipo'=>2]); ?>
         </div>
     </div>
 </div>

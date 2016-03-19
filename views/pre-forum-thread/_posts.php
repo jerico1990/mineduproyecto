@@ -10,21 +10,21 @@ if (isset($_GET['page']) >= 2) //分页标识大于2才开始计算
 ?>
 <section class="posts">
     <div class="post-title">
-        <h3><?= Yii::t('app', '{postCount} comments', ['postCount' => $postCount]) ?></h3>
+        <h3><?= Yii::t('app', '{postCount} comentarios', ['postCount' => $postCount]) ?></h3>
     </div>
     <div id="post-list">
         <?php foreach($posts as $post):
             $floor_number=$floor++; //楼层数减少
             ?>
             <div class="row post-item">
-                <div class="col-sm-2">
+                <!--<div class="col-sm-2">
                     <div class="post-user-info">
                         <div class="hidden-xs">
                             <img class="img-circle" src="<?= Yii::getAlias('@avatar') . $post['avatar'] ?>" alt="User avatar">
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-10">
+                </div>-->
+                <div class="col-sm-12">
                     <div class="post-meta">
                         <?= Html::a('<span class="glyphicon glyphicon-user"></span> ' . Html::encode($post['username']), ['/user/view', 'id' => $post['username']]) ?>
                         &nbsp;•&nbsp;

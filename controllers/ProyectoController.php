@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Actividad;
+use app\models\ObjetivoEspecifico;
 use app\models\Proyecto;
 use app\models\ProyectoSearch;
 use yii\web\Controller;
@@ -145,5 +146,35 @@ class ProyectoController extends Controller
         $actividad=Actividad::findOne($id);
         $actividad->estado=0;
         $actividad->update();
+    }
+    
+    public function actionFinalizarprimeraentrega()
+    {
+        $proyecto= new Proyecto;
+        $proyecto->load(Yii::$app->request->post());
+        $proyecto=Proyecto::findOne($proyecto->id);
+        $objetivosEspecificos=ObjetivoEspecifico::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto-id])->all();
+        $actividades=Actividad::find()
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('objetivo_especifico.proyecto_id=:proyecto_id and actividad.estado=1',[':proyecto_id'=>$proyecto-id])
+                    ->count();
+        
+        $cronogramas=Cronograma::find()
+                    ->innerJoin('actividad','actividad.id=cronograma.actividad_id')
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('objetivo_especifico.proyecto_id=:proyecto_id and cronograma.estado=1',[':proyecto_id'=>$proyecto-id])
+                    ->count();
+                    
+        $planepresupuestales=PlanPresupuestal::find()
+                    ->innerJoin('actividad','actividad.id=plan_presupuestal.actividad_id')
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('objetivo_especifico.proyecto_id=:proyecto_id and plan_presupuestal.estado=1',[':proyecto_id'=>$proyecto-id])
+                    ->count();
+        
+        if($actividades<1)
+        {
+            
+        }
+        
     }
 }

@@ -9,8 +9,9 @@ use yii\widgets\ActiveForm;
 ?>
 <section class="post-area">
     <div class="row">
+        <!--
         <div class="post-user col-sm-2">
-            <?php if (Yii::$app->user->isGuest) :?>
+            <?php /* if (Yii::$app->user->isGuest) :?>
                 <div class="hidden-xs">
                     <img class="img-circle" src="<?= Yii::getAlias('@avatar') ?>default/guest.png" alt="User avatar">
                 </div>
@@ -18,9 +19,9 @@ use yii\widgets\ActiveForm;
                 <div class="hidden-xs">
                     <img class="img-circle" src="<?= Yii::getAlias('@avatar') . Yii::$app->user->identity->avatar ?>" alt="User avatar">
                 </div>
-            <?php endif; ?>
-        </div>
-        <div class="post-form col-sm-10">
+            <?php endif; */?>
+        </div>-->
+        <div class="post-form col-sm-12">
             <?php if (!Yii::$app->user->isGuest) :?>
                 <?php $form = ActiveForm::begin(); ?>
                 <?= $form->field($model, 'content')->widget('shiyang\umeditor\UMeditor', [
@@ -29,10 +30,11 @@ use yii\widgets\ActiveForm;
                         'toolbar' => [
                             'link unlink | emotion image video',
                         ],
+                        'lang'=>'en'
                     ]
                 ])->label(false) ?>
                 <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Reply'), ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Responder'), ['class' => 'btn btn-success']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
             <?php else: ?>

@@ -11,12 +11,12 @@ use shiyang\infinitescroll\InfiniteScrollPager;
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tbody>
                         <tr>
-                            <td width="48" valign="middle" align="center">
+                            <!--<td width="48" valign="middle" align="center">
                                 <a href="<?= Url::toRoute(['/user/view', 'id' => $thread['username']])?>" rel="author">
                                     <img class="media-object img-user-avatar img-circle" src="<?= Yii::getAlias('@avatar') . $thread['avatar'] ?>" alt="User avatar">
                                 </a>
                             </td>
-                            <td width="10"></td>
+                            <td width="10"></td> -->
                             <td width="auto" valign="middle">
                                 <h2><?= Html::a(Html::encode($thread['title']), ['/pre-forum-thread/view', 'id' => $thread['id']]) ?></h2>
                                 <small style="color: #aaa">
@@ -28,7 +28,7 @@ use shiyang\infinitescroll\InfiniteScrollPager;
                                     <?php if ($thread['user_id'] == Yii::$app->user->id || $model['user_id'] == Yii::$app->user->id): ?>
                                         &nbsp;•&nbsp;
                                         <a href="<?= Url::toRoute(['/pre-forum-thread/delete', 'id' => $thread['id']]) ?>" data-confirm="¿Está seguro de eliminar este elemento?" data-method="post" data-pjax="0" title="<?= Yii::t('app', 'Are you sure to delete it?') ?>">
-                                            <span class="glyphicon glyphicon-trash"></span> <?= Yii::t('app', 'Delete') ?>
+                                            <span class="glyphicon glyphicon-trash"></span> <?= Yii::t('app', 'Eliminar') ?>
                                         </a>
                                     <?php endif; ?>
                                 </small>

@@ -119,4 +119,9 @@ class SiteController extends Controller
         $this->layout='minedu';
         return $this->render('asuntos-publicos');
     }
+    public function actionResultados()
+    {
+        $this->layout='minedu';
+        return $this->render('resultados');
+    }
 }

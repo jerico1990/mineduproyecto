@@ -74,7 +74,7 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
         ?>
     </div>
 </p>
-
+<div class="clearfix"></div>
 <p class="text-justify">
     <b>Relacionados a la cultura escolar</b><br>
     Para nosotros la escuela en verdad es un segundo hogar, y a veces como en todo hogar hay problemas que
@@ -90,7 +90,7 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
         ?>
     </div>
 </p>
-
+<div class="clearfix"></div>
 <p class="text-justify">
     <b>Asuntos públicos sobre mi realidad local, regional y nacional</b><br>
     <b>Relacionados a la vida local, regional y nacional</b><br>
@@ -107,13 +107,14 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
         ?>
     </div>
 </p>
-
+<div class="clearfix"></div>
 <?php if(!$resultados){ ?>
-<div>
-    <button id="votar" type="button" class="btn btn-small btn-primary" >votar</button>
-</div>
-
+<button id="votar" type="button" class="btn btn-small btn-primary" >votar</button>
+<br>
 <?php } ?>
+<br>
+<a href="resultados" class="btn btn-small btn-success">Resultados</a>
+<br><br>
 <?= $this->render('_mobile') ?>
 
 <?php
