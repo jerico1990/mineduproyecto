@@ -65,16 +65,42 @@ use yii\web\JsExpression;
         }
         else
         {
-            $.ajax({
+            var finalizar=$.ajax({
                 url: '<?= $finalizarprimerentrega ?>',
                 type: 'POST',
-                async: true,
+                async: false,
                 data: {'Proyecto[id]':<?= $proyecto->id ?>},
                 success: function(data){
                     
                 }
             });
-             return true;
+            
+            if (finalizar.responseText==1) {
+                $.notify({
+                    message: 'Gracias se ha cerrado la 1era entrega' 
+                },{
+                    type: 'success',
+                    z_index: 1000000,
+                    placement: {
+                        from: 'bottom',
+                        align: 'right'
+                    },
+                }); 
+            }
+            if (finalizar.responseText==2)
+            {
+                $.notify({
+                    message: 'Ya se ha cerrado la 1era entrega' 
+                },{
+                    type: 'danger',
+                    z_index: 1000000,
+                    placement: {
+                        from: 'bottom',
+                        align: 'right'
+                    },
+                }); 
+            }
+            return true;
         }
         /*
         */

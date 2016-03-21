@@ -15,7 +15,6 @@ use yii\web\JsExpression;
     <div class="panel panel-default">
         <div class="panel-heading">Acciones</div>
         <div class="panel-body text-center">
-            
             <div class="clearfix"></div>
             <button class="btn btn-success" id="cerrarvoto" <?= $disabled ?>>cerrar votación</button>
             <div class="clearfix"></div><p></p>
@@ -26,7 +25,7 @@ use yii\web\JsExpression;
 
 
 <?php
-    //$url= Yii::$app->getUrlManager()->createUrl('voto/validardni');
+    $cerrarprimeraentrega= Yii::$app->getUrlManager()->createUrl('proyecto/cerrarprimeraentrega');
     $this->registerJs(
     "$('document').ready(function(){
         
@@ -35,44 +34,84 @@ use yii\web\JsExpression;
 
 <script>
     $( '#cerrarvoto' ).click(function() {
-            $.ajax({
-                url: 'cerrar',
-                //dataType: 'json',
-                type: 'GET',
-                async: true,
-                data: {bandera:1},
-                success: function(data){
-                    if(data==1)
-                    {
-                        $.notify({
-                            // options
-                            message: 'Se ha cerrado la votación correctamente' 
-                        },{
-                            // settings
-                            type: 'success',
-                            z_index: 1000000,
-                            placement: {
-                                    from: 'bottom',
-                                    align: 'right'
-                            },
-                        });
-                    }
-                    if(data==2)
-                    {
-                        $.notify({
-                            // options
-                            message: 'Ya ha cerrado la votación, gracias' 
-                        },{
-                            // settings
-                            type: 'danger',
-                            z_index: 1000000,
-                            placement: {
-                                    from: 'bottom',
-                                    align: 'right'
-                            },
-                        });
-                    }
+        $.ajax({
+            url: 'cerrar',
+            //dataType: 'json',
+            type: 'GET',
+            async: true,
+            data: {bandera:1},
+            success: function(data){
+                if(data==1)
+                {
+                    $.notify({
+                        // options
+                        message: 'Se ha cerrado la votación correctamente' 
+                    },{
+                        // settings
+                        type: 'success',
+                        z_index: 1000000,
+                        placement: {
+                                from: 'bottom',
+                                align: 'right'
+                        },
+                    });
                 }
-            });
+                if(data==2)
+                {
+                    $.notify({
+                        // options
+                        message: 'Ya ha cerrado la votación, gracias' 
+                    },{
+                        // settings
+                        type: 'danger',
+                        z_index: 1000000,
+                        placement: {
+                                from: 'bottom',
+                                align: 'right'
+                        },
+                    });
+                }
+            }
         });
+    });
+    
+    $('#cerrar1entrega').click(function(events){
+        var finalizar=$.ajax({
+            url: '<?= $cerrarprimeraentrega ?>',
+            type: 'POST',
+            async: false,
+            success: function(data){
+                
+            }
+        });
+        
+        if(finalizar.responseText==1)
+        {
+            $.notify({
+                message: 'Se ha cerrado el proceso de 1ra entrega' 
+            },{
+                type: 'success',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+        }
+        if(finalizar.responseText==2)
+        {
+            $.notify({
+                message: 'Ya se ha cerrado el proceso de 1ra entrega' 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+        }
+        
+        
+    });
 </script>
