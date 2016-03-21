@@ -43,11 +43,11 @@ if($equipo->id)
                     {
                         if($equipo->asunto_id==$resultado->asunto_id)
                         {
-                            echo "<option value='$resultado->asunto_id' selected='selected'>$resultado->asunto_id</option>";
+                            echo "<option value='$resultado->asunto_id' selected='selected'>".$resultado->asunto->descripcion_cabecera."</option>";
                         }
                         else
                         {
-                            echo "<option value='$resultado->asunto_id'>$resultado->asunto_id</option>";
+                            echo "<option value='$resultado->asunto_id'>".$resultado->asunto->descripcion_cabecera."</option>";
                         }
                     }
                 ?>

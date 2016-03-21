@@ -65,12 +65,12 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="clearfix"></div>
-    <!--<div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-objetivo_general required">
-            <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Objetivo General: *</label>
-            <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="30" placeholder="Objetivo General" title="Máximo 30 palabras"></textarea>
+    <div class="col-xs-12 col-sm-7 col-md-5">
+        <div class="form-group field-proyecto-reflexion required">
+            <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
+            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión"></textarea>
         </div>
-    </div>-->
+    </div>
     
     <div class="clearfix"></div>
     <!--

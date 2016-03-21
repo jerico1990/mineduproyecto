@@ -44,4 +44,9 @@ class Resultados extends \yii\db\ActiveRecord
             'cantidad' => 'Cantidad',
         ];
     }
+    
+    public function getAsunto()
+    {
+        return $this->hasOne(Asunto::className(), ['id' => 'asunto_id']);
+    }
 }

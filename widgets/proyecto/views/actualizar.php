@@ -90,12 +90,12 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="clearfix"></div>
-    <!--<div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-objetivo_general required">
-            <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Objetivo General: *</label>
-            <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="30" placeholder="Objetivo General" title="Máximo 30 palabras"></textarea>
+    <div class="col-xs-12 col-sm-7 col-md-5">
+        <div class="form-group field-proyecto-reflexion required">
+            <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
+            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión"><?= $proyecto->reflexion?></textarea>
         </div>
-    </div>-->
+    </div>
     
     <div class="clearfix"></div>
     <!--
@@ -456,8 +456,10 @@ use yii\web\JsExpression;
     </div>
     <div class="modal-footer">
         <?php if($disabled==''){ ?>
-        <button type="submit" id="btnproyecto" class="btn btn-primary">Guardar</button>
-        <?php }?>
+        <button type="submit" id="btnproyecto" class="btn btn-primary pull-right">Guardar</button>
+        <?php }else{ ?>
+        <button type="button" id="btnproyectoreflexion" class="btn btn-primary pull-right">Guardar</button>
+        <?php } ?>
     </div>
 </div>
 
@@ -474,6 +476,7 @@ use yii\web\JsExpression;
 ?>
 <?php
     $eliminaractividad= Yii::$app->getUrlManager()->createUrl('proyecto/eliminaractividad');
+    $reflexion= Yii::$app->getUrlManager()->createUrl('proyecto/reflexion');
 ?>
 <script>
     var i=<?= $i ?>;
@@ -988,7 +991,59 @@ use yii\web\JsExpression;
         return true;
     });
     
-     
+    $('#btnproyectoreflexion').click(function(events){
+        var error='';
+        
+        if($.trim($('#proyecto-reflexion').val())=='')
+        {
+            error=error+'ingrese una reflexión del proyecto <br>';
+            $('.field-proyecto-reflexion').addClass('has-error');
+        }
+        else
+        {
+            $('.field-proyecto-reflexion').addClass('has-success');
+            $('.field-proyecto-reflexion').removeClass('has-error');
+        }
+        
+        if(error!='')
+        {
+            $.notify({
+                message: error 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            return false;
+        }
+        else
+        {
+            $.ajax({
+                url: '<?= $reflexion ?>',
+                type: 'POST',
+                async: true,
+                data: {'Reflexion[reflexion]':$('#proyecto-reflexion').val(),'Reflexion[proyecto_id]':<?= $proyecto->id ?>,'Reflexion[user_id]':<?= \Yii::$app->user->id ?>},
+                success: function(data){
+                    $.notify({
+                        message: 'Se ha guardado tu reflexión' 
+                    },{
+                        type: 'success',
+                        z_index: 1000000,
+                        placement: {
+                            from: 'bottom',
+                            align: 'right'
+                        },
+                    });
+                }
+            });
+            return true;
+        }
+        
+    });
+    
 </script>
 
 

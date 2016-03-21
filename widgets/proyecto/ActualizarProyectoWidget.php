@@ -5,6 +5,7 @@ namespace app\widgets\proyecto;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
+use app\models\Reflexion;
 use app\models\Proyecto;
 use app\models\Usuario;
 use app\models\Integrante;
@@ -56,10 +57,13 @@ class ActualizarProyectoWidget extends Widget
             $i++;
         }
         
+        $reflexion=Reflexion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
+        $proyecto->reflexion=$reflexion->reflexion;
         
         
         if ($proyecto->load(\Yii::$app->request->post())) {
-            
+            $reflexion->reflexion=$proyecto->reflexion;
+            $reflexion->update();
             $proyecto->update();
             $countActividades1=count($proyecto->actividades_1);
             $countActividades2=count($proyecto->actividades_2);

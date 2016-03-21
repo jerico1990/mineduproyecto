@@ -5,7 +5,10 @@ namespace app\widgets\proyecto;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
+use app\models\Usuario;
+use app\models\Integrante;
 use app\models\Proyecto;
+use app\models\Reflexion;
 use app\models\Actividad;
 use app\models\ObjetivoEspecifico;
 class ProyectoWidget extends Widget
@@ -21,7 +24,25 @@ class ProyectoWidget extends Widget
     {
         $proyecto = new Proyecto;
         if ($proyecto->load(\Yii::$app->request->post()) && $proyecto->save()) {
-            //var_dump($proyecto->actividades_3);die;
+            $usuario=Usuario::findOne(\Yii::$app->user->id);
+            $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+            //$proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
+            //$countIntegrantes=Integrante::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->count();
+            
+            $sql = 'insert into reflexion (reflexion,proyecto_id,user_id)
+                    select "" , '.$proyecto->id.' , usuario.id from integrante
+                    inner join usuario on usuario.estudiante_id=integrante.estudiante_id
+                    where  integrante.equipo_id='.$integrante->equipo_id.' and integrante.estudiante_id!='.$integrante->estudiante_id.' ';
+            
+            \Yii::$app->db->createCommand($sql)->execute();
+            
+            $reflexion= new Reflexion;
+            $reflexion->reflexion=$proyecto->reflexion;
+            $reflexion->proyecto_id=$proyecto->id;
+            $reflexion->user_id=$proyecto->user_id;
+            $reflexion->save();
+            
+            
             $countActividades1=count($proyecto->actividades_1);
             $countActividades2=count($proyecto->actividades_2);
             $countActividades3=count($proyecto->actividades_3);
