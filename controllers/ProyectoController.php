@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\models\Etapa;
 /**
  * ProyectoController implements the CRUD actions for Proyecto model.
  */
@@ -151,13 +152,14 @@ class ProyectoController extends Controller
     
     public function actionFinalizarprimeraentrega()
     {
+        $etapa=Etapa::find()->where('estado=1')->one();
         $proyecto=new Proyecto;
         $proyecto->load(Yii::$app->request->post());
-        $proyectoexiste=ProyectoCopia::findOne($proyecto->id);
+        $proyectoexiste=ProyectoCopia::find()->where('id=:id and etapa=1',[':id'=>$proyecto->id])->one();
         if(!$proyectoexiste)
         {
-            $proyectocopia =    'insert into proyecto_copia (id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id)
-                                select id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id from proyecto
+            $proyectocopia =    'insert into proyecto_copia (id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id,etapa)
+                                select id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id,1 from proyecto
                                 where id='.$proyecto->id.'  ';
             \Yii::$app->db->createCommand($proyectocopia)->execute();
             
@@ -191,6 +193,18 @@ class ProyectoController extends Controller
                                 inner join objetivo_especifico on objetivo_especifico.id=actividad.objetivo_especifico_id
                                 where objetivo_especifico.proyecto_id='.$proyecto->id.' and cronograma.estado=1 ';
             \Yii::$app->db->createCommand($cronogramacopia)->execute();
+            $proyectoetapa=Proyecto::findOne($proyecto->id);
+            $equipo=Equipo::findOne($proyectoetapa->equipo_id);
+            $equipo->etapa=$etapa->etapa;
+            $equipo->update();
+            
+            /*$proyectoetapa=Proyecto::findOne($proyecto->id);
+            $proyectoetapa->etapa=$etapa->etapa;
+            $proyectoetapa->update();
+            $video=Video::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
+            $video->etapa=$etapa->etapa;
+            $video->update();
+            */
             echo 1;
         }
         else
@@ -213,10 +227,11 @@ class ProyectoController extends Controller
     
     public function actionCerrarprimeraentrega()
     {
-            $proyectoexiste=ProyectoCopia::find()->all();
-            if(!$proyectoexiste)
-            {
-                $proyectocopia =    'insert into proyecto_copia (id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id)
+            $proyectoexiste=ProyectoCopia::find()->where('etapa=1')->all();
+            $etapa=Etapa::find()->where('estado=1 and etapa=1')->one();
+            if($proyectoexiste && $etapa)
+            {   
+                /*$proyectocopia =    'insert into proyecto_copia (id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id)
                                 select id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id from proyecto ';
                 \Yii::$app->db->createCommand($proyectocopia)->execute();
                 
@@ -248,7 +263,14 @@ class ProyectoController extends Controller
                                     inner join actividad on cronograma.actividad_id=actividad.id
                                     inner join objetivo_especifico on objetivo_especifico.id=actividad.objetivo_especifico_id
                                     where cronograma.estado=1 ';
-                \Yii::$app->db->createCommand($cronogramacopia)->execute();
+                \Yii::$app->db->createCommand($cronogramacopia)->execute();*/
+                
+                $etapa->estado=0;
+                $etapa->update();
+                $nuevaetapa=new Etapa;
+                $nuevaetapa->etapa=2;
+                $nuevaetapa->estado=1;
+                $nuevaetapa->save();
                 echo 1;
             }
             else

@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\db\StaleObjectException;
 use app\models\Video;
 use app\models\Proyecto;
-
+use app\models\Etapa;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 
@@ -71,9 +71,11 @@ class VideoController extends Controller
         
         if (Yii::$app->request->isPost) {
             $video->archivo = UploadedFile::getInstance($video, 'archivo');
+            //$etapa=Etapa::find()->where('estado=1')->one();
             if($video->archivo) {
                 $video->ruta=\Yii::$app->user->id. '.' . $video->archivo->extension;
                 $video->proyecto_id=$proyecto->id;
+                //$video->etapa=$etapa->etapa;
                 $video->save();
                 $video->archivo->saveAs('video_carga/' . \Yii::$app->user->id . '.' . $video->archivo->extension);
                 //$model->file->saveAs('uploads/subcategories/'.$imageName.'.'.$model->file->extension);

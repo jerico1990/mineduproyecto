@@ -28,6 +28,8 @@ use yii\web\JsExpression;
         var forums1025=<?= $forums1025 ?>;
         var forums1028=<?= $forums1028 ?>;
         var reflexion="<?= $errorreflexion?>";
+        var video=<?= $video ?>;
+        
         var error='';
         
         if (actividad<1) {
@@ -35,6 +37,9 @@ use yii\web\JsExpression;
         }
         if (cronograma<1) {
             error='Debe ingresar mínimo un cronograma <br>'+error;
+        }
+        if (video<1) {
+            error='Debe ingresar el video del proyecto <br>'+error;
         }
         if (planepresupuestales<1) {
             error='Debe ingresar mínimo un plan presupuestal <br>'+error;

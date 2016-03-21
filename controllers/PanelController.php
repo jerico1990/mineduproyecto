@@ -17,7 +17,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\Resultados;
-
+use app\models\Etapa;
 
 /**
  * ParticipanteController implements the CRUD actions for Participante model.
@@ -29,7 +29,7 @@ class PanelController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','cerrarvotos'],
+                'only' => ['index','acciones'],
                 'rules' => [
                     [
                         'actions' => ['index'],
@@ -37,7 +37,7 @@ class PanelController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['cerrarvotos'],
+                        'actions' => ['acciones'],
                         'allow' => true,
                         'roles' => ['administrador'],
                     ],
@@ -90,12 +90,8 @@ class PanelController extends Controller
     {
         $this->layout='registrar';
         $resutaldos=Resultados::find()->all();
-        $disabled='';
-        if($resutaldos)
-        {
-            $disabled='disabled';
-        }
-        return $this->render('acciones',['disabled'=>$disabled]);
+        $etapa=Etapa::find()->where('etapa=1 and estado=0')->one();
+        return $this->render('acciones',['resutaldos'=>$resutaldos,'etapa'=>$etapa]);
     }
     
     public function actionCerrar($bandera)
