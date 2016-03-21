@@ -42,6 +42,7 @@ class Proyecto extends \yii\db\ActiveRecord
     public $actividades_ids_1;
     public $actividades_ids_2;
     public $actividades_ids_3;
+    public $reflexion;
     public static function tableName()
     {
         return 'proyecto';
@@ -57,7 +58,7 @@ class Proyecto extends \yii\db\ActiveRecord
             [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id'], 'integer'],
             [['titulo'], 'string', 'max' => 20],
             [['resumen','beneficiario'], 'string', 'max' => 25000],
-            [['objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
+            [['reflexion','objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
         ];
     }
 

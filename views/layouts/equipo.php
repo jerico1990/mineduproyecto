@@ -118,8 +118,10 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 <li><a href="../proyecto/index"> Mi proyecto</a></li>
                 <?php } elseif($integrante && $equipo && $proyecto){ ?>
                 <li><a href="../proyecto/actualizar"> Mi proyecto</a></li>
-                <?php } ?>
                 <li><a href="../video/index"> Mi video</a></li>
+                <li><a href="../entrega/index"> Mis entregas</a></li>
+                <?php } ?>
+                
           </ul>
         </div><!--/.nav-collapse -->
       </div>
