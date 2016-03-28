@@ -84,13 +84,13 @@ class EntregaController extends Controller
         $forums1025=Integrante::find()
                 ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
                 ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
-                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1025',[':equipo_id'=>$integrante->equipo_id])
+                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1',[':equipo_id'=>$integrante->equipo_id])
                 ->count();
         
         $forums1028=Integrante::find()
                 ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
                 ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
-                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1028',[':equipo_id'=>$integrante->equipo_id])
+                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=2',[':equipo_id'=>$integrante->equipo_id])
                 ->count();
         
         $reflexiones=Reflexion::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();

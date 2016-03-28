@@ -127,7 +127,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 <li><a href="../video/index"> Mi video</a></li>
                 <?php } ?>
                 
-                <?php if($etapa2){?>
+                <?php if($integrante && $equipo && $etapa2 && $equipo->etapa=1){?>
                 <li><a href="../proyecto/buscar">Búsqueda de proyectos</a></li>
                 <?php } ?>
           </ul>

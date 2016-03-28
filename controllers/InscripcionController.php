@@ -65,7 +65,7 @@ class InscripcionController extends Controller
         
         $estudiantes=Estudiante::find()
                     ->where('estudiante.institucion_id=:institucion_id and estudiante.id
-                            not in  (select estudiante_id from integrante where estado=1) and estudiante.id!=:id
+                            not in  (select estudiante_id from integrante where estado=2) and estudiante.id!=:id
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
                     ->all();
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$institucion->estudiante_id])->one();
@@ -156,16 +156,24 @@ class InscripcionController extends Controller
         $this->layout='equipo';
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one();
         $equipo=Equipo::find()->where('id=:id',[':id'=>$integrante->equipo_id])->one();
-        $institucion=Institucion::find()
+        /*$institucion=Institucion::find()
                     ->select('institucion.id,estudiante.id as estudiante_id')
                     ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
                     ->where('estudiante.id='.$id.'')
+                    ->one();*/
+        $institucion=Institucion::find()
+                    ->select('institucion.id,estudiante.id as estudiante_id,ubigeo.department_id')
+                    ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
+                    ->innerJoin('usuario','usuario.estudiante_id=estudiante.id')
+                    ->innerJoin('ubigeo','ubigeo.district_id=institucion.ubigeo_id')
+                    ->where('usuario.id='.\Yii::$app->user->id.'')
                     ->one();
+                    
         $estudiantes=Estudiante::find()
                     ->where('estudiante.institucion_id=:institucion_id and estudiante.id
                             not in (select estudiante_invitado_id from invitacion where estudiante_id='.$institucion->estudiante_id.' and estado=1)
                             and estudiante.id
-                            not in (select estudiante_id from integrante where estado=1) and estudiante.id!=:id
+                            not in (select estudiante_id from integrante where estado=2) and estudiante.id!=:id
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
                     ->all();
         
@@ -198,7 +206,8 @@ class InscripcionController extends Controller
         return $this->render('index',[
                                       'equipo'=>$equipo,
                                       'estudiantes'=>$estudiantes,
-                                      'invitacionContador'=>$invitacionContador]);
+                                      'invitacionContador'=>$invitacionContador,
+                                      'institucion'=>$institucion]);
     }
 
 }

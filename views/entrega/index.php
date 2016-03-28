@@ -47,10 +47,10 @@ use yii\web\JsExpression;
             error='Debe ingresar mínimo un plan presupuestal <br>'+error;
         }
         if (forums1025<1) {
-            error='Debe ingresar mínimo 1 comentario en Foro de "Foro de Prueba" <br>'+error;
+            error='Debe ingresar mínimo 1 comentario en Foro de "Asuntos Públicos" <br>'+error;
         }
         if (forums1028<1) {
-            error='Debe ingresar mínimo 1 comentario en Foro de "Foro 3" <br>'+error;
+            error='Debe ingresar mínimo 1 comentario en Foro de "Asuntos Privados" <br>'+error;
         }
         
         if (reflexion!='') {
