@@ -7,7 +7,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'es-ES',
-    //'defaultRoute'=>'panel/index',
+    'defaultRoute'=>'site/que-es',
     'components' => [
         'formatter' => [
             'dateFormat' => 'dd-MM-yyyy',
@@ -43,6 +43,9 @@ $config = [
         'urlManager' => [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                'site/index'=>''
+            ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
