@@ -38,7 +38,7 @@ if($equipo->id)
             <select id="equipo-asunto_id" class="form-control" name="Equipo[asunto_id]">
                 <option value="">Seleccionar asunto</option>
                 <?php
-                    $resultados=Resultados::find()->all();
+                    $resultados=Resultados::find()->where('region_id=:region_id',['region_id'=>$institucion->department_id])->all();
                     foreach($resultados as $resultado)
                     {
                         if($equipo->asunto_id==$resultado->asunto_id)

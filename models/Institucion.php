@@ -26,6 +26,7 @@ class Institucion extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public $estudiante_id;
+    public $department_id;
     public static function tableName()
     {
         return 'institucion';

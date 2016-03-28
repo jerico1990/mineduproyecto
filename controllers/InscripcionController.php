@@ -56,9 +56,10 @@ class InscripcionController extends Controller
         $equipo=new Equipo;
         
         $institucion=Institucion::find()
-                    ->select('institucion.id,estudiante.id as estudiante_id')
+                    ->select('institucion.id,estudiante.id as estudiante_id,ubigeo.department_id')
                     ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
                     ->innerJoin('usuario','usuario.estudiante_id=estudiante.id')
+                    ->innerJoin('ubigeo','ubigeo.district_id=institucion.ubigeo_id')
                     ->where('usuario.id='.\Yii::$app->user->id.'')
                     ->one();
         
@@ -135,7 +136,7 @@ class InscripcionController extends Controller
         return $this->render('index',[
                                       'equipo'=>$equipo,
                                       'estudiantes'=>$estudiantes,
-                                      'invitacionContador'=>$invitacionContador]);
+                                      'invitacionContador'=>$invitacionContador,'institucion'=>$institucion]);
     }
     
     public function actionParticipante($q = null) {

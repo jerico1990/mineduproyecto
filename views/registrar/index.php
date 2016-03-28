@@ -392,7 +392,6 @@ use app\models\Ubigeo ;
         var p4=$('input[name=\'Registrar[p4][]\']:checked').length;
         var p5=$('input[name=\'Registrar[p5][]\']:checked').length;
         var p6=$('input[name=\'Registrar[p6][]\']:checked').length;
-        console.log(p2);
         
         if ($('#registrar-nombres_apellidos').val()=='') {
             error=error+'Ingrese nombres y apellidos <br>';
@@ -604,9 +603,10 @@ use app\models\Ubigeo ;
             $('.field-registrar-p6').removeClass('has-error');
         }
         
-        if($('#registrar-password').val().length<8)
+        if($('#registrar-password').val()!='' && $('#registrar-password').val().length<8)
         {
-            $.notify({
+            error=error+'La contraseña debe contener mínimo 8 caracteres <br>';
+            /*$.notify({
                 // options
                 message: 'La contraseña debe contener mínimo 8 caracteres' 
             },{
@@ -617,9 +617,8 @@ use app\models\Ubigeo ;
                         from: 'bottom',
                         align: 'right'
                 },
-            });
+            });*/
             $('.field-registrar-password').addClass('has-error');
-            return false;
         }
         
         if ($('#registrar-password').val()!='' && $('#registrar-repassword').val() && $('#registrar-password').val()!=$('#registrar-repassword').val()) {

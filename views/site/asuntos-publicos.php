@@ -21,6 +21,7 @@ Modal::end();
 
 $resultados=Resultados::find()->all();
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <h1>
 ¿Qué son los asuntos públicos?
 </h1>
@@ -117,18 +118,66 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
 <br><br>
 <?= $this->render('_mobile') ?>
 
+
+
+<!-- Modal Votar -->
+<?php $form = ActiveForm::begin(); ?>
+<div class="modal fade" id="myModalVotar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Votar</h4>
+            </div>
+            <div class="modal-body">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="form-group field-voto-dni required">
+			<label class="control-label" for="voto-dni">DNI: *</label>
+			<input type="text" id="voto-dni" class="form-control numerico" name="Voto[dni]" placeholder="DNI" maxlength="8" pattern=".{8,8}">
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="form-group field-voto-region required">
+			<label class="control-label" for="voto-region">Región: *</label>
+			<select id="voto-region" class="form-control" name="Voto[region]" >
+			    <option value>Seleccionar</option>
+			    <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
+				<option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
+			    <?php } ?>
+			</select>
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+		
+                <?php //= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
+                <?php //= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
+                
+                <?php //= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
+                <?php //= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="votar2">Votar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <?php
     $url= Yii::$app->getUrlManager()->createUrl('voto/validardni');
     $urlinsert= Yii::$app->getUrlManager()->createUrl('voto/registrar');
     if(!$resultados){
-    $this->registerJs(
-    "$('document').ready(function(){
+?>
+<script>
     
         $('.numerico').keypress(function (tecla) {
             var reg = /^[0-9\s]+$/;
             if(!reg.test(String.fromCharCode(tecla.which))){
                 return false;
             }
+            return true;
         });
         
         var myArray = [];
@@ -155,6 +204,7 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
 	    else
 	    {
 		$('#myModalVotar').modal('show');
+                return true;
 	    }
 	});
 	
@@ -218,18 +268,32 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
 		
 		
                 myArray.push(value);
-                $.notify({
-                        // options
-                        message: 'Se ha agregado el proyecto '+ value +' ' 
-                },{
-                        // settings
-                        type: 'success',
-                        z_index: 1000000,
-                        placement: {
-                                from: 'bottom',
-                                align: 'right'
-                        },
-                });
+                
+                <?php
+                    $asuntosp=Asunto::find()->all();
+                    foreach($asuntosp as $asuntop)
+                    {
+                ?>
+                    var asuntop=<?= $asuntop->id ?>;
+                    var asuntonombre="<?= $asuntop->descripcion_cabecera ?>";
+                    if (asuntop==value) {
+                        $.notify({
+                            // options
+                            message: 'Se ha agregado el asunto "'+ asuntonombre +'" ' 
+                        },{
+                            // settings
+                            type: 'success',
+                            z_index: 1000000,
+                            placement: {
+                                    from: 'bottom',
+                                    align: 'right'
+                            },
+                        }); 
+                    }
+                    
+                <?php
+                    }
+                ?>
                 return true;
 		
 	    }
@@ -260,7 +324,7 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
                 }
                 
                 $.ajax({
-                    url: '$url',
+                    url: '<?= $url ?>',
                     //dataType: 'json',
                     type: 'GET',
                     async: true,
@@ -283,10 +347,11 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
                             });
                             $('#voto-dni').val('');
 			    
-                            return false;
+                            
                         }
                     }
                 });
+                return true;
                 
             }
             return false;
@@ -338,7 +403,7 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
 		$('.field-voto-region').addClass('has-success');
 		$('.field-voto-region').removeClass('has-error');
                 $.ajax({
-                    url: '$urlinsert',
+                    url: '<?= $urlinsert ?>',
                     type: 'GET',
                     async: true,
                     data: {'Voto[dni]':$('#voto-dni').val(),'Voto[region]':$('#voto-region').val(),Asuntos: myArray},
@@ -383,58 +448,16 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
                         }
                     }
                 });
+                return true;
             }
-            
             
 	});
         
-    });"
-    );
-    }
+    
+    </script>
+   
+    
+    <?php }
 ?>
     
-
-<!-- Modal Votar -->
-<?php $form = ActiveForm::begin(); ?>
-<div class="modal fade" id="myModalVotar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Votar</h4>
-            </div>
-            <div class="modal-body">
-		<div class="col-xs-12 col-sm-12 col-md-12">
-		    <div class="form-group field-voto-dni required">
-			<label class="control-label" for="voto-dni">DNI: *</label>
-			<input type="text" id="voto-dni" class="form-control numerico" name="Voto[dni]" placeholder="DNI" maxlength="8" pattern=".{8,8}">
-		    </div>
-		</div>
-		<div class="clearfix"></div>
-		<div class="col-xs-12 col-sm-12 col-md-12">
-		    <div class="form-group field-voto-region required">
-			<label class="control-label" for="voto-region">Región: *</label>
-			<select id="voto-region" class="form-control" name="Voto[region]" >
-			    <option value>Seleccionar</option>
-			    <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
-				<option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
-			    <?php } ?>
-			</select>
-		    </div>
-		</div>
-		<div class="clearfix"></div>
-		
-                <?php //= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
-                <?php //= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
-                
-                <?php //= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
-                <?php //= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="votar2">Votar</button>
-            </div>
-        </div>
-    </div>
-</div>
 <?php ActiveForm::end(); ?>
