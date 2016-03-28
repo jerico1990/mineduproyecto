@@ -19,7 +19,7 @@ class ProyectoSearch extends Proyecto
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['titulo', 'resumen', 'justificacion', 'objetivo_general', 'beneficiario_directo_1', 'beneficiario_directo_2', 'beneficiario_directo_3', 'beneficiario_indirecto_1', 'beneficiario_indirecto_2', 'beneficiario_indirecto_3'], 'safe'],
+            [['titulo', 'resumen', 'objetivo_general','forum_url'], 'safe'],
         ];
     }
 
@@ -41,7 +41,11 @@ class ProyectoSearch extends Proyecto
      */
     public function search($params)
     {
-        $query = Proyecto::find();
+        $query = Proyecto::find()
+                    ->select('proyecto.titulo,pre_forum.forum_url')
+                    ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
+                    ->innerJoin('asunto','asunto.id=equipo.asunto_id')
+                    ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,18 +62,14 @@ class ProyectoSearch extends Proyecto
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'equipo.etapa'=>1
         ]);
 
-        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+        $query->andFilterWhere(['like', 'proyecto.titulo', $this->titulo])
             ->andFilterWhere(['like', 'resumen', $this->resumen])
-            ->andFilterWhere(['like', 'justificacion', $this->justificacion])
-            ->andFilterWhere(['like', 'objetivo_general', $this->objetivo_general])
-            ->andFilterWhere(['like', 'beneficiario_directo_1', $this->beneficiario_directo_1])
-            ->andFilterWhere(['like', 'beneficiario_directo_2', $this->beneficiario_directo_2])
-            ->andFilterWhere(['like', 'beneficiario_directo_3', $this->beneficiario_directo_3])
-            ->andFilterWhere(['like', 'beneficiario_indirecto_1', $this->beneficiario_indirecto_1])
-            ->andFilterWhere(['like', 'beneficiario_indirecto_2', $this->beneficiario_indirecto_2])
-            ->andFilterWhere(['like', 'beneficiario_indirecto_3', $this->beneficiario_indirecto_3]);
+            ->andFilterWhere(['like', 'forum_url', $this->forum_url]);
+            
+            
 
         return $dataProvider;
     }

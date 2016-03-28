@@ -14,7 +14,9 @@ use yii\web\JsExpression;
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<button type="button" id="btnprimeraentrega">Cerrar primera entrega</button>
+<button class="btn" type="button" id="btnprimeraentrega" <?= ($proyectoCopia || ($etapa->etapa==2))?'disabled':'' ?>>Cerrar primera entrega</button>
+
+<button class="btn" type="button" id="btnsegundaentrega" <?= ($proyectoCopia || ($etapa->etapa==2))?'':'disabled' ?>>Cerrar segunda entrega</button>
 
 <?php 
     $finalizarprimerentrega= Yii::$app->getUrlManager()->createUrl('proyecto/finalizarprimeraentrega');
@@ -70,27 +72,33 @@ use yii\web\JsExpression;
         }
         else
         {
-            var finalizar=$.ajax({
+            $.ajax({
                 url: '<?= $finalizarprimerentrega ?>',
                 type: 'POST',
-                async: false,
+                async: true,
                 data: {'Proyecto[id]':<?= $proyecto->id ?>},
                 success: function(data){
+                    if (data==1) {
+                        $.notify({
+                            message: 'Gracias se ha cerrado la 1era entrega' 
+                        },{
+                            type: 'success',
+                            z_index: 1000000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            },
+                        });
+                        setTimeout(function(){
+                                        window.location.reload(1);
+                                    }, 2000);   
+                    }
                     
                 }
             });
-            
+            /*
             if (finalizar.responseText==1) {
-                $.notify({
-                    message: 'Gracias se ha cerrado la 1era entrega' 
-                },{
-                    type: 'success',
-                    z_index: 1000000,
-                    placement: {
-                        from: 'bottom',
-                        align: 'right'
-                    },
-                }); 
+                
             }
             if (finalizar.responseText==2)
             {
@@ -103,8 +111,11 @@ use yii\web\JsExpression;
                         from: 'bottom',
                         align: 'right'
                     },
-                }); 
-            }
+                });
+                setTimeout(function(){
+                                window.location.reload(1);
+                            }, 2000);
+            }*/
             return true;
         }
         /*

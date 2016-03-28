@@ -13,11 +13,12 @@ use app\models\Usuario;
 use app\models\Integrante;
 use app\models\Equipo;
 use app\models\Proyecto;
+use app\models\Etapa;
 AppAsset::register($this);
 
 if (!\Yii::$app->user->isGuest) {
 
-
+$etapa2=Etapa::find()->where('etapa=2')->one();
 $usuario=Usuario::find()->where('id=:id',[':id'=>\Yii::$app->user->id])->one();
 
 $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
@@ -39,7 +40,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->language ?>" ng-app="app">
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="../js/bootbox.min.js"></script>
@@ -109,19 +110,26 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 <li><a href="../panel/index"> Principal</a></li>
             <?php if (!empty($forums)): ?>
                 <?php foreach($forums as $model): ?>
-                <li><a href="#" onclick="window.location.href= '<?= \yii\helpers\Url::toRoute(['/pre-forum/view', 'id' => $model->forum_url]) ?>';return false"> <?= Html::encode($model->forum_name); ?></a></li>
-                   
+                    <?php if($model->id==1 || $model->id==2){?>
+                    <li><a href="#" onclick="window.location.href= '<?= \yii\helpers\Url::toRoute(['/pre-forum/view', 'id' => $model->forum_url]) ?>';return false"> <?= Html::encode($model->forum_name); ?></a></li>
+                    <?php } ?>
                 <?php endforeach; ?>
             <?php else: ?>
             <?php endif; ?>
                 <?php if($integrante && $equipo && !$proyecto && $integrante->rol==1){ ?>
                 <li><a href="../proyecto/index"> Mi proyecto</a></li>
-                <?php } elseif($integrante && $equipo && $proyecto){ ?>
+                <?php } elseif($integrante && $equipo && $proyecto && $integrante->rol==1){ ?>
                 <li><a href="../proyecto/actualizar"> Mi proyecto</a></li>
                 <li><a href="../video/index"> Mi video</a></li>
                 <li><a href="../entrega/index"> Mis entregas</a></li>
+                <?php } elseif($integrante && $equipo && $proyecto && $integrante->rol==2){ ?>
+                <li><a href="../proyecto/actualizar"> Mi proyecto</a></li>
+                <li><a href="../video/index"> Mi video</a></li>
                 <?php } ?>
                 
+                <?php if($etapa2){?>
+                <li><a href="../proyecto/buscar">Búsqueda de proyectos</a></li>
+                <?php } ?>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -10,11 +10,14 @@ use yii\filters\AccessControl;
 use app\models\Usuario;
 use app\models\Integrante;
 use app\models\Proyecto;
+use app\models\ProyectoCopia;
 use app\models\Actividad;
 use app\models\ObjetivoEspecifico;
 use app\models\Cronograma;
 use app\models\Reflexion;
 use app\models\Video;
+use app\models\Etapa;
+use app\models\Evaluacion;
 use app\models\PlanPresupuestal;
 /**
  * ActividadController implements the CRUD actions for Actividad model.
@@ -51,12 +54,14 @@ class EntregaController extends Controller
     public function actionIndex()
     {
         $this->layout='equipo';
+        $etapa=Etapa::find()->where('estado=1')->one();
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
         
         
         
         $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
+        $proyectoCopia=ProyectoCopia::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
         $video=Video::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->count();
         $objetivosEspecificos=ObjetivoEspecifico::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
         $actividades=Actividad::find()
@@ -99,11 +104,22 @@ class EntregaController extends Controller
             
         }
         
+        $evaluaciones=Evaluacion::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
+        $errorevaluacion="";
+        foreach($evaluaciones as $evaluacion)
+        {
+            if(trim($evaluacion->evaluacion)=='')
+            {
+                $errorevaluacion="Falta ingresar una evaluación de ".$evaluacion->usuario->estudiante->nombres_apellidos." <br>".$errorreflexion;
+            }
+            
+        }
         
         return $this->render('index',['proyecto'=>$proyecto,'actividades'=>$actividades,
                                       'cronogramas'=>$cronogramas,'planepresupuestales'=>$planepresupuestales,
                                       'forums1025'=>$forums1025,'forums1028'=>$forums1028,'errorreflexion'=>$errorreflexion,
-                                      'video'=>$video]);
+                                      'video'=>$video,'etapa'=>$etapa,'proyectoCopia'=>$proyectoCopia,
+                                      'errorevaluacion'=>$errorevaluacion]);
     }
 
 }

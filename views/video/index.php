@@ -11,17 +11,29 @@ use yii\web\JsExpression;
 ?>
 
 <h1>Video</h1>
-<?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
-    <input type="file" id="video-archivo" name="Video[archivo]" class="" accept="video/mp4"><br>
-    <input type="submit" id="btnvideo" value="Cargar video">
-<?php ActiveForm::end(); ?>
+<?php if($integrante->rol==1){?>
+    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
+        <input type="file" id="video-archivo" name="Video[archivo]" class="" accept="video/mp4"><br>
+        <input type="submit" id="btnvideo" value="Cargar video">
+    <?php ActiveForm::end(); ?>
+
 <div class="progress">
     <div class="bar"></div >
     <div class="percent">0%</div >
 </div>
+<?php }?>
 <video width="320" height="240" controls>
     <source src="<?= Yii::getAlias('@video').$video->ruta ?>" type="video/mp4">  
 </video>
+<br>
+
+<?php if($videoprimeraentrega && $equipo->etapa==1){ ?>
+<h1>Video de primera entrega</h1>
+    <video width="320" height="240" controls>
+        <source src="<?= Yii::getAlias('@video').$videoprimeraentrega->ruta ?>" type="video/mp4">  
+    </video>
+<?php } ?>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>

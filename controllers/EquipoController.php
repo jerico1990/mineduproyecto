@@ -279,6 +279,7 @@ class EquipoController extends Controller
         {
             $equipo=Equipo::findOne($id);
             $equipo->estado=1;
+            $equipo->etapa=0;
             $equipo->update();
             
             Integrante::updateAll(['estado' => 2], 'estado = 1 and equipo_id=:equipo_id',

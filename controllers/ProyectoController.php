@@ -14,6 +14,14 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\Etapa;
+use app\models\Equipo;
+use app\models\Usuario;
+use app\models\Integrante;
+use app\models\Video;
+use app\models\Evaluacion;
+
+
+
 /**
  * ProyectoController implements the CRUD actions for Proyecto model.
  */
@@ -24,10 +32,10 @@ class ProyectoController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','actualizar'],
+                'only' => ['index','actualizar','buscar'],
                 'rules' => [
                     [
-                        'actions' => ['index','actualizar'],
+                        'actions' => ['index','actualizar','buscar'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -193,6 +201,28 @@ class ProyectoController extends Controller
                                 inner join objetivo_especifico on objetivo_especifico.id=actividad.objetivo_especifico_id
                                 where objetivo_especifico.proyecto_id='.$proyecto->id.' and cronograma.estado=1 ';
             \Yii::$app->db->createCommand($cronogramacopia)->execute();
+            
+            $videocopia =    'insert into video_copia (id,proyecto_id,ruta,etapa)
+                                select id,proyecto_id,ruta,1 from video
+                                where proyecto_id='.$proyecto->id.' ';
+            \Yii::$app->db->createCommand($videocopia)->execute();
+            
+            
+            $usuario=Usuario::findOne(\Yii::$app->user->id);
+            $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+            $video=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
+                                        [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
+            $video->etapa=1;
+            $video->update();
+            $evaluacion = 'insert into evaluacion (evaluacion,proyecto_id,user_id)
+                    select "" , '.$proyecto->id.' , usuario.id from integrante
+                    inner join usuario on usuario.estudiante_id=integrante.estudiante_id
+                    where  integrante.equipo_id='.$integrante->equipo_id.' ';
+            
+            \Yii::$app->db->createCommand($evaluacion)->execute();
+            
+            
+            
             $proyectoetapa=Proyecto::findOne($proyecto->id);
             $equipo=Equipo::findOne($proyectoetapa->equipo_id);
             $equipo->etapa=$etapa->etapa;
@@ -224,13 +254,43 @@ class ProyectoController extends Controller
         echo 1;
     }
     
+    public function actionEvaluacion()
+    {
+        $evaluacion=new Evaluacion;
+        $evaluacion->load(Yii::$app->request->post());
+        $evaluaciona=Evaluacion::find()->where('proyecto_id=:proyecto_id and user_id=:user_id',
+                                            [':proyecto_id'=>$evaluacion->proyecto_id,':user_id'=>$evaluacion->user_id])->one();
+        $evaluaciona->evaluacion=$evaluacion->evaluacion;
+        $evaluaciona->update();
+        echo 1;
+    }
     
     public function actionCerrarprimeraentrega()
     {
             $proyectoexiste=ProyectoCopia::find()->where('etapa=1')->all();
             $etapa=Etapa::find()->where('estado=1 and etapa=1')->one();
             if($proyectoexiste && $etapa)
-            {   
+            {
+                //$proyectos=Proyecto::find()->where()->all();
+                
+                $pre_forum_proyectos = 'insert into pre_forum (forum_name,forum_desc,user_id,status,proyecto_id)
+                        select proyecto.titulo,proyecto.titulo,1,1,proyecto.id from proyecto
+                        inner join equipo on equipo.id=proyecto.equipo_id
+                        where  equipo.etapa=1';
+                
+                \Yii::$app->db->createCommand($pre_forum_proyectos)->execute();
+                
+                $uppre_forum_proyectos = 'update pre_forum set forum_url=id';
+                
+                \Yii::$app->db->createCommand($uppre_forum_proyectos)->execute();
+                
+                $pre_forum_board_proyectos = 'insert into pre_forum_board (parent_id,name,columns,forum_id,user_id)
+                        select 1,pre_forum.forum_name,1,pre_forum.id,1 from pre_forum
+                        where  pre_forum.id not in (1,2)';
+                
+                \Yii::$app->db->createCommand($pre_forum_board_proyectos)->execute();
+                
+                
                 /*$proyectocopia =    'insert into proyecto_copia (id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id)
                                 select id,titulo,resumen,objetivo_general,beneficiario,user_id,asunto_id,equipo_id from proyecto ';
                 \Yii::$app->db->createCommand($proyectocopia)->execute();
@@ -277,6 +337,17 @@ class ProyectoController extends Controller
             {
                 echo 2;
             }
-            
+    }
+    
+    public function actionBuscar()
+    {
+        $this->layout='equipo';
+        $searchModel = new ProyectoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        
+        return $this->render('buscar',[
+                                        'searchModel' => $searchModel,
+                                        'dataProvider' => $dataProvider,]);
     }
 }

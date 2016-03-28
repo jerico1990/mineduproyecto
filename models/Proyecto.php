@@ -43,6 +43,8 @@ class Proyecto extends \yii\db\ActiveRecord
     public $actividades_ids_2;
     public $actividades_ids_3;
     public $reflexion;
+    public $evaluacion;
+    public $forum_url;
     public static function tableName()
     {
         return 'proyecto';
@@ -57,8 +59,8 @@ class Proyecto extends \yii\db\ActiveRecord
             [['id','actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
             [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id'], 'integer'],
             [['titulo'], 'string', 'max' => 20],
-            [['resumen','beneficiario'], 'string', 'max' => 25000],
-            [['reflexion','objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
+            [['resumen','beneficiario','evaluacion'], 'string', 'max' => 25000],
+            [['forum_url','reflexion','objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
         ];
     }
 
@@ -97,9 +99,10 @@ class Proyecto extends \yii\db\ActiveRecord
     {
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+        $equipo=Equipo::findOne($integrante->equipo_id);
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-                
+                $this->asunto_id=$equipo->asunto_id;
                 $this->user_id = \Yii::$app->user->id;
                 $this->equipo_id= $integrante->equipo_id;
             }

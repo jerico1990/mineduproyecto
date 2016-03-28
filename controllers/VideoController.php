@@ -11,6 +11,9 @@ use yii\db\StaleObjectException;
 use app\models\Video;
 use app\models\Proyecto;
 use app\models\Etapa;
+use app\models\Integrante;
+use app\models\Usuario;
+use app\models\Equipo;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 
@@ -52,56 +55,48 @@ class VideoController extends Controller
     public function actionIndex()
     {
         $this->layout='equipo';
-        $proyecto=Proyecto::find()->where('user_id=:user_id',[':user_id'=>\Yii::$app->user->id])->one();
-        if($proyecto)
-        {
-            $video=Video::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
+        $etapa=Etapa::find()->where('estado=1')->one();
+        $usuario=Usuario::findOne(\Yii::$app->user->id);
+        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',
+                                              [':estudiante_id'=>$usuario->estudiante_id])->one();
+        $equipo=Equipo::findOne($integrante->equipo_id);
+        $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
+        
+        
+        
+        $videoprimeraentrega=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
+                                        [':proyecto_id'=>$proyecto->id,':etapa'=>1])->one();
+        //if($proyecto)
+        //{
+            $video=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
+                                        [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
             if(!$video)
             {
                 $video=new Video;
             }
-        }
+        /*}
         else
         {
             $video=new Video;
-        }
-        
-        
-        
+        }*/
         
         if (Yii::$app->request->isPost) {
             $video->archivo = UploadedFile::getInstance($video, 'archivo');
-            //$etapa=Etapa::find()->where('estado=1')->one();
+            
             if($video->archivo) {
-                $video->ruta=\Yii::$app->user->id. '.' . $video->archivo->extension;
+                //$video->ruta=\Yii::$app->user->id. '.' . $video->archivo->extension;
                 $video->proyecto_id=$proyecto->id;
-                //$video->etapa=$etapa->etapa;
+                $video->etapa=0;
                 $video->save();
-                $video->archivo->saveAs('video_carga/' . \Yii::$app->user->id . '.' . $video->archivo->extension);
-                //$model->file->saveAs('uploads/subcategories/'.$imageName.'.'.$model->file->extension);
+                $videoup=Video::findOne($video->id);
+                $videoup->ruta=$video->id. '.' . $video->archivo->extension;
+                $videoup->update();
+                
+                $video->archivo->saveAs('video_carga/' . $videoup->id . '.' . $video->archivo->extension);
             }
             return $this->refresh();
         }
-/*
-        if (Yii::$app->request->isPost) {
-            
-            if ($video->upload()) {
-                // file is uploaded successfully
-                
-                
-                return $this->refresh();
-            }
-        }*/
-        
-        
-        /*
-        if($video->archivo)
-        {
-            $video->archivo->saveAs('video_carga/' .\Yii::$app->user->id. '.' . $video->archivo->extension,true);
-            //$video->archivo = 'video_carga/' .\Yii::$app->user->id. '.' . $video->archivo->extension;
-            
-        }*/
-        return $this->render('index',['video'=>$video]);
+        return $this->render('index',['video'=>$video,'integrante'=>$integrante,'videoprimeraentrega'=>$videoprimeraentrega,'equipo'=>$equipo]);
     }
     public function actionDescargar($archivo)
     {
