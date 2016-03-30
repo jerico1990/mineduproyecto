@@ -27,12 +27,7 @@ use yii\web\JsExpression;
 </video>
 <br>
 
-<?php if($videoprimeraentrega && $equipo->etapa==1){ ?>
-<h1>Video de primera entrega</h1>
-    <video width="320" height="240" controls>
-        <source src="<?= Yii::getAlias('@video').$videoprimeraentrega->ruta ?>" type="video/mp4">  
-    </video>
-<?php } ?>
+
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>

@@ -39,26 +39,30 @@ use yii\widgets\Pjax;
     </div>
 <?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
-
-<?php Pjax::begin(); ?>
-<?= GridView::widget([
-    'dataProvider' => $dataProvider,
-    //'filterModel' => $searchModel,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-
-        'titulo',
-        
-
-        [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model,$key) {
-                    return Html::a('<span class="glyphicon glyphicon-edit"></span>',['pre-forum/ver?id='.$model->forum_url],[]);
-                }
-            ],
-        ]
-    ],
-]); ?>
-<?php Pjax::end(); ?>
+<div class="col-md-6">
+    <?php Pjax::begin(); ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        //'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+    
+            'titulo',
+            
+    
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {like}',
+                'buttons' => [
+                    'view' => function ($url,$model,$key) {
+                        return Html::a('<span class="glyphicon glyphicon-edit" ></span>',['pre-forum/ver?id='.$model->forum_url],[]);
+                    },
+                    'like' => function ($url,$model,$key) {
+                        return Html::a('<span class="glyphicon glyphicon-thumbs-up" style="color:green"></span>',['pre-forum/ver?id='.$model->forum_url],[]);
+                    }
+                ],
+            ]
+        ],
+    ]); ?>
+    <?php Pjax::end(); ?>
+</div>

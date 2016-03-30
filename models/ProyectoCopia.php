@@ -5,18 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "proyecto_copia".
+ * This is the model class for table "proyecto".
  *
  * @property integer $id
  * @property string $titulo
  * @property string $resumen
+ * @property string $justificacion
  * @property string $objetivo_general
- * @property string $beneficiario
+ * @property string $beneficiario_directo_1
+ * @property string $beneficiario_directo_2
+ * @property string $beneficiario_directo_3
+ * @property string $beneficiario_indirecto_1
+ * @property string $beneficiario_indirecto_2
+ * @property string $beneficiario_indirecto_3
  * @property integer $user_id
- * @property integer $asunto_id
- * @property integer $equipo_id
  *
- * @property ObjetivoEspecificoCopia[] $objetivoEspecificoCopias
+ * @property ObjetivoEspecifico[] $objetivoEspecificos
  * @property Usuario $user
  */
 class ProyectoCopia extends \yii\db\ActiveRecord
@@ -24,6 +28,23 @@ class ProyectoCopia extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $objetivo_especifico_1;
+    public $objetivo_especifico_1_id;
+    public $objetivo_especifico_2;
+    public $objetivo_especifico_2_id;
+    public $objetivo_especifico_3;
+    public $objetivo_especifico_3_id;
+    public $actividades_1;
+    public $actividades_2;
+    public $actividades_3;
+    public $objetivo_especifico_id;
+    public $actividad_id;
+    public $actividades_ids_1;
+    public $actividades_ids_2;
+    public $actividades_ids_3;
+    public $reflexion;
+    public $evaluacion;
+    public $forum_url;
     public static function tableName()
     {
         return 'proyecto_copia';
@@ -35,10 +56,11 @@ class ProyectoCopia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'asunto_id', 'equipo_id'], 'integer'],
+            [['id','actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
+            [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id'], 'integer'],
             [['titulo'], 'string', 'max' => 20],
-            [['resumen', 'beneficiario'], 'string', 'max' => 2500],
-            [['objetivo_general'], 'string', 'max' => 300]
+            [['resumen','beneficiario','evaluacion'], 'string', 'max' => 25000],
+            [['forum_url','reflexion','objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
         ];
     }
 
@@ -51,20 +73,18 @@ class ProyectoCopia extends \yii\db\ActiveRecord
             'id' => 'ID',
             'titulo' => 'Titulo',
             'resumen' => 'Resumen',
+            'justificacion' => 'Justificacion',
             'objetivo_general' => 'Objetivo General',
-            'beneficiario' => 'Beneficiario',
             'user_id' => 'User ID',
-            'asunto_id' => 'Asunto ID',
-            'equipo_id' => 'Equipo ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getObjetivoEspecificoCopias()
+    public function getObjetivoEspecificosCopia()
     {
-        return $this->hasMany(ObjetivoEspecificoCopia::className(), ['proyecto_id' => 'id']);
+        return $this->hasMany(ObjetivoEspecifico::className(), ['proyecto_id' => 'id']);
     }
 
     /**
@@ -74,4 +94,5 @@ class ProyectoCopia extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuario::className(), ['id' => 'user_id']);
     }
+    
 }

@@ -4,7 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Ubigeo ;
-
+use yii\web\JsExpression;
+use yii\widgets\Pjax;
 //var_dump($registrar->errors);
 ?>
 <script src="../bootstrap-strength-meter-master/docs/js/jquery-2.1.1.min.js"></script>
@@ -14,7 +15,7 @@ use app\models\Ubigeo ;
 
 <script src="../bootstrap-strength-meter-master/password-score/password-score.js"></script>
 <script src="../bootstrap-strength-meter-master/password-score/password-score-options.js"></script>
-<?php $form = ActiveForm::begin(['options' => [],]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'formularios', ]]); ?>
 <h2>Inscripción</h2>
 <hr class="colorgraph">
 <div class="row">
@@ -28,13 +29,13 @@ use app\models\Ubigeo ;
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-nombres_apellidos required">
             <label class="control-label" for="registrar-nombres_apellidos">Nombres y apellidos: *</label>
-            <input type="text" id="registrar-nombres_apellidos" class="form-control texto" name="Registrar[nombres_apellidos]" placeholder="Nombres y apellidos">
+            <input type="text" id="registrar-nombres_apellidos" class="form-control texto" name="Registrar[nombres_apellidos]" placeholder="Nombres y apellidos" required/>
         </div>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-sexo required">
             <label class="control-label" for="registrar-sexo">Sexo: *</label>
-            <select id="registrar-sexo" class="form-control" name="Registrar[sexo]">
+            <select id="registrar-sexo" class="form-control" name="Registrar[sexo]" required/>
                 <option value="">Seleccionar sexo</option>
                 <option value="F">Femenino</option>
                 <option value="M">Masculino</option>

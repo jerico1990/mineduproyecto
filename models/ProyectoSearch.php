@@ -41,6 +41,44 @@ class ProyectoSearch extends Proyecto
      */
     public function search($params)
     {
+        
+        $query = Proyecto::find()
+                    ->select('proyecto.titulo,pre_forum.forum_url')
+                    ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
+                    ->innerJoin('asunto','asunto.id=equipo.asunto_id')
+                    ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
+                    ->where('proyecto.user_id not in ('.\Yii::$app->user->id.')');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            //'proyecto.user_id' => \Yii::$app->user->id,
+            'equipo.etapa'=>1
+        ]);
+
+        $query->andFilterWhere(['like', 'proyecto.titulo', $this->titulo])
+            ->andFilterWhere(['like', 'resumen', $this->resumen])
+            ->andFilterWhere(['like', 'forum_url', $this->forum_url]);
+            
+            
+
+        return $dataProvider;
+    }
+    
+    public function votacion($params)
+    {
+        
         $query = Proyecto::find()
                     ->select('proyecto.titulo,pre_forum.forum_url')
                     ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
@@ -61,7 +99,7 @@ class ProyectoSearch extends Proyecto
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            //'proyecto.user_id' => \Yii::$app->user->id,
             'equipo.etapa'=>1
         ]);
 

@@ -19,6 +19,9 @@ use app\models\Video;
 use app\models\Etapa;
 use app\models\Evaluacion;
 use app\models\PlanPresupuestal;
+use app\models\Equipo;
+
+
 /**
  * ActividadController implements the CRUD actions for Actividad model.
  */
@@ -114,6 +117,10 @@ class EntregaController extends Controller
             }
             
         }
+        
+        
+        
+        
         
         return $this->render('index',['proyecto'=>$proyecto,'actividades'=>$actividades,
                                       'cronogramas'=>$cronogramas,'planepresupuestales'=>$planepresupuestales,

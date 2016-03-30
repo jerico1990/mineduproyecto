@@ -350,4 +350,16 @@ class ProyectoController extends Controller
                                         'searchModel' => $searchModel,
                                         'dataProvider' => $dataProvider,]);
     }
+    
+    public function actionVotacion()
+    {
+        $this->layout='equipo';
+        $searchModel = new ProyectoSearch();
+        $dataProvider = $searchModel->votacion(Yii::$app->request->queryParams);
+        
+        
+        return $this->render('votacion',[
+                                        'searchModel' => $searchModel,
+                                        'dataProvider' => $dataProvider,]);
+    }
 }

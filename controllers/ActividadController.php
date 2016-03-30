@@ -57,22 +57,16 @@ class ActividadController extends Controller
         {   
             return $this->redirect(['panel/index']);
         }
-        /*$actividades=Actividad::find()
-                        ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
-                        ->innerJoin('proyecto','proyecto.id=objetivo_especifico.proyecto_id')
-                        ->where('proyecto.user_id=:user_id',[':user_id'=>\Yii::$app->user->id])
-                        ->all();
-        if(!$actividades)
-        {*/
-            
-        /*}
-        else
-        {
-            
-        }*/
         
     }
-
+    
+    public function actionIndexc($id)
+    {
+        $this->layout='equipo';
+        $actividad=Actividad::findOne($id);
+        return $this->render('indexc',['id'=>$id]);
+    }
+    
     /**
      * Displays a single Actividad model.
      * @param integer $id

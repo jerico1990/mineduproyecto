@@ -129,6 +129,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 
                 <?php if($integrante && $equipo && $etapa2 && $equipo->etapa=1){?>
                 <li><a href="../proyecto/buscar">Búsqueda de proyectos</a></li>
+                <li><a href="../proyecto/votacion">Votación interna</a></li>
                 <?php } ?>
           </ul>
         </div><!--/.nav-collapse -->

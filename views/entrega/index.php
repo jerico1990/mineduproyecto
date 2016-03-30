@@ -18,6 +18,12 @@ use yii\web\JsExpression;
 
 <button class="btn" type="button" id="btnsegundaentrega" <?= ($proyectoCopia || ($etapa->etapa==2))?'':'disabled' ?>>Cerrar segunda entrega</button>
 
+
+
+<?= \app\widgets\proyecto\ProyectoPrimeraEntregaWidget::widget(); ?>
+
+
+
 <?php 
     $finalizarprimerentrega= Yii::$app->getUrlManager()->createUrl('proyecto/finalizarprimeraentrega');
 ?>

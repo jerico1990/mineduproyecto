@@ -64,21 +64,13 @@ class VideoController extends Controller
         
         
         
-        $videoprimeraentrega=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
-                                        [':proyecto_id'=>$proyecto->id,':etapa'=>1])->one();
-        //if($proyecto)
-        //{
-            $video=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
-                                        [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
-            if(!$video)
-            {
-                $video=new Video;
-            }
-        /*}
-        else
+        $video=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
+                                    [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
+        if(!$video)
         {
             $video=new Video;
-        }*/
+        }
+        
         
         if (Yii::$app->request->isPost) {
             $video->archivo = UploadedFile::getInstance($video, 'archivo');
@@ -96,7 +88,7 @@ class VideoController extends Controller
             }
             return $this->refresh();
         }
-        return $this->render('index',['video'=>$video,'integrante'=>$integrante,'videoprimeraentrega'=>$videoprimeraentrega,'equipo'=>$equipo]);
+        return $this->render('index',['video'=>$video,'integrante'=>$integrante,'equipo'=>$equipo]);
     }
     public function actionDescargar($archivo)
     {

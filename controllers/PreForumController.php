@@ -292,4 +292,49 @@ class PreForumController extends Controller
         }
         return $newThread;
     }
+    
+    
+    
+    public function actionVer($id)
+    {
+        $this->layout='equipo';
+        
+        if(\Yii::$app->user->can('administrador'))
+        {
+            $model = $this->backfindModel($id);
+            
+            if ($model->boardCount == 1 && $model->boards[0]->parent_id == Board::AS_BOARD ) {
+                $newThread = $this->newThread($model->boards[0]->id);
+            } else {
+                $newThread = null;
+            }
+            
+            return $this->render('ver', [
+                'model' => $model,
+                'newThread' => $newThread,
+            ]);
+        }
+        else
+        {
+    
+            $model = $this->findModel($id);
+            if ($model->status === PreForum::STATUS_PENDING) {
+                return $this->render('status', [
+                    'model' => $model
+                ]);
+            }
+            
+            if ($model->boardCount == 1 && $model->boards[0]->parent_id == PreForumBoard::AS_BOARD) {
+                $newThread = $this->newThread($model->boards[0]->id);
+            } else {
+                $newThread = null;
+            }
+            
+            return $this->render('ver', [
+                'model' => $model,
+                'newThread' => $newThread,
+            ]);
+        }
+        
+    }
 }
