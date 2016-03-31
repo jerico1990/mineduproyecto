@@ -63,9 +63,9 @@ use yii\web\JsExpression;
 				    <div class="form-group field-actividad-como_conseguirlo_<?= $a ?> required">
 					<select id="actividad-como_conseguirlo_<?= $a ?>" class="form-control" name="Actividad[comos_conseguirlos][]" <?= $disabled ?>>
 					    <option value>seleccionar</option>
-					    <option value=1 selected=<?= ($planpresupuestal->como_conseguirlo == 1) ? true : false; ?>>Pedir</option>
-					    <option value=2 selected=<?= ($planpresupuestal->como_conseguirlo == 2) ? true : false; ?>>Crear</option>
-					    <option value=3 selected=<?= ($planpresupuestal->como_conseguirlo == 3) ? true : false; ?>>Comprar</option>
+					    <option value=1 <?= ($planpresupuestal->como_conseguirlo == 1) ? 'selected' : ''; ?>>Pedir</option>
+					    <option value=2 <?= ($planpresupuestal->como_conseguirlo == 2) ? 'selected' : ''; ?>>Crear</option>
+					    <option value=3 <?= ($planpresupuestal->como_conseguirlo == 3) ? 'selected' : ''; ?>>Comprar</option>
 					</select>
 				    </div>
 				</td>

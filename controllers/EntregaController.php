@@ -90,11 +90,29 @@ class EntregaController extends Controller
                 ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1',[':equipo_id'=>$integrante->equipo_id])
                 ->count();
         
+        $asuntosprivados=Integrante::find()
+                ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
+                ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
+                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1',[':equipo_id'=>$integrante->equipo_id])
+                ->all();
+        /*$errorasuntoprivado="";
+        foreach($asuntosprivados as $asuntoprivado)
+        {
+            if(trim($asuntoprivado->reflexion)=='')
+            {
+                $errorreflexion="Falta ingresar una reflexión ".$reflexion->usuario->estudiante->nombres_apellidos." <br>".$errorreflexion;
+            }
+            
+        } */
+        
         $forums1028=Integrante::find()
                 ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
                 ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
                 ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=2',[':equipo_id'=>$integrante->equipo_id])
                 ->count();
+        
+        
+        
         
         $reflexiones=Reflexion::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
         $errorreflexion="";
@@ -117,10 +135,6 @@ class EntregaController extends Controller
             }
             
         }
-        
-        
-        
-        
         
         return $this->render('index',['proyecto'=>$proyecto,'actividades'=>$actividades,
                                       'cronogramas'=>$cronogramas,'planepresupuestales'=>$planepresupuestales,

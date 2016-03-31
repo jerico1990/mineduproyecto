@@ -21,6 +21,7 @@ class Integrante extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public $nombres_apellidos;
+    public $department_id;
     public static function tableName()
     {
         return 'integrante';

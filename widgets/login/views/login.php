@@ -33,7 +33,7 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <?php if($tipo==2 && $resultados){?>
+        <?php if($tipo==2 && $resultados){ ?>
         <?= Html::a('Regístrese',['registrar/index'],['class'=>'pull-left']);?>
         <?= Html::a('¿Olvido su contraseña?',['registrar/index'],['class'=>'pull-right']);?>
         

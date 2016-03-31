@@ -16,12 +16,12 @@ use yii\widgets\Pjax;
         'method' => 'get',
     ]); ?>
     <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group field-voto-proyecto required">
-            <label class="control-label" for="proyecto-region">Región: *</label>
-            <select id="proyecto-region" class="form-control" name="ProyectoSearch[region]" >
+        <div class="form-group field-proyecto-region_id required">
+            <label class="control-label" for="proyecto-region_id">Región: *</label>
+            <select id="proyecto-region_id" class="form-control" name="ProyectoSearch[region_id]" >
                 <option value>Seleccionar</option>
                 <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
-                    <option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
+                    <option value="<?= $departamento->department_id ?>" <?= ($searchModel->region_id==$departamento->department_id)?'selected':'' ?> ><?= $departamento->department ?></option>
                 <?php } ?>
             </select>
         </div>

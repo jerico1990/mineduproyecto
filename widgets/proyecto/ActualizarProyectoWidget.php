@@ -10,7 +10,9 @@ use app\models\Proyecto;
 use app\models\Usuario;
 use app\models\Integrante;
 use app\models\Actividad;
+use app\models\Equipo;
 use app\models\ObjetivoEspecifico;
+use app\models\Evaluacion;
 class ActualizarProyectoWidget extends Widget
 {
     public $message;
@@ -24,6 +26,7 @@ class ActualizarProyectoWidget extends Widget
     {
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+        $equipo=Equipo::findOne($integrante->equipo_id);
         $disabled='';
         if($integrante->rol==2)
         {
@@ -59,11 +62,19 @@ class ActualizarProyectoWidget extends Widget
         
         $reflexion=Reflexion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
         $proyecto->reflexion=$reflexion->reflexion;
+        if($equipo->etapa==1)
+        {
+            $evaluacion=Evaluacion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
+            $proyecto->evaluacion=$evaluacion->evaluacion;
+        }
+        
         
         
         if ($proyecto->load(\Yii::$app->request->post())) {
             $reflexion->reflexion=$proyecto->reflexion;
             $reflexion->update();
+            //$evaluacion->reflexion=$proyecto->evaluacion;
+            
             $proyecto->update();
             $countActividades1=count($proyecto->actividades_1);
             $countActividades2=count($proyecto->actividades_2);
@@ -173,6 +184,7 @@ class ActualizarProyectoWidget extends Widget
                              ['proyecto'=>$proyecto,
                               'objetivos_especificos'=>$objetivos_especificos,
                               'actividades'=>$actividades,
-                              'disabled'=>$disabled]);
+                              'disabled'=>$disabled,
+                              'equipo'=>$equipo]);
     }
 }

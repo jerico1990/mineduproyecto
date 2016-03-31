@@ -16,7 +16,7 @@ use yii\web\JsExpression;
         <div class="panel-heading">Acciones</div>
         <div class="panel-body text-center">
             <div class="clearfix"></div>
-            <button class="btn btn-success" id="cerrarvoto" <?= $resutaldos?'disabled':'' ?>>cerrar votación</button>
+            <button class="btn btn-success" id="cerrarvoto" <?= $resultados?'disabled':'' ?>>cerrar votación</button>
             <div class="clearfix"></div><p></p>
             <button class="btn  btn-success" id="cerrar1entrega" <?= $etapa?'disabled':'' ?> >cerrar 1era entrega</button>
         </div>

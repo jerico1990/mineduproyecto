@@ -89,17 +89,17 @@ class PanelController extends Controller
     public function actionAcciones()
     {
         $this->layout='registrar';
-        $resutaldos=Resultados::find()->all();
+        $resultados=Resultados::find()->all();
         $etapa=Etapa::find()->where('etapa=1 and estado=0')->one();
-        return $this->render('acciones',['resutaldos'=>$resutaldos,'etapa'=>$etapa]);
+        return $this->render('acciones',['resultados'=>$resultados,'etapa'=>$etapa]);
     }
     
     public function actionCerrar($bandera)
     {
-        $resutaldos=Resultados::find()->all();
+        $resultados=Resultados::find()->all();
         $connection = \Yii::$app->db;
         $ubigeos=Ubigeo::find()->select('department_id,department')->groupBy('department_id')->orderBy('department desc')->all();
-        if($bandera==1 && !$resutaldos)
+        if($bandera==1 && !$resultados)
         {
             foreach($ubigeos as $ubigeo)
             {

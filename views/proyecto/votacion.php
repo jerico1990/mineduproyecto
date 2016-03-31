@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Ubigeo;
 use app\models\Proyecto;
+use app\models\VotacionInterna;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $model app\models\ProyectoSearch */
@@ -12,16 +13,16 @@ use yii\widgets\Pjax;
 
 <?php Pjax::begin(); ?>
 <?php $form = ActiveForm::begin([
-        'action' => ['buscar'],
+        'action' => ['votacion'],
         'method' => 'get',
     ]); ?>
     <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group field-voto-proyecto required">
-            <label class="control-label" for="proyecto-region">Región: *</label>
-            <select id="proyecto-region" class="form-control" name="ProyectoSearch[region]" >
+        <div class="form-group field-proyecto-region_id required">
+            <label class="control-label" for="proyecto-region_id">Región: *</label>
+            <select id="proyecto-region_id" class="form-control" name="ProyectoSearch[region_id]" >
                 <option value>Seleccionar</option>
                 <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
-                    <option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
+                    <option value="<?= $departamento->department_id ?>" <?= ($searchModel->region_id==$departamento->department_id)?'selected':'' ?>><?= $departamento->department ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -56,9 +57,20 @@ use yii\widgets\Pjax;
                 'buttons' => [
                     'view' => function ($url,$model,$key) {
                         return Html::a('<span class="glyphicon glyphicon-edit" ></span>',['pre-forum/ver?id='.$model->forum_url],[]);
-                    },
+                    },//style="color:green"
                     'like' => function ($url,$model,$key) {
-                        return Html::a('<span class="glyphicon glyphicon-thumbs-up" style="color:green"></span>',['pre-forum/ver?id='.$model->forum_url],[]);
+                        $votacioninterna=VotacionInterna::find()
+                            ->where('proyecto_id=:proyecto_id and user_id=:user_id',
+                                    [':proyecto_id'=>$model->id,':user_id'=>\Yii::$app->user->id])
+                            ->one();
+                        if($votacioninterna)
+                        {
+                            return Html::a('<span class="glyphicon glyphicon-thumbs-up" style="color:green"></span>',['votacion'],['onclick'=>'Seleccionar('.$model->id.')']);
+                        }
+                        else
+                        {
+                            return Html::a('<span class="glyphicon glyphicon-thumbs-up" ></span>',['votacion'],['onclick'=>'Seleccionar('.$model->id.')']);
+                        }
                     }
                 ],
             ]
@@ -66,3 +78,76 @@ use yii\widgets\Pjax;
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
+
+<div class="col-md-6">
+    <table class="table">
+        <th>Proyecto</th>
+        <th>Equipo</th>
+        <?php foreach($votacionesinternas as $votacioninterna){ ?>
+        <tr>
+            <td><?= $votacioninterna->proyecto->titulo ?></td>
+            <td><?= $votacioninterna->proyecto->equipo->descripcion_equipo ?></td>
+        </tr>
+        <?php } ?>
+    </table>
+</div>
+<?php
+    $votacion= Yii::$app->getUrlManager()->createUrl('proyecto/votacioninterna');
+?>
+<script>
+function Seleccionar(id) {
+    $.ajax({
+        url: '<?= $votacion ?>',
+        type: 'GET',
+        async: true,
+        data: {id:id},
+        success: function(data){
+            if (data==1) {
+                $.notify({
+                    // options
+                    message: 'Tu voto ha sido registrado' 
+                },{
+                    // settings
+                    type: 'success',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                }); 
+            }
+            else if (data==2) {
+                $.notify({
+                    // options
+                    message: 'Tu voto se ha deseleccionado' 
+                },{
+                    // settings
+                    type: 'success',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                }); 
+            }
+            else if (data==3) {
+                $.notify({
+                    // options
+                    message: 'Solo puedes votar por 4 proyectos' 
+                },{
+                    // settings
+                    type: 'danger',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                }); 
+            }
+            setTimeout(function(){
+                window.location.reload(1);
+            }, 2000);
+        }
+    });
+}
+</script>

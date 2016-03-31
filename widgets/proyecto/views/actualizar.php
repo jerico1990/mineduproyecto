@@ -90,13 +90,22 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="clearfix"></div>
+    
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-reflexion required">
             <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
-            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión"><?= $proyecto->reflexion?></textarea>
+            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión" <?= ($equipo->etapa==1)?'disabled':''; ?>><?= $proyecto->reflexion?></textarea>
         </div>
     </div>
-    
+    <div class="clearfix"></div>
+    <?php if($equipo->etapa==1){ ?>
+    <div class="col-xs-12 col-sm-7 col-md-5">
+        <div class="form-group field-proyecto-evaluacion required">
+            <label class="control-label" for="proyecto-evaluacion" >Evaluación: </label>
+            <textarea id="proyecto-evaluacion" class="form-control" name="Proyecto[evaluacion]"  placeholder="Evaluación" <?= ($equipo->etapa==2)?'disabled':''; ?>><?= $proyecto->evaluacion?></textarea>
+        </div>
+    </div>
+    <?php } ?>
     <div class="clearfix"></div>
     <!--
     <div class="col-xs-12 col-sm-7 col-md-5">
@@ -455,10 +464,13 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="modal-footer">
-        <?php if($disabled==''){ ?>
+        <?php if($disabled=='' && $equipo->etapa==0){ ?>
         <button type="submit" id="btnproyecto" class="btn btn-primary pull-right">Guardar</button>
-        <?php }else{ ?>
+        
+        <?php } else if($disabled && $equipo->etapa==0){?>
         <button type="button" id="btnproyectoreflexion" class="btn btn-primary pull-right">Guardar</button>
+        <?php } else if($equipo->etapa==1){ ?>
+        <button type="button" id="btnproyectoevaluacion" class="btn btn-primary pull-right">Guardar</button>
         <?php } ?>
     </div>
 </div>
@@ -477,6 +489,7 @@ use yii\web\JsExpression;
 <?php
     $eliminaractividad= Yii::$app->getUrlManager()->createUrl('proyecto/eliminaractividad');
     $reflexion= Yii::$app->getUrlManager()->createUrl('proyecto/reflexion');
+    $evaluacion= Yii::$app->getUrlManager()->createUrl('proyecto/evaluacion');
 ?>
 <script>
     var i=<?= $i ?>;
@@ -1037,6 +1050,10 @@ use yii\web\JsExpression;
                             align: 'right'
                         },
                     });
+                    
+                    setTimeout(function(){
+                                        window.location.reload(1);
+                                    }, 2000); 
                 }
             });
             return true;
@@ -1044,6 +1061,66 @@ use yii\web\JsExpression;
         
     });
     
+    
+    
+    
+    $('#btnproyectoevaluacion').click(function(events){
+        var error='';
+        
+        if($.trim($('#proyecto-evaluacion').val())=='')
+        {
+            error=error+'ingrese una evaluacion del proyecto <br>';
+            $('.field-proyecto-evaluacion').addClass('has-error');
+        }
+        else
+        {
+            $('.field-proyecto-evaluacion').addClass('has-success');
+            $('.field-proyecto-evaluacion').removeClass('has-error');
+        }
+        
+        if(error!='')
+        {
+            $.notify({
+                message: error 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            return false;
+        }
+        else
+        {
+            $.ajax({
+                url: '<?= $evaluacion ?>',
+                type: 'POST',
+                async: true,
+                data: {'Evaluacion[evaluacion]':$('#proyecto-evaluacion').val(),'Evaluacion[proyecto_id]':<?= $proyecto->id ?>,'Evaluacion[user_id]':<?= \Yii::$app->user->id ?>},
+                success: function(data){
+                    $.notify({
+                        message: 'Se ha guardado tu evaluación' 
+                    },{
+                        type: 'success',
+                        z_index: 1000000,
+                        placement: {
+                            from: 'bottom',
+                            align: 'right'
+                        },
+                    });
+                    
+                }
+            });
+            
+            setTimeout(function(){
+                                        window.location.reload(1);
+                                    }, 2000); 
+            return true;
+        }
+        
+    });
 </script>
 
 

@@ -15,7 +15,7 @@ use app\models\Estudiante;
 use app\models\Usuario;
 use app\models\Cronograma;
 
-class ActividadWidget extends Widget
+class ActividadCopiaWidget extends Widget
 {
     public $id;
     public function init()
@@ -27,7 +27,7 @@ class ActividadWidget extends Widget
     {
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
-        $disabled='';
+        $disabled='disabled';
         if($integrante->rol==2)
         {
             $disabled='disabled';
@@ -113,7 +113,7 @@ class ActividadWidget extends Widget
             return \Yii::$app->getResponse()->refresh();
         }
         
-        return $this->render('actividad',['proyecto'=>$proyecto,'actividad'=>$actividad,'planespresupuestales'=>$planespresupuestales,
+        return $this->render('actividadc',['proyecto'=>$proyecto,'actividad'=>$actividad,'planespresupuestales'=>$planespresupuestales,
                                           'responsables'=>$responsables,'cronogramas'=>$cronogramas,'disabled'=>$disabled]);
     }
 }

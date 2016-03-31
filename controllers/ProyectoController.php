@@ -19,6 +19,7 @@ use app\models\Usuario;
 use app\models\Integrante;
 use app\models\Video;
 use app\models\Evaluacion;
+use app\models\VotacionInterna;
 
 
 
@@ -356,10 +357,59 @@ class ProyectoController extends Controller
         $this->layout='equipo';
         $searchModel = new ProyectoSearch();
         $dataProvider = $searchModel->votacion(Yii::$app->request->queryParams);
-        
+        ///$usuario=Usuario::findOne(\Yii::$app->user->id);
+        //$integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+       // $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
+        $votacionesinternas=VotacionInterna::find()
+                            ->where('user_id=:user_id',
+                                    [':user_id'=>\Yii::$app->user->id])
+                            ->all();
         
         return $this->render('votacion',[
                                         'searchModel' => $searchModel,
-                                        'dataProvider' => $dataProvider,]);
+                                        'dataProvider' => $dataProvider,
+                                        'votacionesinternas'=>$votacionesinternas]);
+    }
+    
+    public function actionVotacioninterna($id)
+    {
+        $proyecto=Proyecto::findOne($id);
+        $votacioninterna=VotacionInterna::find()
+                            ->where('proyecto_id=:proyecto_id and user_id=:user_id',
+                                    [':proyecto_id'=>$proyecto->id,':user_id'=>\Yii::$app->user->id])
+                            ->one();
+        
+        $countvotacioninterna=VotacionInterna::find()
+                            ->where( 'user_id=:user_id',
+                                    [':user_id'=>\Yii::$app->user->id])
+                            ->count();
+                            
+        if($countvotacioninterna<4)
+        {
+            if(!$votacioninterna)
+            {
+                $votacioninterna=new VotacionInterna;
+                $votacioninterna->proyecto_id=$proyecto->id;
+                $votacioninterna->region_id=$proyecto->region_id;
+                $votacioninterna->user_id=\Yii::$app->user->id;
+                $votacioninterna->save();
+                echo 1;
+            }
+            else
+            {
+                VotacionInterna::find()
+                                ->where('proyecto_id=:proyecto_id and user_id=:user_id',
+                                        [':proyecto_id'=>$proyecto->id,':user_id'=>\Yii::$app->user->id])
+                                ->one()
+                                ->delete();
+                echo 2;
+            }
+        }
+        else
+        {
+            echo 3;
+        }
+        
+        
     }
 }

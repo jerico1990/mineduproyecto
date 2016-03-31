@@ -19,9 +19,9 @@ use yii\web\JsExpression;
 <button class="btn" type="button" id="btnsegundaentrega" <?= ($proyectoCopia || ($etapa->etapa==2))?'':'disabled' ?>>Cerrar segunda entrega</button>
 
 
-
+<?php if($proyectoCopia){?>
 <?= \app\widgets\proyecto\ProyectoPrimeraEntregaWidget::widget(); ?>
-
+<?php }?>
 
 
 <?php 

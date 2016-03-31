@@ -57,7 +57,7 @@ class Proyecto extends \yii\db\ActiveRecord
     {
         return [
             [['id','actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
-            [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id'], 'integer'],
+            [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id','region_id'], 'integer'],
             [['titulo'], 'string', 'max' => 20],
             [['resumen','beneficiario','evaluacion'], 'string', 'max' => 25000],
             [['forum_url','reflexion','objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
@@ -95,13 +95,24 @@ class Proyecto extends \yii\db\ActiveRecord
         return $this->hasOne(Usuario::className(), ['id' => 'user_id']);
     }
     
+    public function getEquipo()
+    {
+        return $this->hasOne(Equipo::className(), ['id' => 'equipo_id']);
+    }
+    
     public function beforeSave($insert)
     {
         $usuario=Usuario::findOne(\Yii::$app->user->id);
-        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+        $integrante=Integrante::find()
+                    ->select('integrante.equipo_id,ubigeo.department_id')
+                    ->innerJoin('estudiante','estudiante.id=integrante.estudiante_id')
+                    ->innerJoin('institucion','institucion.id=estudiante.institucion_id')
+                    ->innerJoin('ubigeo','ubigeo.district_id=institucion.ubigeo_id')
+                    ->where('integrante.estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
         $equipo=Equipo::findOne($integrante->equipo_id);
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
+                $this->region_id=$integrante->department_id;
                 $this->asunto_id=$equipo->asunto_id;
                 $this->user_id = \Yii::$app->user->id;
                 $this->equipo_id= $integrante->equipo_id;

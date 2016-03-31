@@ -18,7 +18,7 @@ class ProyectoSearch extends Proyecto
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
+            [['id', 'user_id','region_id'], 'integer'],
             [['titulo', 'resumen', 'objetivo_general','forum_url'], 'safe'],
         ];
     }
@@ -43,11 +43,12 @@ class ProyectoSearch extends Proyecto
     {
         
         $query = Proyecto::find()
-                    ->select('proyecto.titulo,pre_forum.forum_url')
+                    ->select('proyecto.id,proyecto.titulo,pre_forum.forum_url,proyecto.region_id')
                     ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
                     ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
-                    ->where('proyecto.user_id not in ('.\Yii::$app->user->id.')');
+                    ->where('proyecto.user_id not in ('.\Yii::$app->user->id.')')
+                    ->groupBy('proyecto.titulo,pre_forum.forum_url');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,7 +65,8 @@ class ProyectoSearch extends Proyecto
         $query->andFilterWhere([
             'id' => $this->id,
             //'proyecto.user_id' => \Yii::$app->user->id,
-            'equipo.etapa'=>1
+            'equipo.etapa'=>1,
+            'proyecto.region_id'=>$this->region_id
         ]);
 
         $query->andFilterWhere(['like', 'proyecto.titulo', $this->titulo])
@@ -80,10 +82,13 @@ class ProyectoSearch extends Proyecto
     {
         
         $query = Proyecto::find()
-                    ->select('proyecto.titulo,pre_forum.forum_url')
+                    ->select('proyecto.id,proyecto.titulo,pre_forum.forum_url,proyecto.region_id')
+                    //->innerJoin('ubigeo','ubigeo.department_id=proyecto.region_id')
                     ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
+                    //->innerJoin('integrante','integrante.')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
-                    ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id');
+                    ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
+                    ->groupBy('proyecto.titulo,pre_forum.forum_url');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -100,7 +105,8 @@ class ProyectoSearch extends Proyecto
         $query->andFilterWhere([
             'id' => $this->id,
             //'proyecto.user_id' => \Yii::$app->user->id,
-            'equipo.etapa'=>1
+            'equipo.etapa'=>1,
+            'proyecto.region_id'=>$this->region_id
         ]);
 
         $query->andFilterWhere(['like', 'proyecto.titulo', $this->titulo])

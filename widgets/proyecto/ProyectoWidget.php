@@ -29,20 +29,20 @@ class ProyectoWidget extends Widget
             //$proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
             //$countIntegrantes=Integrante::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->count();
             
-            $sql = 'insert into reflexion (reflexion,proyecto_id,user_id)
+            $reflexion = 'insert into reflexion (reflexion,proyecto_id,user_id)
                     select "" , '.$proyecto->id.' , usuario.id from integrante
                     inner join usuario on usuario.estudiante_id=integrante.estudiante_id
                     where  integrante.equipo_id='.$integrante->equipo_id.' and integrante.estudiante_id!='.$integrante->estudiante_id.' ';
             
-            \Yii::$app->db->createCommand($sql)->execute();
+            \Yii::$app->db->createCommand($reflexion)->execute();
             
             $reflexion= new Reflexion;
             $reflexion->reflexion=$proyecto->reflexion;
             $reflexion->proyecto_id=$proyecto->id;
             $reflexion->user_id=$proyecto->user_id;
             $reflexion->save();
-            
-            
+             
+                    
             $countActividades1=count($proyecto->actividades_1);
             $countActividades2=count($proyecto->actividades_2);
             $countActividades3=count($proyecto->actividades_3);
