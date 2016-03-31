@@ -83,36 +83,28 @@ class EntregaController extends Controller
                     ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
                     ->where('objetivo_especifico.proyecto_id=:proyecto_id and plan_presupuestal.estado=1',[':proyecto_id'=>$proyecto->id])
                     ->count();
-        
-        $forums1025=Integrante::find()
-                ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
-                ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
-                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1',[':equipo_id'=>$integrante->equipo_id])
-                ->count();
-        
+               
         $asuntosprivados=Integrante::find()
                 ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
-                ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
-                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=1',[':equipo_id'=>$integrante->equipo_id])
+                ->where('integrante.equipo_id=:equipo_id and usuario.id not in (select user_id from pre_forum_thread where board_id=1)',[':equipo_id'=>$integrante->equipo_id])
                 ->all();
-        /*$errorasuntoprivado="";
+        $errorasuntoprivado='';
         foreach($asuntosprivados as $asuntoprivado)
         {
-            if(trim($asuntoprivado->reflexion)=='')
-            {
-                $errorreflexion="Falta ingresar una reflexión ".$reflexion->usuario->estudiante->nombres_apellidos." <br>".$errorreflexion;
-            }
+            $errorasuntoprivado='Falta comentar en el foro de "Asuntos Privados" ha '.$asuntoprivado->estudiante->nombres_apellidos.' <br>'.$errorasuntoprivado;
             
-        } */
+        }
         
-        $forums1028=Integrante::find()
+        $asuntospublicos=Integrante::find()
                 ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
-                ->innerJoin('pre_forum_thread','pre_forum_thread.user_id=usuario.id')
-                ->where('integrante.equipo_id=:equipo_id and pre_forum_thread.board_id=2',[':equipo_id'=>$integrante->equipo_id])
-                ->count();
-        
-        
-        
+                ->where('integrante.equipo_id=:equipo_id and usuario.id not in (select user_id from pre_forum_thread where board_id=2)',[':equipo_id'=>$integrante->equipo_id])
+                ->all();
+        $errorasuntopublico='';
+        foreach($asuntospublicos as $asuntopublico)
+        {
+            $errorasuntopublico='Falta comentar en el foro de "Asuntos Públicos" ha '.$asuntopublico->estudiante->nombres_apellidos.' <br>'.$errorasuntopublico;
+            
+        }
         
         $reflexiones=Reflexion::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
         $errorreflexion="";
@@ -138,9 +130,9 @@ class EntregaController extends Controller
         
         return $this->render('index',['proyecto'=>$proyecto,'actividades'=>$actividades,
                                       'cronogramas'=>$cronogramas,'planepresupuestales'=>$planepresupuestales,
-                                      'forums1025'=>$forums1025,'forums1028'=>$forums1028,'errorreflexion'=>$errorreflexion,
+                                      'errorasuntopublico'=>$errorasuntopublico,'errorreflexion'=>$errorreflexion,
                                       'video'=>$video,'etapa'=>$etapa,'proyectoCopia'=>$proyectoCopia,
-                                      'errorevaluacion'=>$errorevaluacion]);
+                                      'errorevaluacion'=>$errorevaluacion,'errorasuntoprivado'=>$errorasuntoprivado]);
     }
 
 }

@@ -17,7 +17,7 @@ use yii\web\JsExpression;
 <script src="../js/bootstrap.min.js"></script>
 
 <?php $form = ActiveForm::begin(); ?>
-<h2>Registrar Proyecto</h2>
+<h2>Primera entrega</h2>
 <hr class="colorgraph">
 <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-5">

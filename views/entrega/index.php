@@ -33,8 +33,8 @@ use yii\web\JsExpression;
         var actividad=<?= $actividades ?>;
         var cronograma=<?= $cronogramas ?>;
         var planepresupuestales=<?= $planepresupuestales ?>;
-        var forums1025=<?= $forums1025 ?>;
-        var forums1028=<?= $forums1028 ?>;
+        var asuntosprivados='<?= $errorasuntoprivado ?>';
+        var asuntospublicos='<?= $errorasuntopublico ?>';
         var reflexion="<?= $errorreflexion?>";
         var video=<?= $video ?>;
         
@@ -52,11 +52,12 @@ use yii\web\JsExpression;
         if (planepresupuestales<1) {
             error='Debe ingresar mínimo un plan presupuestal <br>'+error;
         }
-        if (forums1025<1) {
-            error='Debe ingresar mínimo 1 comentario en Foro de "Asuntos Públicos" <br>'+error;
+        if (asuntosprivados!='') {
+            error=asuntosprivados+error;
+            //error='Debe ingresar mínimo 1 comentario en Foro de "Asuntos Públicos" <br>'+error;
         }
-        if (forums1028<1) {
-            error='Debe ingresar mínimo 1 comentario en Foro de "Asuntos Privados" <br>'+error;
+        if (asuntospublicos!='') {
+            error=asuntospublicos+error;
         }
         
         if (reflexion!='') {

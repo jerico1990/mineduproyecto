@@ -107,6 +107,11 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
+                <li align="center">
+                
+                <?= $usuario->estudiante->nombres_apellidos ?>
+                <?= Html::a('Cerrar sesión',['login/logout'],[]);?></li>
+                <hr>
                 <li><a href="../panel/index"> Principal</a></li>
             <?php if (!empty($forums)): ?>
                 <?php foreach($forums as $model): ?>

@@ -29,7 +29,7 @@ use yii\widgets\Pjax;
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group field-proyecto-titulo required">
             <label class="control-label" for="proyecto-titulo">Proyecto: *</label>
-            <input type="text" name="ProyectoSearch[titulo]" class="form-control">
+            <input type="text" name="ProyectoSearch[titulo]" class="form-control" value="<?= $searchModel->titulo?>">
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
