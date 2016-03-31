@@ -136,7 +136,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 <?php if($integrante && $equipo && $etapa2 && ($equipo->etapa==1 || $equipo->etapa==2)){?>
                 <li><a href="../proyecto/buscar">Búsqueda de proyectos</a></li>
                 <?php } ?>
-                <?php if($integrante && $equipo && $etapa3){?>
+                <?php if($integrante && $equipo && $etapa3 && ($equipo->etapa==1 || $equipo->etapa==2)){?>
                 <li><a href="../proyecto/votacion">Votación interna</a></li>
                 <?php } ?>
           </ul>
