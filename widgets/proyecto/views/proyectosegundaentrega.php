@@ -17,7 +17,7 @@ use yii\web\JsExpression;
 <script src="../js/bootstrap.min.js"></script>
 
 <?php $form = ActiveForm::begin(); ?>
-<h2>Primera entrega</h2>
+<h2>Segunda entrega</h2>
 <hr class="colorgraph">
 <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-5">
@@ -98,7 +98,13 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="clearfix"></div>
-    
+    <div class="col-xs-12 col-sm-7 col-md-5">
+        <div class="form-group field-proyecto-reflexion required">
+            <label class="control-label" for="proyecto-reflexion" >Evaluación: </label>
+            <textarea id="proyecto-evaluacion" class="form-control" name="Proyecto[evaluacion]"  placeholder="Evaluación" disabled><?= $proyecto->evaluacion?></textarea>
+        </div>
+    </div>
+    <div class="clearfix"></div>
     <!-- Objetivo General -->
     <div class="modal fade" id="objetivo_general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

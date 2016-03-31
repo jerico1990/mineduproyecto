@@ -94,11 +94,11 @@ use yii\web\JsExpression;
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-reflexion required">
             <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
-            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión" <?= ($equipo->etapa==1)?'disabled':''; ?>><?= $proyecto->reflexion?></textarea>
+            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión" <?= ($equipo->etapa==1  || $equipo->etapa==2)?'disabled':''; ?>><?= $proyecto->reflexion?></textarea>
         </div>
     </div>
     <div class="clearfix"></div>
-    <?php if($equipo->etapa==1){ ?>
+    <?php if($equipo->etapa==1 || $equipo->etapa==2){ ?>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-evaluacion required">
             <label class="control-label" for="proyecto-evaluacion" >Evaluación: </label>
@@ -106,99 +106,6 @@ use yii\web\JsExpression;
         </div>
     </div>
     <?php } ?>
-    <div class="clearfix"></div>
-    <!--
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <table class="table table-bordered table-hover" id="tab_logic">
-            <thead>
-                <tr>
-                    <th class="text-center">
-                        #
-                    </th>
-                    <th class="text-center">
-                        Objetivo especifico
-                    </th>
-                    <th>
-                        
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id='addr0'>
-                    <td>
-                    1
-                    </td>
-                    <td>
-                        <div class="form-group field-proyecto-objetivo_especifico_0 required">
-                            <input type="text" id="proyecto-objetivo_especifico_0" class="form-control" name="Proyecto[objetivo_especifico][]" placeholder="Objetivo especifico" maxlength="30" title="Máximo 30 palabras"/>
-                        </div>
-                    </td>
-                    <td>
-			<span class="remCF glyphicon glyphicon-minus-sign"></span>
-		    </td>
-                </tr>
-                <tr id='addr1'></tr>
-            </tbody>
-        </table>
-        <a id="add_row" class="btn btn-default pull-left">Add Row</a>
-        <br>
-    </div>
-    -->
-    <div class="clearfix"></div>
-    <!--
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th>N°</th>
-                        <th>Cantidad</th>
-                        <th>Unidad</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="form-group field-proyecto-cantidad_1 required">
-                                <input type="text" id="proyecto-cantidad_1" class="form-control numerico" name="Proyecto[cantidad_1]" placeholder="cantidad 1" maxlength="4" title="Máximo 4">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group field-proyecto-unidad_1 required">
-                                <input type="text" id="proyecto-unidad_1" class="form-control" name="Proyecto[unidad_1]" placeholder="unidad 1" maxlength="15" title="Máximo 15 palabras">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <div class="form-group field-proyecto-cantidad_2 required">
-                                <input type="text" id="proyecto-cantidad_2" class="form-control numerico" name="Proyecto[cantidad_2]" placeholder="cantidad 2" maxlength="4" title="Máximo 4">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group field-proyecto-unidad_2 required">
-                                <input type="text" id="proyecto-unidad_2" class="form-control" name="Proyecto[unidad_2]" placeholder="unidad 1" maxlength="15" title="Máximo 15 palabras">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <div class="form-group field-proyecto-cantidad_3 required">
-                                <input type="text" id="proyecto-cantidad_3" class="form-control numerico" name="Proyecto[cantidad_3]" placeholder="cantidad 3" maxlength="4" title="Máximo 4">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group field-proyecto-unidad_3 required">
-                                <input type="text" id="proyecto-unidad_3" class="form-control " name="Proyecto[unidad_3]" placeholder="unidad 3" maxlength="15" title="Máximo 15 palabras">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
--->
     <div class="clearfix"></div>
     
     <!-- Objetivo General -->

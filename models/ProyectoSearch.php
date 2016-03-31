@@ -41,13 +41,17 @@ class ProyectoSearch extends Proyecto
      */
     public function search($params)
     {
+        $usuario=Usuario::findOne(\Yii::$app->user->id);
+        $estudiante=Estudiante::findOne($usuario->estudiante_id);
+        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$estudiante->id])->one();
+        
         
         $query = Proyecto::find()
                     ->select('proyecto.id,proyecto.titulo,pre_forum.forum_url,proyecto.region_id')
                     ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
                     ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
-                    ->where('proyecto.user_id not in ('.\Yii::$app->user->id.')')
+                    ->where('proyecto.equipo_id not in ('.$integrante->equipo_id.') and equipo.etapa in (1,2)')
                     ->groupBy('proyecto.titulo,pre_forum.forum_url');
 
         $dataProvider = new ActiveDataProvider([
@@ -65,7 +69,7 @@ class ProyectoSearch extends Proyecto
         $query->andFilterWhere([
             'id' => $this->id,
             //'proyecto.user_id' => \Yii::$app->user->id,
-            'equipo.etapa'=>1,
+            //'equipo.etapa'=>1,
             'proyecto.region_id'=>$this->region_id
         ]);
 
@@ -88,6 +92,7 @@ class ProyectoSearch extends Proyecto
                     //->innerJoin('integrante','integrante.')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
                     ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
+                    ->where('equipo.etapa in (1,2)')
                     ->groupBy('proyecto.titulo,pre_forum.forum_url');
 
         $dataProvider = new ActiveDataProvider([
@@ -105,7 +110,7 @@ class ProyectoSearch extends Proyecto
         $query->andFilterWhere([
             'id' => $this->id,
             //'proyecto.user_id' => \Yii::$app->user->id,
-            'equipo.etapa'=>1,
+            //'equipo.etapa'=>1,
             'proyecto.region_id'=>$this->region_id
         ]);
 

@@ -58,14 +58,16 @@ class EntregaController extends Controller
     {
         $this->layout='equipo';
         $etapa=Etapa::find()->where('estado=1')->one();
+        $etapa1=Etapa::find()->where('estado=1 and etapa=1')->one();
+        $etapa2=Etapa::find()->where('estado=1 and etapa=2')->one();
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
-        
-        
+        $equipo=Equipo::findOne($integrante->equipo_id);        
         
         $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
-        $proyectoCopia=ProyectoCopia::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
-        $video=Video::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->count();
+        $proyectoCopia=ProyectoCopia::find()->where('equipo_id=:equipo_id and etapa=1',[':equipo_id'=>$integrante->equipo_id])->one();
+        $videoprimera=Video::find()->where('proyecto_id=:proyecto_id and etapa in (0,1)',[':proyecto_id'=>$proyecto->id])->count();
+        $videosegunda=Video::find()->where('proyecto_id=:proyecto_id and etapa in (0,2)',[':proyecto_id'=>$proyecto->id])->count();
         $objetivosEspecificos=ObjetivoEspecifico::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
         $actividades=Actividad::find()
                     ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
@@ -117,22 +119,35 @@ class EntregaController extends Controller
             
         }
         
+        
         $evaluaciones=Evaluacion::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
+        //var_dump($evaluaciones);die;
         $errorevaluacion="";
         foreach($evaluaciones as $evaluacion)
         {
             if(trim($evaluacion->evaluacion)=='')
             {
-                $errorevaluacion="Falta ingresar una evaluación de ".$evaluacion->usuario->estudiante->nombres_apellidos." <br>".$errorreflexion;
+                $errorevaluacion="Falta ingresar una evaluación de ".$evaluacion->usuario->estudiante->nombres_apellidos." <br>".$errorevaluacion;
             }
-            
         }
+        
+        $recomendaciones=Integrante::find()
+                ->innerJoin('usuario','usuario.estudiante_id=integrante.estudiante_id')
+                ->where('integrante.equipo_id=:equipo_id and usuario.id not in (select user_id from pre_forum_thread where board_id not in (1,2))',[':equipo_id'=>$integrante->equipo_id])
+                ->all();
+        $errorrecomendaciones='';
+        foreach($recomendaciones as $recomendacion)
+        {
+            $errorrecomendaciones='Falta realizar mínimo una recomendación en cualquiera de los proyectos '.$recomendacion->estudiante->nombres_apellidos.' <br>'.$errorrecomendaciones;
+        }
+        
         
         return $this->render('index',['proyecto'=>$proyecto,'actividades'=>$actividades,
                                       'cronogramas'=>$cronogramas,'planepresupuestales'=>$planepresupuestales,
                                       'errorasuntopublico'=>$errorasuntopublico,'errorreflexion'=>$errorreflexion,
-                                      'video'=>$video,'etapa'=>$etapa,'proyectoCopia'=>$proyectoCopia,
-                                      'errorevaluacion'=>$errorevaluacion,'errorasuntoprivado'=>$errorasuntoprivado]);
+                                      'videoprimera'=>$videoprimera,'videosegunda'=>$videosegunda,'etapa'=>$etapa,'proyectoCopia'=>$proyectoCopia,
+                                      'errorevaluacion'=>$errorevaluacion,'errorasuntoprivado'=>$errorasuntoprivado,'errorrecomendaciones'=>$errorrecomendaciones,
+                                      'equipo'=>$equipo,'etapa1'=>$etapa1,'etapa2'=>$etapa2]);
     }
 
 }

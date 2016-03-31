@@ -17,7 +17,7 @@ use app\models\Video;
 
 Yii::setAlias('video', '@web/video_carga/');
 
-class ProyectoPrimeraEntregaWidget extends Widget
+class ProyectoSegundaEntregaWidget extends Widget
 {
     public $message;
 
@@ -32,12 +32,12 @@ class ProyectoPrimeraEntregaWidget extends Widget
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
         $equipo=Equipo::findOne($integrante->equipo_id);
         
-        $proyecto=ProyectoCopia::find()->where('equipo_id=:equipo_id and etapa=1',[':equipo_id'=>$integrante->equipo_id])->one();
-        $objetivos_especificos=ObjetivoEspecificoCopia::find()->where('proyecto_id=:proyecto_id and etapa=1',[':proyecto_id'=>$proyecto->id])->all();
+        $proyecto=ProyectoCopia::find()->where('equipo_id=:equipo_id and etapa=2',[':equipo_id'=>$integrante->equipo_id])->one();
+        $objetivos_especificos=ObjetivoEspecificoCopia::find()->where('proyecto_id=:proyecto_id and etapa=2',[':proyecto_id'=>$proyecto->id])->all();
         $actividades=ActividadCopia::find()
                     ->select('objetivo_especifico_copia.id objetivo_especifico_id,actividad_copia.id actividad_id,actividad_copia.descripcion')
                     ->innerJoin('objetivo_especifico_copia','objetivo_especifico_copia.id=actividad_copia.objetivo_especifico_id')
-                    ->where('proyecto_id=:proyecto_id and actividad_copia.estado=1 and actividad_copia.etapa=1',[':proyecto_id'=>$proyecto->id])->all();
+                    ->where('proyecto_id=:proyecto_id and actividad_copia.estado=1 and actividad_copia.etapa=2',[':proyecto_id'=>$proyecto->id])->all();
         $i=1;
         foreach($objetivos_especificos as $objetivo_especifico)
         {
@@ -67,10 +67,10 @@ class ProyectoPrimeraEntregaWidget extends Widget
             $proyecto->evaluacion=$evaluacion->evaluacion;
         }
         $videoprimeraentrega=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
-                                        [':proyecto_id'=>$proyecto->id,':etapa'=>1])->one();
+                                        [':proyecto_id'=>$proyecto->id,':etapa'=>2])->one();
         
         
-        return $this->render('proyectoprimeraentrega',
+        return $this->render('proyectosegundaentrega',
                              ['proyecto'=>$proyecto,
                               'objetivos_especificos'=>$objetivos_especificos,
                               'actividades'=>$actividades,

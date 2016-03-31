@@ -19,6 +19,7 @@ AppAsset::register($this);
 if (!\Yii::$app->user->isGuest) {
 
 $etapa2=Etapa::find()->where('etapa=2')->one();
+$etapa3=Etapa::find()->where('etapa=3')->one();
 $usuario=Usuario::find()->where('id=:id',[':id'=>\Yii::$app->user->id])->one();
 
 $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
@@ -132,8 +133,10 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 <li><a href="../video/index"> Mi video</a></li>
                 <?php } ?>
                 
-                <?php if($integrante && $equipo && $etapa2 && $equipo->etapa=1){?>
+                <?php if($integrante && $equipo && $etapa2 && ($equipo->etapa==1 || $equipo->etapa==2)){?>
                 <li><a href="../proyecto/buscar">Búsqueda de proyectos</a></li>
+                <?php } ?>
+                <?php if($integrante && $equipo && $etapa3){?>
                 <li><a href="../proyecto/votacion">Votación interna</a></li>
                 <?php } ?>
           </ul>

@@ -62,7 +62,7 @@ class ActualizarProyectoWidget extends Widget
         
         $reflexion=Reflexion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
         $proyecto->reflexion=$reflexion->reflexion;
-        if($equipo->etapa==1)
+        if($equipo->etapa==1 || $equipo->etapa==2)
         {
             $evaluacion=Evaluacion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
             $proyecto->evaluacion=$evaluacion->evaluacion;

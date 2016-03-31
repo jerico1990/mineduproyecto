@@ -51,4 +51,6 @@ class Evaluacion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuario::className(), ['id' => 'user_id']);
     }
+    
+    
 }

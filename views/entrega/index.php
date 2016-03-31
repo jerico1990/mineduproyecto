@@ -14,18 +14,22 @@ use yii\web\JsExpression;
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<button class="btn" type="button" id="btnprimeraentrega" <?= ($proyectoCopia || ($etapa->etapa==2))?'disabled':'' ?>>Cerrar primera entrega</button>
+<button class="btn" type="button" id="btnprimeraentrega" <?= (!$etapa1 || $equipo->etapa==1)?'disabled':'' ?>>Cerrar primera entrega</button>
 
-<button class="btn" type="button" id="btnsegundaentrega" <?= ($proyectoCopia || ($etapa->etapa==2))?'':'disabled' ?>>Cerrar segunda entrega</button>
+<button class="btn" type="button" id="btnsegundaentrega" <?= (!$etapa2 || $equipo->etapa==2)?'disabled':'' ?>>Cerrar segunda entrega</button>
 
 
-<?php if($proyectoCopia){?>
+<?php if($equipo->etapa==1 || $equipo->etapa==2){?>
 <?= \app\widgets\proyecto\ProyectoPrimeraEntregaWidget::widget(); ?>
 <?php }?>
 
+<?php if($equipo->etapa==2){?>
+<?= \app\widgets\proyecto\ProyectoSegundaEntregaWidget::widget(); ?>
+<?php }?>
 
 <?php 
     $finalizarprimerentrega= Yii::$app->getUrlManager()->createUrl('proyecto/finalizarprimeraentrega');
+    $finalizarsegundaentrega= Yii::$app->getUrlManager()->createUrl('proyecto/finalizarsegundaentrega');
 ?>
 <script>
     
@@ -36,7 +40,7 @@ use yii\web\JsExpression;
         var asuntosprivados='<?= $errorasuntoprivado ?>';
         var asuntospublicos='<?= $errorasuntopublico ?>';
         var reflexion="<?= $errorreflexion?>";
-        var video=<?= $video ?>;
+        var video=<?= $videoprimera ?>;
         
         var error='';
         
@@ -103,30 +107,68 @@ use yii\web\JsExpression;
                     
                 }
             });
-            /*
-            if (finalizar.responseText==1) {
-                
-            }
-            if (finalizar.responseText==2)
-            {
-                $.notify({
-                    message: 'Ya se ha cerrado la 1era entrega' 
-                },{
-                    type: 'danger',
-                    z_index: 1000000,
-                    placement: {
-                        from: 'bottom',
-                        align: 'right'
-                    },
-                });
-                setTimeout(function(){
-                                window.location.reload(1);
-                            }, 2000);
-            }*/
             return true;
+        }       
+    });
+    
+    $('#btnsegundaentrega').click(function(event){
+        var error='';
+        var evaluacion='<?= $errorevaluacion ?>';
+        var recomendacion='<?= $errorrecomendaciones ?>';
+        var video=<?= $videosegunda ?>;
+        
+        
+        if (evaluacion!='') {
+            error=evaluacion+error;
         }
-        /*
-        */
-       
+        if (recomendacion!='') {
+            error=recomendacion+error;
+        }
+        if (video<1) {
+            error='Debe ingresar el video de la Segunda etapa del proyecto <br>'+error;
+        }
+        
+        
+        if (error!='') {
+            $.notify({
+                message: error 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            return false;
+        }
+        else
+        {
+            $.ajax({
+                url: '<?= $finalizarsegundaentrega ?>',
+                type: 'POST',
+                async: true,
+                data: {'Proyecto[id]':<?= $proyecto->id ?>},
+                success: function(data){
+                    if (data==1) {
+                        $.notify({
+                            message: 'Gracias se ha cerrado la 2da entrega' 
+                        },{
+                            type: 'success',
+                            z_index: 1000000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            },
+                        });
+                        setTimeout(function(){
+                                        window.location.reload(1);
+                                    }, 2000);   
+                    }
+                    
+                }
+            });
+            return true;
+        }     
     });
 </script>

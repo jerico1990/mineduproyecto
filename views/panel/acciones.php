@@ -18,7 +18,9 @@ use yii\web\JsExpression;
             <div class="clearfix"></div>
             <button class="btn btn-success" id="cerrarvoto" <?= $resultados?'disabled':'' ?>>cerrar votación</button>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrar1entrega" <?= $etapa?'disabled':'' ?> >cerrar 1era entrega</button>
+            <button class="btn  btn-success" id="cerrar1entrega" <?= ($etapa->etapa==1)?'disabled':'' ?> >cerrar 1era entrega</button>
+            <div class="clearfix"></div><p></p>
+            <button class="btn  btn-success" id="cerrar2entrega" <?= ($etapa->etapa==2)?'disabled':'' ?> >cerrar 2da entrega</button>
         </div>
     </div>
 </div>
@@ -26,6 +28,7 @@ use yii\web\JsExpression;
 
 <?php
     $cerrarprimeraentrega= Yii::$app->getUrlManager()->createUrl('proyecto/cerrarprimeraentrega');
+    $cerrarsegundaentrega= Yii::$app->getUrlManager()->createUrl('proyecto/cerrarsegundaentrega');
     $this->registerJs(
     "$('document').ready(function(){
         
@@ -108,6 +111,53 @@ use yii\web\JsExpression;
         {
             $.notify({
                 message: 'Ya se ha cerrado el proceso de 1ra entrega' 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            setTimeout(function(){
+                                window.location.reload(1);
+                            }, 2000);
+        }
+        
+        
+    });
+    
+    
+    $('#cerrar2entrega').click(function(events){
+        var finalizar=$.ajax({
+            url: '<?= $cerrarsegundaentrega ?>',
+            type: 'POST',
+            async: false,
+            success: function(data){
+                
+            }
+        });
+        
+        if(finalizar.responseText==1)
+        {
+            $.notify({
+                message: 'Se ha cerrado el proceso de 2da entrega' 
+            },{
+                type: 'success',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            setTimeout(function(){
+                                window.location.reload(1);
+                            }, 2000);
+        }
+        if(finalizar.responseText==2)
+        {
+            $.notify({
+                message: 'Ya se ha cerrado el proceso de 2da entrega' 
             },{
                 type: 'danger',
                 z_index: 1000000,
