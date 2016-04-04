@@ -429,21 +429,33 @@ class ProyectoController extends Controller
         //$integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
        // $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
         $votacionesinternas=VotacionInterna::find()
-                            ->where('user_id=:user_id',
+                            ->where('user_id=:user_id and estado in (1,2)',
                                     [':user_id'=>\Yii::$app->user->id])
                             ->all();
-        
+                            
+                            
+        $votacionesinternasCount=VotacionInterna::find()
+                            ->where('user_id=:user_id and estado=1',
+                                    [':user_id'=>\Yii::$app->user->id])
+                            ->count();
+        $votacionesinternasfinalizadasCount=VotacionInterna::find()
+                            ->where('user_id=:user_id and estado=2',
+                                    [':user_id'=>\Yii::$app->user->id])
+                            ->count();                    
+                            
         return $this->render('votacion',[
                                         'searchModel' => $searchModel,
                                         'dataProvider' => $dataProvider,
-                                        'votacionesinternas'=>$votacionesinternas]);
+                                        'votacionesinternas'=>$votacionesinternas,
+                                        'votacionesinternasCount'=>$votacionesinternasCount,
+                                        'votacionesinternasfinalizadasCount'=>$votacionesinternasfinalizadasCount]);
     }
     
     public function actionVotacioninterna($id)
     {
         $proyecto=Proyecto::findOne($id);
         $votacioninterna=VotacionInterna::find()
-                            ->where('proyecto_id=:proyecto_id and user_id=:user_id',
+                            ->where('proyecto_id=:proyecto_id and user_id=:user_id and estado=1',
                                     [':proyecto_id'=>$proyecto->id,':user_id'=>\Yii::$app->user->id])
                             ->one();
         
@@ -460,13 +472,14 @@ class ProyectoController extends Controller
                 $votacioninterna->proyecto_id=$proyecto->id;
                 $votacioninterna->region_id=$proyecto->region_id;
                 $votacioninterna->user_id=\Yii::$app->user->id;
+                $votacioninterna->estado=1;
                 $votacioninterna->save();
                 echo 1;
             }
             else
             {
                 VotacionInterna::find()
-                                ->where('proyecto_id=:proyecto_id and user_id=:user_id',
+                                ->where('proyecto_id=:proyecto_id and user_id=:user_id and estado=1',
                                         [':proyecto_id'=>$proyecto->id,':user_id'=>\Yii::$app->user->id])
                                 ->one()
                                 ->delete();
@@ -479,5 +492,18 @@ class ProyectoController extends Controller
         }
         
         
+    }
+    
+    public function actionFinalizarvotacioninterna()
+    {
+        /*$votacioninterna=VotacionInterna::find()
+                            ->where('proyecto_id=:proyecto_id and user_id=:user_id and estado=1',
+                                    [':proyecto_id'=>$proyecto->id,':user_id'=>\Yii::$app->user->id])
+                            ->all();*/
+        $updatevotacioninterna =    'update votacion_interna set estado=2 where user_id='.\Yii::$app->user->id.' and estado=1';
+            
+        \Yii::$app->db->createCommand($updatevotacioninterna)->execute();
+        
+        echo 1;
     }
 }

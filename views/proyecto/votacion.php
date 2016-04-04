@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $model app\models\ProyectoSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?php if (!$votacionesinternasfinalizadasCount){?>
 <?php Pjax::begin(); ?>
 <?php $form = ActiveForm::begin([
         'action' => ['votacion'],
@@ -40,6 +40,7 @@ use yii\widgets\Pjax;
     </div>
 <?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
+
 <div class="col-md-6">
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
@@ -78,7 +79,7 @@ use yii\widgets\Pjax;
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
-
+<?php } ?>
 <div class="col-md-6">
     <table class="table">
         <th>Proyecto</th>
@@ -90,11 +91,17 @@ use yii\widgets\Pjax;
         </tr>
         <?php } ?>
     </table>
+    <?php if (!$votacionesinternasfinalizadasCount){?>
+    <button type="button" id="btnfinalizarvotacion" class="btn btn-primary">Finalizar equipo</button>
+    <?php } ?>
 </div>
 <?php
     $votacion= Yii::$app->getUrlManager()->createUrl('proyecto/votacioninterna');
+    $finalizarvotacion= Yii::$app->getUrlManager()->createUrl('proyecto/finalizarvotacioninterna');
 ?>
 <script>
+var countvotacion=<?= $votacionesinternasCount ?>;
+    
 function Seleccionar(id) {
     $.ajax({
         url: '<?= $votacion ?>',
@@ -150,4 +157,51 @@ function Seleccionar(id) {
         }
     });
 }
+
+$('#btnfinalizarvotacion').click(function(event){
+    if (countvotacion<4) {
+        $.notify({
+            // options
+            message: 'Debes votar por 4 proyectos' 
+        },{
+            // settings
+            type: 'danger',
+            z_index: 1000000,
+            placement: {
+                    from: 'bottom',
+                    align: 'right'
+            },
+        });
+        return false;
+    }
+    
+    
+    $.ajax({
+        url: '<?= $finalizarvotacion ?>',
+        type: 'GET',
+        async: true,
+        success: function(data){
+            if (data==1) {
+                $.notify({
+                    // options
+                    message: 'Ha finalizado el proceso de votación interna' 
+                },{
+                    // settings
+                    type: 'success',
+                    z_index: 1000000,
+                    placement: {
+                            from: 'bottom',
+                            align: 'right'
+                    },
+                });
+                setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+            }
+        }
+    });
+    return true;
+    
+});
+
 </script>
