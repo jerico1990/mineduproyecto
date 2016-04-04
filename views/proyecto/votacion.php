@@ -57,7 +57,7 @@ use yii\widgets\Pjax;
                 'template' => '{view} {like}',
                 'buttons' => [
                     'view' => function ($url,$model,$key) {
-                        return Html::a('<span class="glyphicon glyphicon-edit" ></span>',['pre-forum/ver?id='.$model->forum_url],[]);
+                        return Html::a('<span class="glyphicon glyphicon-edit" ></span>',['pre-forum/ver2?id='.$model->forum_url],[]);
                     },//style="color:green"
                     'like' => function ($url,$model,$key) {
                         $votacioninterna=VotacionInterna::find()
