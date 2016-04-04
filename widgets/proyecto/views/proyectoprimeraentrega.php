@@ -21,23 +21,21 @@ use yii\web\JsExpression;
 <hr class="colorgraph">
 <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-titulo required">
-            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: *</label>
-            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="10" title="Máximo 10 palabras" value="<?= $proyecto->titulo ?>" disabled >
+        <div class="form-group field-proyecto-titulo">
+            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: </label> <p><?= $proyecto->titulo ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-resumen required">
-            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label>
-            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 100 palabras" disabled><?= $proyecto->resumen ?></textarea>
+        <div class="form-group field-proyecto-resumen">
+            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label> <p><?= $proyecto->resumen ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-beneficiario required">
-            <label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label>
-            <textarea id="proyecto-beneficiario" class="form-control" name="Proyecto[beneficiario]"  placeholder="Beneficiario" disabled><?= $proyecto->beneficiario ?></textarea>
+            <label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label><p><?= $proyecto->beneficiario ?></p>
+            
         </div>
     </div>
     <div class="clearfix"></div>
@@ -93,8 +91,8 @@ use yii\web\JsExpression;
     
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-reflexion required">
-            <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
-            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión" disabled><?= $proyecto->reflexion?></textarea>
+            <label class="control-label" for="proyecto-reflexion" >Reflexión: </label><p><?= $proyecto->reflexion ?></p>
+            
         </div>
     </div>
     <div class="clearfix"></div>

@@ -37,7 +37,7 @@ class ProyectoPrimeraEntregaWidget extends Widget
         $actividades=ActividadCopia::find()
                     ->select('objetivo_especifico_copia.id objetivo_especifico_id,actividad_copia.id actividad_id,actividad_copia.descripcion')
                     ->innerJoin('objetivo_especifico_copia','objetivo_especifico_copia.id=actividad_copia.objetivo_especifico_id')
-                    ->where('proyecto_id=:proyecto_id and actividad_copia.estado=1 and actividad_copia.etapa=1',[':proyecto_id'=>$proyecto->id])->all();
+                    ->where('proyecto_id=:proyecto_id and actividad_copia.estado=1 and actividad_copia.etapa=1 and objetivo_especifico_copia.etapa=1',[':proyecto_id'=>$proyecto->id])->all();
         $i=1;
         foreach($objetivos_especificos as $objetivo_especifico)
         {

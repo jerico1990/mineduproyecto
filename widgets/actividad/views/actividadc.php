@@ -19,12 +19,13 @@ use yii\web\JsExpression;
 <hr class="colorgraph">
 <div class="row">
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-3 col-md-3">
-	<?= $actividad->descripcion ?>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+	<label class="control-label" for="proyecto-actividad" >Actividad: </label><p><?= $actividad->descripcion ?></p>
     </div>
-    <div class="col-xs-12 col-sm-9 col-md-3">
+    <div class="col-xs-12 col-sm-12 col-md-12">
 	<div class="form-group field-actividad-resultado_esperado required">
-	    <input type="text" id="actividad-resultado_esperado" class="form-control" name="Actividad[resultado_esperado]" placeholder="Resultado" value="<?= $actividad->resultado_esperado ?>" <?= $disabled ?> >
+	    <label class="control-label" for="proyecto-reflexion" >Resultado: </label><p><?= $actividad->resultado_esperado ?></p>
+	    
 	</div>
     </div>
     <div class="clearfix"></div>
