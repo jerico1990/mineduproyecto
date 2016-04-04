@@ -107,8 +107,7 @@ use yii\web\JsExpression;
                 </div>
                 <div class="modal-body">
                     <div class="form-group field-proyecto-objetivo_general required">
-                        <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Objetivo General: *</label>
-                        <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="30" placeholder="Objetivo General" title="Máximo 30 palabras" disabled><?= $proyecto->objetivo_general ?></textarea>
+                        <p><?= $proyecto->objetivo_general ?></p>
                     </div>
                 </div>
             </div>
@@ -127,9 +126,7 @@ use yii\web\JsExpression;
                 <div class="modal-body">
                     <div class="col-xs-12 col-sm-7 col-md-12">
                         <div class="form-group field-proyecto-objetivo_especifico_1 required">
-                            <label class="control-label" for="proyecto-objetivo_especifico_1" title="Máximo 30 palabras">Objetivo objetivo especifico_1: *</label>
-                            <input type="hidden" name="Proyecto[objetivo_especifico_1_id]" value="<?= $proyecto->objetivo_especifico_1_id ?>" >
-                            <textarea id="proyecto-objetivo_especifico_1" class="form-control" name="Proyecto[objetivo_especifico_1]"   placeholder="Objetivo especifico 1" disabled><?= $proyecto->objetivo_especifico_1 ?></textarea>
+                            <p><?= $proyecto->objetivo_especifico_1 ?></p>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -155,8 +152,7 @@ use yii\web\JsExpression;
                                         </td>
                                         <td>
                                             <div class="form-group field-proyecto-actividad_objetivo1_<?= $i ?> required">
-                                                
-                                                <input type="text" id="proyecto-actividad_objetivo1_<?= $i ?>" class="form-control" name="Proyecto[actividades_1][]" placeholder="Actividad" value="<?= $actividad->descripcion ?>" disabled/>
+                                                <?= $actividad->descripcion ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -186,10 +182,8 @@ use yii\web\JsExpression;
                 </div>
                 <div class="modal-body">
                     <div class="col-xs-12 col-sm-7 col-md-12">
-                        <div class="form-group field-proyecto-objetivo_especifico_2 required">
-                            <label class="control-label" for="proyecto-objetivo_especifico_2" title="Máximo 30 palabras">Objetivo objetivo especifico_2: *</label>
-                            <input type="hidden" name="Proyecto[objetivo_especifico_2_id]" value="<?= $proyecto->objetivo_especifico_2_id ?>">
-                            <textarea id="proyecto-objetivo_especifico_2" class="form-control" name="Proyecto[objetivo_especifico_2]"  placeholder="Objetivo especifico 2" disabled><?= $proyecto->objetivo_especifico_2 ?></textarea>
+                        <div class="form-group field-proyecto-objetivo_especifico_2 required" style="display: inline-block">
+                            <p><?= $proyecto->objetivo_especifico_2 ?></p>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -216,8 +210,8 @@ use yii\web\JsExpression;
                                         </td>
                                         <td>
                                             <div class="form-group field-proyecto-actividad_objetivo2_<?= $a ?> required">
+                                                <?= $actividad->descripcion ?>
                                                 
-                                                <input type="text" id="proyecto-actividad_objetivo2_<?= $a ?>" class="form-control" name="Proyecto[actividades_2][]" placeholder="Actividad" value="<?= $actividad->descripcion ?>" disabled/>
                                             </div>
                                         </td>
                                        
@@ -249,9 +243,7 @@ use yii\web\JsExpression;
                 <div class="modal-body">
                     <div class="col-xs-12 col-sm-7 col-md-12">
                         <div class="form-group field-proyecto-objetivo_especifico_3 required">
-                            <label class="control-label" for="proyecto-objetivo_especifico_3" title="Máximo 30 palabras">Objetivo objetivo especifico_3: *</label>
-                            <input type="hidden" name="Proyecto[objetivo_especifico_3_id]" value="<?= $proyecto->objetivo_especifico_3_id ?>">
-                            <textarea id="proyecto-objetivo_especifico_3" class="form-control" name="Proyecto[objetivo_especifico_3]"  placeholder="Objetivo especifico 3" disabled><?= $proyecto->objetivo_especifico_3 ?></textarea>
+                            <p><?= $proyecto->objetivo_especifico_3 ?></p>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -277,7 +269,7 @@ use yii\web\JsExpression;
                                         </td>
                                         <td>
                                             <div class="form-group field-proyecto-actividad_objetivo3_<?= $e ?> required">
-                                                <input type="text" id="proyecto-actividad_objetivo3_<?= $e ?>" class="form-control" name="Proyecto[actividades_3][]" placeholder="Actividad" value="<?= $actividad->descripcion ?>" disabled/>
+                                                <?= $actividad->descripcion ?>
                                             </div>
                                         </td>
                                         <?php if($disabled==''){ ?>

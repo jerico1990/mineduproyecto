@@ -22,22 +22,18 @@ use yii\web\JsExpression;
 <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-titulo required">
-            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: *</label>
-            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="10" title="Máximo 10 palabras" value="<?= $proyecto->titulo ?>" disabled >
+            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: </label> <p><?= $proyecto->titulo ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-resumen required">
-            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label>
-            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 100 palabras" disabled><?= $proyecto->resumen ?></textarea>
+            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label> <p><?= $proyecto->resumen ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-beneficiario required">
-            <label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label>
-            <textarea id="proyecto-beneficiario" class="form-control" name="Proyecto[beneficiario]"  placeholder="Beneficiario" disabled><?= $proyecto->beneficiario ?></textarea>
+        <div class="form-group field-proyecto-beneficiario required"><label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label><p><?= $proyecto->beneficiario ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -92,16 +88,12 @@ use yii\web\JsExpression;
     <div class="clearfix"></div>
     
     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-reflexion required">
-            <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
-            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión" disabled><?= $proyecto->reflexion?></textarea>
+        <div class="form-group field-proyecto-reflexion required"><label class="control-label" for="proyecto-reflexion" >Reflexión: </label><p><?= $proyecto->reflexion ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-reflexion required">
-            <label class="control-label" for="proyecto-reflexion" >Evaluación: </label>
-            <textarea id="proyecto-evaluacion" class="form-control" name="Proyecto[evaluacion]"  placeholder="Evaluación" disabled><?= $proyecto->evaluacion?></textarea>
+        <div class="form-group field-proyecto-evaluacion required"><label class="control-label" for="proyecto-evaluacion" >Evaluación: </label><p><?= $proyecto->evaluacion ?></p>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -316,7 +308,7 @@ use yii\web\JsExpression;
 
 <?php ActiveForm::end(); ?>
 <?php if($videoprimeraentrega && ($equipo->etapa==1 || $equipo->etapa==2)){ ?>
-<h1>Video de primera entrega</h1>
+<h1>Video de segunda entrega</h1>
     <video width="320" height="240" controls>
         <source src="<?= Yii::getAlias('@video').$videoprimeraentrega->ruta ?>" type="video/mp4">  
     </video>
