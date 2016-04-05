@@ -62,7 +62,7 @@ class EntregaController extends Controller
         $etapa2=Etapa::find()->where('estado=1 and etapa=2')->one();
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
-        $equipo=Equipo::findOne($integrante->equipo_id);        
+        $equipo=Equipo::findOne($integrante->equipo_id);
         
         $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
         $proyectoCopia=ProyectoCopia::find()->where('equipo_id=:equipo_id and etapa=1',[':equipo_id'=>$integrante->equipo_id])->one();

@@ -288,15 +288,6 @@ class EquipoController extends Controller
             Invitacion::updateAll(['estado' => 0,'fecha_rechazo'=>date("Y-m-d H:i:s")], 'estado = 1 and equipo_id=:equipo_id',
                               [':equipo_id'=>$id]);
             
-            /*$invitacion=Invitacion::find()
-                        ->where('estado=1 and equipo_id=:equipo_id',
-                                [':equipo_id'=>$id])->one();
-            if($invitacion)
-            {
-                $invitacion->estado=0;
-                $invitacion->fecha_rechazo=date("Y-m-d H:i:s");
-                $invitacion->update();
-            }*/
             echo 1;
         }
     }

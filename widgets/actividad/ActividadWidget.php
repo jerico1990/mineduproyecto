@@ -50,10 +50,7 @@ class ActividadWidget extends Widget
                     ->innerJoin('actividad','actividad.id=cronograma.actividad_id')
                     ->where('actividad_id=:actividad_id and actividad.estado=1 and cronograma.estado=1',[':actividad_id'=>$this->id])
                     ->all();
-        if(!$actividad)
-        {
-            
-        }
+       
         
         if ($actividad->load(\Yii::$app->request->post())) {
             $actividadu=Actividad::findOne($actividad->actividad_id);

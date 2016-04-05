@@ -7,6 +7,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
+$disabled=false;
+if($votacionpublica || $etapa->etapa!=3)
+{
+    $disabled=true;
+}
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <br>
@@ -22,9 +27,9 @@ use yii\web\JsExpression;
             <div class="clearfix"></div><p></p>
             <button class="btn  btn-success" id="cerrar2entrega" <?= ($etapa->etapa!=2)?'disabled':'' ?> >cerrar 2da entrega</button>
             <div class="clearfix"></div><p></p>
-            <?= Html::a('Votación interna',['votacioninterna'],['class'=>'btn btn-success']); ?>
+            <?= Html::a('Votación interna',['votacioninterna'],['class'=>'btn btn-success','disabled'=>$disabled]); ?>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrarvotacioninterna" <?= ($votacionpublica)?'disabled':'' ?> >cerrar votación interna</button>
+            <button class="btn  btn-success" id="cerrarvotacioninterna" <?= ($votacionpublica || $etapa->etapa!=3)?'disabled':'' ?> >cerrar votación interna</button>
         </div>
     </div>
 </div>
@@ -156,6 +161,22 @@ use yii\web\JsExpression;
                             }, 2000);
         }
         if(finalizar.responseText==2)
+        {
+            $.notify({
+                message: 'Ningun proyecto ha cerrado su segunda entrega' 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            setTimeout(function(){
+                                window.location.reload(1);
+                            }, 2000);
+        }
+        if(finalizar.responseText==3)
         {
             $.notify({
                 message: 'Ya se ha cerrado el proceso de 2da entrega' 

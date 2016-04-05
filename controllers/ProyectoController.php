@@ -402,9 +402,13 @@ class ProyectoController extends Controller
             $nuevaetapa->save();
             echo 1;
         }
-        else
+        elseif(!$proyectoexiste)
         {
             echo 2;
+        }
+        else
+        {
+            echo 3;
         }
     }
     

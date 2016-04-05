@@ -303,7 +303,7 @@ function unirme(id) {
             if (data==0) {
                 $.notify({
                     // options
-                    message: 'Oe ya ps, no te meches con el lider, ya te elimino XD! :v' 
+                    message: 'El lider te ha eliminado' 
                 },{
                     // settings
                     type: 'danger',
@@ -329,7 +329,7 @@ function unirme(id) {
                     success: function(data){
                         $.notify({
                             // options
-                            message: 'Gracias se ha unido al equipo lalal :v :3 -.-!! o.O :D ' 
+                            message: 'Gracias se ha unido al equipo  ' 
                         },{
                             // settings
                             type: 'success',
@@ -362,7 +362,7 @@ function rechazar(id) {
         success: function(data){
             $.notify({
                 // options
-                message: 'Ha rechazado la invitacion porque ahhh , dime pues ps porq Grr -.-!! o.O :D , no se baya joven :v' 
+                message: 'Ha rechazado la invitación' 
             },{
                 // settings
                 type: 'danger',
@@ -414,7 +414,7 @@ function dejarequipo(id) {
                     success: function(data){
                         $.notify({
                             // options
-                            message: 'Porque nos dejas :( , somos un equipo recuerdanos :\'(' 
+                            message: 'Has dejado el equipo' 
                         },{
                             // settings
                             type: 'danger',
@@ -464,7 +464,7 @@ function eliminarinvitado(id,equipo) {
         success: function(data){
             $.notify({
                 // options
-                message: 'Que malo, lo ilusionas con una invitacion ahora lo eliminas, mal amigo :v :3' 
+                message: 'Invitación eliminada' 
             },{
                 // settings
                 type: 'success',
@@ -535,7 +535,7 @@ function finalizarequipo(id) {
             if (data==2) {
                 $.notify({
                     // options
-                    message: 'No tiene la cantidad suficiente para finalizar el equipo, deben ser 6 integrantes' 
+                    message: 'No tiene la cantidad suficiente para finalizar el equipo, deben ser 3 integrantes' 
                 },{
                     // settings
                     type: 'danger',

@@ -131,6 +131,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
                 <?php } elseif($integrante && $equipo && $proyecto && $integrante->rol==2){ ?>
                 <li><a href="../proyecto/actualizar"> Mi proyecto</a></li>
                 <li><a href="../video/index"> Mi video</a></li>
+                <li><a href="../entrega/index"> Mis entregas</a></li>
                 <?php } ?>
                 
                 <?php if($integrante && $equipo && $etapa2 && ($equipo->etapa==1 || $equipo->etapa==2)){?>

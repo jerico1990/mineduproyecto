@@ -92,7 +92,7 @@ use yii\widgets\Pjax;
         <?php } ?>
     </table>
     <?php if (!$votacionesinternasfinalizadasCount){?>
-    <button type="button" id="btnfinalizarvotacion" class="btn btn-primary">Finalizar equipo</button>
+    <button type="button" id="btnfinalizarvotacion" class="btn btn-primary">Finalizar votación</button>
     <?php } ?>
 </div>
 <?php
