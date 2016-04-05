@@ -107,7 +107,11 @@ class SiteController extends Controller
         $this->layout='minedu';
         return $this->render('que-es');
     }
-    
+    public function actionBases()
+    {
+        $this->layout='minedu';
+        return $this->render('bases');
+    }
     public function actionEtapas()
     {
         $this->layout='minedu';

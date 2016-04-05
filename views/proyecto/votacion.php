@@ -140,7 +140,7 @@ function Seleccionar(id) {
             else if (data==3) {
                 $.notify({
                     // options
-                    message: 'Solo puedes votar por 4 proyectos' 
+                    message: 'Solo puedes votar por 3 proyectos' 
                 },{
                     // settings
                     type: 'danger',
@@ -153,16 +153,16 @@ function Seleccionar(id) {
             }
             setTimeout(function(){
                 window.location.reload(1);
-            }, 2000);
+            }, 1000);
         }
     });
 }
 
 $('#btnfinalizarvotacion').click(function(event){
-    if (countvotacion<4) {
+    if (countvotacion<3) {
         $.notify({
             // options
-            message: 'Debes votar por 4 proyectos' 
+            message: 'Debes votar por 3 proyectos' 
         },{
             // settings
             type: 'danger',

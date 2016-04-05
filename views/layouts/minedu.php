@@ -41,10 +41,12 @@ AppAsset::register($this);
 		    </button>',['site/etapas'],[]);?>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-nav">
+		<?= Html::a('<button type="button" class="btn btn-nav">
                     <span class="glyphicon glyphicon-globe"></span>
     			<p>Bases</p>
-                </button>
+                </button>',['site/bases'],[]);?>
+		    
+                
             </div>
             <div class="btn-group">
 		<?= Html::a('<button type="button" class="btn btn-nav">

@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\StaleObjectException;
+use app\models\VotacionPublica;
+use app\models\VotacionFinal;
 
 /**
  * VotoController implements the CRUD actions for Voto model.
@@ -250,5 +252,56 @@ class VotoController extends Controller
         </table>";
         
         echo $table;
+    }
+    
+    public function actionMostrarvotacionpublica($region)
+    {
+        $htmlvotacionespublicas='';
+        $i=0;
+        $votacionespublicas=VotacionPublica::find()->where('region_id=:region_id',[':region_id'=>$region])->all();
+        foreach($votacionespublicas as $votacionpublica)
+        {
+            $htmlvotacionespublicas=$htmlvotacionespublicas.'<br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">'.$votacionpublica->proyecto->titulo .'</h3>
+                </div>
+                <div class="panel-body">
+                    Resumen:<p>'.$votacionpublica->proyecto->resumen .'</p>
+                    Objetivo general:<p>'.$votacionpublica->proyecto->objetivo_general .'</p>
+                    <button  type="button" class="" onclick="votar('.$votacionpublica->proyecto_id.')" >votar</button>
+                </div>
+                
+            </div>
+            ';
+            $i++;
+        }
+        
+        echo $htmlvotacionespublicas;
+    
+    }
+    
+    
+    public function actionValidardnivotacionpublica($dni)
+    {
+        $dni=VotacionFinal::find()->where('dni=:dni',[':dni'=>$dni])->one();
+        if($dni)
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+    }
+    
+    public function actionVotacionfinal($dni,$proyecto)
+    {
+        $votacionfinal=new VotacionFinal;
+        $votacionfinal->dni=$dni;
+        $votacionfinal->proyecto_id=$proyecto;
+        $votacionfinal->estado=1;
+        $votacionfinal->save();
+        echo 1;
     }
 }

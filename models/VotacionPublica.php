@@ -5,26 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "votacion_interna".
+ * This is the model class for table "votacion_publica".
  *
  * @property integer $id
  * @property integer $proyecto_id
  * @property integer $region_id
- * @property integer $user_id
+ * @property integer $estado
+ * @property string $fecha_registro
  */
-class VotacionInterna extends \yii\db\ActiveRecord
+class VotacionPublica extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-    public $titulo;
-    public $voto;
-    public $valor;
-    public $resultado;
-    public $maximo;
     public static function tableName()
     {
-        return 'votacion_interna';
+        return 'votacion_publica';
     }
 
     /**
@@ -33,8 +29,8 @@ class VotacionInterna extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['proyecto_id', 'region_id', 'user_id','voto','resultado'], 'integer'],
-            [['titulo'],'safe']
+            [['proyecto_id', 'region_id', 'estado'], 'integer'],
+            [['fecha_registro'], 'safe']
         ];
     }
 
@@ -47,22 +43,13 @@ class VotacionInterna extends \yii\db\ActiveRecord
             'id' => 'ID',
             'proyecto_id' => 'Proyecto ID',
             'region_id' => 'Region ID',
-            'user_id' => 'User ID',
+            'estado' => 'Estado',
+            'fecha_registro' => 'Fecha Registro',
         ];
     }
     
     public function getProyecto()
     {
         return $this->hasOne(Proyecto::className(), ['id' => 'proyecto_id']);
-    }
-    
-    public function getRegion()
-    {
-        return $this->hasOne(Ubigeo::className(), ['department_id' => 'region_id']);
-    }
-    
-    public function getUsuario()
-    {
-        return $this->hasOne(Usuario::className(), ['id' => 'user_id']);
     }
 }

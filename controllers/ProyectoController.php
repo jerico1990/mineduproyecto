@@ -20,7 +20,7 @@ use app\models\Integrante;
 use app\models\Video;
 use app\models\Evaluacion;
 use app\models\VotacionInterna;
-
+use app\models\Ubigeo;
 
 
 /**
@@ -464,7 +464,7 @@ class ProyectoController extends Controller
                                     [':user_id'=>\Yii::$app->user->id])
                             ->count();
                             
-        if($countvotacioninterna<4)
+        if($countvotacioninterna<3)
         {
             if(!$votacioninterna)
             {
@@ -505,5 +505,40 @@ class ProyectoController extends Controller
         \Yii::$app->db->createCommand($updatevotacioninterna)->execute();
         
         echo 1;
+    }
+    
+    public function actionValoraporcentualadministrador($proyecto_id,$valor,$resultatotal)
+    {
+        $updatevalorporcentual =    'update proyecto set valor_porcentual_administrador='.$valor.',resultado='.$resultatotal.'
+                                        where id='.$proyecto_id.'';
+        
+        \Yii::$app->db->createCommand($updatevalorporcentual)->execute();
+        
+        echo 1;
+    }
+    
+    public function actionCerrarvotacioninterna()
+    {
+        //$resultados=Resultados::find()->all();
+        $connection = \Yii::$app->db;
+        $ubigeos=Ubigeo::find()->select('department_id,department')->groupBy('department_id')->orderBy('department desc')->all();
+        
+            foreach($ubigeos as $ubigeo)
+            {
+                $command=$connection->createCommand("
+                    insert into votacion_publica (proyecto_id,region_id,estado)
+                    select votacion_interna.proyecto_id,votacion_interna.region_id,1 from votacion_interna
+                    inner join proyecto on proyecto.id=votacion_interna.proyecto_id
+                    where votacion_interna.region_id='$ubigeo->department_id' and votacion_interna.estado=2
+                    group by votacion_interna.proyecto_id,votacion_interna.region_id,1
+                    order by proyecto.resultado desc
+                    limit 3;
+                ");
+                
+                $command->execute();
+                
+            }
+            echo 1;
+        
     }
 }

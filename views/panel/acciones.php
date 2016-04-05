@@ -18,9 +18,13 @@ use yii\web\JsExpression;
             <div class="clearfix"></div>
             <button class="btn btn-success" id="cerrarvoto" <?= $resultados?'disabled':'' ?>>cerrar votación</button>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrar1entrega" <?= ($etapa->etapa==1)?'disabled':'' ?> >cerrar 1era entrega</button>
+            <button class="btn  btn-success" id="cerrar1entrega" <?= ($etapa->etapa!=1)?'disabled':'' ?> >cerrar 1era entrega</button>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrar2entrega" <?= ($etapa->etapa==2)?'disabled':'' ?> >cerrar 2da entrega</button>
+            <button class="btn  btn-success" id="cerrar2entrega" <?= ($etapa->etapa!=2)?'disabled':'' ?> >cerrar 2da entrega</button>
+            <div class="clearfix"></div><p></p>
+            <?= Html::a('Votación interna',['votacioninterna'],['class'=>'btn btn-success']); ?>
+            <div class="clearfix"></div><p></p>
+            <button class="btn  btn-success" id="cerrarvotacioninterna" <?= ($votacionpublica)?'disabled':'' ?> >cerrar votación interna</button>
         </div>
     </div>
 </div>
@@ -29,10 +33,7 @@ use yii\web\JsExpression;
 <?php
     $cerrarprimeraentrega= Yii::$app->getUrlManager()->createUrl('proyecto/cerrarprimeraentrega');
     $cerrarsegundaentrega= Yii::$app->getUrlManager()->createUrl('proyecto/cerrarsegundaentrega');
-    $this->registerJs(
-    "$('document').ready(function(){
-        
-    });");
+    $cerrarvotacioninterna= Yii::$app->getUrlManager()->createUrl('proyecto/cerrarvotacioninterna');
 ?>
 
 <script>
@@ -173,4 +174,36 @@ use yii\web\JsExpression;
         
         
     });
+    
+    $('#cerrarvotacioninterna').click(function(events){
+        var faltavalorporcentual=<?= $faltavalorporcentual ?>;
+        if (faltavalorporcentual>0) {
+            $.notify({
+                message: 'Falta ingresa valor en algunos proyectos' 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            return false;
+        }
+        
+        $.ajax({
+            url: '<?= $cerrarvotacioninterna ?>',
+            type: 'POST',
+            async: true,
+            success: function(data){
+                setTimeout(function(){
+                                window.location.reload(1);
+                            }, 2000);
+            }
+        });
+        
+        
+        return true;
+    });
+    
 </script>

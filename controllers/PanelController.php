@@ -18,6 +18,10 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\Resultados;
 use app\models\Etapa;
+use app\models\VotacionInternaSearch;
+use app\models\VotacionInterna;
+use app\models\VotacionPublica;
+
 
 /**
  * ParticipanteController implements the CRUD actions for Participante model.
@@ -90,8 +94,15 @@ class PanelController extends Controller
     {
         $this->layout='registrar';
         $resultados=Resultados::find()->all();
-        $etapa=Etapa::find()->where('etapa=1 and estado=0')->one();
-        return $this->render('acciones',['resultados'=>$resultados,'etapa'=>$etapa]);
+        $votacionpublica=VotacionPublica::find()->all();
+        $etapa=Etapa::find()->where('estado=1')->one();
+        $faltavalorporcentual=VotacionInterna::find()
+                        ->innerJoin('proyecto','proyecto.id=votacion_interna.proyecto_id')
+                        ->where('votacion_interna.estado=2 and proyecto.valor_porcentual_administrador is null ')->count();
+        
+        return $this->render('acciones',['resultados'=>$resultados,'etapa'=>$etapa,
+                                         'faltavalorporcentual'=>$faltavalorporcentual,
+                                         'votacionpublica'=>$votacionpublica]);
     }
     
     public function actionCerrar($bandera)
@@ -121,6 +132,20 @@ class PanelController extends Controller
         {
             echo 2;
         }
+    }
+    
+    public function actionVotacioninterna()
+    {
+        $this->layout='registrar';
+        
+        $searchModel = new VotacionInternaSearch();
+        $dataProvider = $searchModel->votacion(Yii::$app->request->queryParams);
+        $countInterna=VotacionInterna::find()->select(['count(proyecto_id) as maximo'])->groupBy('proyecto_id')->one();
+        
+        return $this->render('votacioninterna',[
+                                        'searchModel' => $searchModel,
+                                        'dataProvider' => $dataProvider,
+                                        'countInterna'=>$countInterna]);
     }
     
     
