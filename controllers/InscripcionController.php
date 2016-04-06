@@ -65,7 +65,7 @@ class InscripcionController extends Controller
         
         $estudiantes=Estudiante::find()
                     ->where('estudiante.institucion_id=:institucion_id and estudiante.id
-                            not in  (select estudiante_id from integrante where estado=2) and estudiante.id!=:id
+                            not in (select estudiante_id from integrante where estado=1) and estudiante.id!=:id
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
                     ->all();
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$institucion->estudiante_id])->one();
@@ -173,7 +173,7 @@ class InscripcionController extends Controller
                     ->where('estudiante.institucion_id=:institucion_id and estudiante.id
                             not in (select estudiante_invitado_id from invitacion where estudiante_id='.$institucion->estudiante_id.' and estado=1)
                             and estudiante.id
-                            not in (select estudiante_id from integrante where estado=2) and estudiante.id!=:id
+                            not in (select estudiante_id from integrante where estado=1) and estudiante.id!=:id
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
                     ->all();
         

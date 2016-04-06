@@ -192,10 +192,10 @@ class RegistrarController extends Controller
             }
             
             $encuesta->save();
-            Yii::$app->session->setFlash('registrar');
+            //Yii::$app->session->setFlash('registrar');
             
-            return $this->refresh();
-            //return $this->redirect(['index', 'id' => $model->id]);
+            //return $this->refresh();
+            return $this->redirect(['site/login']);
         }
         
         

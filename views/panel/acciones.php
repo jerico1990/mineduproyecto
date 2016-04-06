@@ -79,10 +79,11 @@ if($votacionpublica || $etapa->etapa!=3)
                                 align: 'right'
                         },
                     });
-                    setTimeout(function(){
+                    
+                }
+                setTimeout(function(){
                                 window.location.reload(1);
                             }, 2000);
-                }
             }
         });
     });
