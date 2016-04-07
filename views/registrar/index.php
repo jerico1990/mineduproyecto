@@ -16,16 +16,9 @@ use yii\widgets\Pjax;
 <script src="../bootstrap-strength-meter-master/password-score/password-score.js"></script>
 <script src="../bootstrap-strength-meter-master/password-score/password-score-options.js"></script>
 <?php $form = ActiveForm::begin(['options' => ['class' => 'formularios', ]]); ?>
-<h2>Inscripción</h2>
+<h1>Registro de estudiantes</h1>
 <hr class="colorgraph">
 <div class="row">
-    <?php if (Yii::$app->session->hasFlash('registrar')): ?>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        Gracias por Registrarte
-    </div>
-    <?php else: ?>
-    
-    
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-nombres_apellidos required">
             <label class="control-label" for="registrar-nombres_apellidos">Nombres y apellidos: *</label>
@@ -76,7 +69,6 @@ use yii\widgets\Pjax;
             <input type="password" id="registrar-password" class="form-control" name="Registrar[password]" placeholder="Contraseña">
         </div>      
     </div>
-    
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-repassword required">
             <label class="control-label" for="registrar-repassword">Repetir Contraseña: *</label>
@@ -86,6 +78,10 @@ use yii\widgets\Pjax;
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-9" id="example-progress-bar-container"></div>
     <div class="clearfix"></div>
+</div>
+<h1>Datos de la Institución Educativa</h1>
+<hr class="colorgraph">
+<div class="row">
     <div class="col-xs-12 col-sm-4 col-md-3">
         <div class="form-group field-registrar-departamento required">
             <label class="control-label" for="registrar-departamento">Departamento: *</label>
@@ -138,6 +134,10 @@ use yii\widgets\Pjax;
         </div>
     </div>
     <div class="clearfix"></div>
+</div>
+<h1>Encuesta</h1>
+<hr class="colorgraph">
+<div class="row">
     <div class="col-xs-12 col-sm-8 col-md-8">
         <div class="form-group field-registrar-p1 required">
             <label class="control-label" for="registrar-p1">¿De qué manera planeas acceder a la plataforma?</label>
@@ -164,6 +164,7 @@ use yii\widgets\Pjax;
                 </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-4 col-md-5">
         <div class="form-group field-registrar-p3 required">
             <label class="control-label" for="registrar-p3">¿De qué manera contribuyó el Proyecto participativo?</label>
@@ -218,12 +219,11 @@ use yii\widgets\Pjax;
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-md-6">
-        <input type="submit" id="registrar" value="Inscribirse" class="btn btn-primary" >
+        <input type="submit" id="registrar" value="Registrar" class="btn btn-primary" >
         
     </div>
     
     <div class="clearfix"></div>
-    <?php endif; ?>
 </div>
 <br>
 <div class="clearfix"></div>

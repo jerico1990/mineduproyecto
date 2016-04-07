@@ -92,6 +92,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
 </head>
 <body oncontextmenu="return false">
 <?php $this->beginBody() ?>
+<br>
 <div class="container">
 <div class="row">
   <div class="col-sm-3" >
@@ -108,13 +109,19 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
+                <li>
+                    <?= Html::img('../images/logo_ministerio_educacion.png',['class'=>'img-responsive logo', 'alt'=>'Responsive image']) ?>
+                </li>
                 <li align="center">
-                
-                <?= $usuario->estudiante->nombres_apellidos ?>
-                <?= Html::a('Cerrar sesión',['login/logout'],[]);?></li>
+                <h4><?= $usuario->estudiante->nombres_apellidos ?></h4>
+                </li>
+                <li align="right">
+                <?= Html::a('Cerrar sesión',['login/logout'],[]);?>
+                </li>
                 <hr>
-                <li><a href="../panel/index"> Principal</a></li>
-            <?php if (!empty($forums)): ?>
+                <li><a href="../panel/ideas-accion"> Ideas en acción</a></li>
+                <li><a href="../panel/index"> Mi equipo</a></li>
+            <?php if (!empty($forums) && $integrante && $equipo): ?>
                 <?php foreach($forums as $model): ?>
                     <?php if($model->id==1 || $model->id==2){?>
                     <li><a href="#" onclick="window.location.href= '<?= \yii\helpers\Url::toRoute(['/pre-forum/view', 'id' => $model->forum_url]) ?>';return false"> <?= Html::encode($model->forum_name); ?></a></li>

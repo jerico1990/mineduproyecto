@@ -32,9 +32,9 @@ $btninscribir=$integrante
     <h1>Mis invitaciones</h1>
     <table class="table">
         <thead>
-            <th>Nombre del equipo</th>
-            <th>Lider del equipo</th>
-            <th>Nombre de escuela</th>
+            <th>Equipo</th>
+            <th>Coordinador</th>
+            <th>Institución Educativa</th>
             <th></th>
             <th></th>
         </thead>
@@ -132,131 +132,10 @@ $btninscribir=$integrante
     </tbody>
 </table>
 
-    <?php if($integrante->rol==1) {?>
-    
-    <?php } elseif($integrante->rol==2) { ?>
-    
-    <?php } ?>
 <?php } ?>
 
+<p>Si aun no tienes equipo, puedes crear tu propio equipo</p>
 
-
-<?php /*if($integrante && !$lider){ ?>
-    <h1>Equipo</h1>
-    <table class="table ">
-        <thead>
-            <th>N°</th>
-            <th>apellidos y nombres</th>
-            <!--<th>Retirarme</th>-->
-        </thead>
-        <tbody>
-    <?php
-        $i=1;
-        if($integrante)
-        {
-            foreach($integrantes as $integ)
-            {
-                echo    "<tr>
-                            <td>$i</td>
-                            <td>".$integ->nombres_apellidos."</td>";
-                /*if($integ->estudiante_id==$integrante->estudiante_id)
-                {
-                    echo    "<td><button class='btn' onclick='dejarequipo($integ->estudiante_id)'>retirarme</button></td>";
-                }
-                else
-                {
-                    echo    "<td></td>";
-                }
-                echo    "</tr>";
-                $i++;
-            }
-        }
-    ?>
-        </tbody>
-    </table>
-    
-    <button class='btn' onclick='dejarequipo(<?= $integrante->estudiante_id ?>)'>Retirarme del equipo</button>
-<?php }*/ ?>
-<?php /*
-    <h1>Invitaciones</h1>
-    <table class="table">
-        <thead>
-            <th>Nombre del invitado</th>
-            <th>Eliminar invitacion</th>
-        </thead>
-        <tbody>
-    <?php
-        $invitados=Invitacion::find()
-                            ->select('invitacion.id,estudiante.nombres_apellidos')
-                            ->innerJoin('estudiante','invitacion.estudiante_invitado_id=estudiante.id')
-                            ->where('invitacion.estudiante_id=:lider and invitacion.estado=1',
-                                    [':lider'=>$lider->estudiante_id])
-                            ->all();
-                            
-        foreach($invitados as $invitado)
-        {
-            echo "<tr>
-                    <td>$invitado->nombres_apellidos</td>
-                    <td><button class='btn' onclick='eliminarinvitado($invitado->id)'>eliminar</button></td>
-                    </tr>";
-        }
-    ?>
-        </tbody>
-    </table>
-<?php }  */ ?>
-
-
-
-
-
-
-
-<?php /*
-<h1>Equipo</h1>
-<table class="table ">
-    <thead>
-        <th>N°</th>
-        <th>apellidos y nombres</th>
-    </thead>
-    <tbody>
-<?php
-    $i=1;
-    if($integrante)
-    {
-        foreach($integrantes as $integ)
-        {
-            echo    "<tr>
-                        <td>$i</td>
-                        <td>".$integ->estudiante->nombres_apellidos."</td>";
-            
-            echo    "</tr>";
-            $i++;
-        }
-    }
-?>
-    </tbody>
-</table>
-
-
-
-<?php }  */ ?>
-
-<?php //= Html::a('Dejar equipo',['#'],['class'=>'btn btn-primary','onclick'=>'dejarequipo('.$estudiante->id.')']);?>
-
-
-
-
-
- 
-<p></p>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Inscribir a mi equipo</h3>
-    </div>
-    <div class="panel-body">
-        asdasd asd adas dasdasd adad asdas dasd ad asds
-    </div>
-</div>
 
 
 <?php

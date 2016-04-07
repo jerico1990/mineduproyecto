@@ -14,10 +14,10 @@ if($equipo->id)
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
-<h2>Inscripción de Nuevos Equipos</h2>
+<h1>Creando mi equipo</h1>
 <hr class="colorgraph">
     <div class="row">
-        <div class="col-xs-12 col-sm-7 col-md-5">
+        <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group field-equipo-descripcion_equipo required">
                 <label class="control-label" for="equipo-descripcion_equipo">Nombre de equipo: *</label>
                 <input value="<?= $equipo->descripcion_equipo?>" type="text" id="equipo-descripcion_equipo" class="form-control texto" name="Equipo[descripcion_equipo]" placeholder="Nombre de equipo">
@@ -25,7 +25,7 @@ if($equipo->id)
         </div>
    
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
+    <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group field-equipo-descripcion required">
             <label class="control-label" for="equipo-descripcion">Danos una breve descripción de tu equipo: *</label>
             <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?></textarea>
@@ -34,7 +34,7 @@ if($equipo->id)
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-equipo-asunto_id required">
-            <label class="control-label" for="equipo-asunto_id">Asunto: *</label>
+            <label class="control-label" for="equipo-asunto_id">Asunto público: *</label>
             <select id="equipo-asunto_id" class="form-control" name="Equipo[asunto_id]">
                 <option value="">Seleccionar asunto</option>
                 <?php

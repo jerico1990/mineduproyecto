@@ -60,6 +60,16 @@ class PanelController extends Controller
      * Lists all Participante models.
      * @return mixed
      */
+    public function actionIdeasAccion()
+    {
+        $this->layout='equipo';
+        if(\Yii::$app->user->can('administrador'))
+        {
+            return $this->redirect(['acciones']);
+        }
+        
+        return $this->render('ideas-accion');
+    }
     public function actionIndex()
     {
         $this->layout='equipo';
@@ -67,6 +77,7 @@ class PanelController extends Controller
         {
             return $this->redirect(['acciones']);
         }
+        
         
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $estudiante=Estudiante::find()->where('id=:id',[':id'=>$usuario->estudiante_id])->one();
