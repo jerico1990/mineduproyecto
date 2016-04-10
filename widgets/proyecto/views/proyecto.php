@@ -12,159 +12,99 @@ use yii\web\JsExpression;
 /* @var $title string */
 
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="../js/bootbox.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
 <?php $form = ActiveForm::begin(); ?>
-<h2>Registrar Proyecto</h2>
+<h2>Registrando mi proyecto</h2>
 <hr class="colorgraph">
 <div class="row">
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-titulo required">
-            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: *</label>
-            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="10" title="Máximo 10 palabras">
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-resumen required">
-            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label>
-            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 100 palabras"></textarea>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-beneficiario required">
-            <label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label>
-            <textarea id="proyecto-beneficiario" class="form-control" name="Proyecto[beneficiario]"  placeholder="Beneficiario"></textarea>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-objetivo_general required">
-            <span class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#objetivo_general"></span> <div style="display: inline" id="txt_objetivo_general"></div>
-        </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Datos generales</a></li>
+            <!--<li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="true">Tab 2</a></li>-->
+            <!--<li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Tab 3</a></li>-->
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group field-proyecto-titulo required">
+                            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: *</label>
+                            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="10" title="Máximo 10 palabras">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group field-proyecto-resumen required">
+                            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label>
+                            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 100 palabras"></textarea>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group field-proyecto-beneficiario required">
+                            <label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label>
+                            <textarea id="proyecto-beneficiario" class="form-control" name="Proyecto[beneficiario]"  placeholder="Beneficiario"></textarea>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-7 col-md-5">
+                        <h3>Objetivos:</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-7 col-md-5">
+                        <div class="form-group field-proyecto-objetivo_general required">
+                            <label>General:</label> <span class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#objetivo_general"></span> <div style="display: inline" id="txt_objetivo_general"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-7 col-md-5">
+                        <h3>Especificos:</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-7 col-md-5">
+                        <div class="form-group field-proyecto-objetivo_especifico_1 required">
+                            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_1" data-toggle="modal" data-target="#objetivo_especifico_1"></span> <div style="display: inline" id="txt_objetivo_especifico_1"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                     <div class="col-xs-12 col-sm-7 col-md-5">
+                        <div class="form-group field-proyecto-objetivo_especifico_2 required">
+                            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_2" data-toggle="modal" data-target="#objetivo_especifico_2"></span> <div style="display: inline" id="txt_objetivo_especifico_2"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                     <div class="col-xs-12 col-sm-7 col-md-5">
+                        <div class="form-group field-proyecto-objetivo_especifico_3 required">
+                            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_3" data-toggle="modal" data-target="#objetivo_especifico_3"></span> <div style="display: inline" id="txt_objetivo_especifico_3"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+            </div><!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+                    The European languages are members of the same family. Their separate existence is a myth.
+                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                    new common language would be desirable: one could refuse to pay expensive translators. To
+                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                    words. If several languages coalesce, the grammar of the resulting language is more simple
+                    and regular than that of the individual languages.
+            </div><!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_3">
+                    <b>How to use:</b>
+                    <p>Exactly like the original bootstrap tabs except you should use
+                      the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
+                    
+            </div><!-- /.tab-pane -->
+        </div><!-- /.tab-content -->
     </div>
     
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-objetivo_especifico_1 required">
-            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_1" data-toggle="modal" data-target="#objetivo_especifico_1"></span> <div style="display: inline" id="txt_objetivo_especifico_1"></div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-objetivo_especifico_2 required">
-            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_2" data-toggle="modal" data-target="#objetivo_especifico_2"></span> <div style="display: inline" id="txt_objetivo_especifico_2"></div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-proyecto-objetivo_especifico_3 required">
-            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_3" data-toggle="modal" data-target="#objetivo_especifico_3"></span> <div style="display: inline" id="txt_objetivo_especifico_3"></div>
-        </div>
-    </div>
+    
+    
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-proyecto-reflexion required">
-            <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
-            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión"></textarea>
+           <!--<label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
+            <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión"></textarea>-->
         </div>
     </div>
-    
-    <div class="clearfix"></div>
-    <!--
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <table class="table table-bordered table-hover" id="tab_logic">
-            <thead>
-                <tr>
-                    <th class="text-center">
-                        #
-                    </th>
-                    <th class="text-center">
-                        Objetivo especifico
-                    </th>
-                    <th>
-                        
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id='addr0'>
-                    <td>
-                    1
-                    </td>
-                    <td>
-                        <div class="form-group field-proyecto-objetivo_especifico_0 required">
-                            <input type="text" id="proyecto-objetivo_especifico_0" class="form-control" name="Proyecto[objetivo_especifico][]" placeholder="Objetivo especifico" maxlength="30" title="Máximo 30 palabras"/>
-                        </div>
-                    </td>
-                    <td>
-			<span class="remCF glyphicon glyphicon-minus-sign"></span>
-		    </td>
-                </tr>
-                <tr id='addr1'></tr>
-            </tbody>
-        </table>
-        <a id="add_row" class="btn btn-default pull-left">Add Row</a>
-        <br>
-    </div>
-    -->
-    <div class="clearfix"></div>
-    <!--
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th>N°</th>
-                        <th>Cantidad</th>
-                        <th>Unidad</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="form-group field-proyecto-cantidad_1 required">
-                                <input type="text" id="proyecto-cantidad_1" class="form-control numerico" name="Proyecto[cantidad_1]" placeholder="cantidad 1" maxlength="4" title="Máximo 4">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group field-proyecto-unidad_1 required">
-                                <input type="text" id="proyecto-unidad_1" class="form-control" name="Proyecto[unidad_1]" placeholder="unidad 1" maxlength="15" title="Máximo 15 palabras">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <div class="form-group field-proyecto-cantidad_2 required">
-                                <input type="text" id="proyecto-cantidad_2" class="form-control numerico" name="Proyecto[cantidad_2]" placeholder="cantidad 2" maxlength="4" title="Máximo 4">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group field-proyecto-unidad_2 required">
-                                <input type="text" id="proyecto-unidad_2" class="form-control" name="Proyecto[unidad_2]" placeholder="unidad 1" maxlength="15" title="Máximo 15 palabras">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <div class="form-group field-proyecto-cantidad_3 required">
-                                <input type="text" id="proyecto-cantidad_3" class="form-control numerico" name="Proyecto[cantidad_3]" placeholder="cantidad 3" maxlength="4" title="Máximo 4">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group field-proyecto-unidad_3 required">
-                                <input type="text" id="proyecto-unidad_3" class="form-control " name="Proyecto[unidad_3]" placeholder="unidad 3" maxlength="15" title="Máximo 15 palabras">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
--->
     <div class="clearfix"></div>
        
     <div class="modal-footer">
@@ -175,22 +115,22 @@ use yii\web\JsExpression;
 
 
 <!-- Objetivo General -->
-<div class="modal fade" id="objetivo_general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+<div class="modal fade" id="objetivo_general"   role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" style="z-index: 2000 !important">
+        <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Objetivo General</h4>
+                <h4 class="modal-title" id="myModalLabel">Objetivo general</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group field-proyecto-objetivo_general required">
-                    <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Objetivo General: *</label>
+                    <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Descripción: *</label>
                     <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="30" placeholder="Objetivo General" title="Máximo 30 palabras"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" id="btn_objetivo_general" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <!--<button type="button" id="btn_objetivo_general" class="btn btn-primary" data-dismiss="modal">Guardar</button>-->
             </div>
         </div>
     </div>
@@ -199,16 +139,16 @@ use yii\web\JsExpression;
 
 <!-- Objetivo Especifico 1 -->
 <div class="modal fade" id="objetivo_especifico_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="z-index: 2000 !important">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Objetivo especifico 1</h4>
+                <h4 class="modal-title" id="myModalLabel">Objetivo especifico #1</h4>
             </div>
             <div class="modal-body">
                 <div class="col-xs-12 col-sm-7 col-md-12">
                     <div class="form-group field-proyecto-objetivo_especifico_1 required">
-                        <label class="control-label" for="proyecto-objetivo_especifico_1" title="Máximo 30 palabras">Objetivo objetivo especifico_1: *</label>
+                        <label class="control-label" for="proyecto-objetivo_especifico_1" title="Máximo 30 palabras">Descripción: *</label>
                         <textarea id="proyecto-objetivo_especifico_1" class="form-control" name="Proyecto[objetivo_especifico_1]"  maxlength="30" placeholder="Objetivo especifico 1" title="Máximo 30 palabras"></textarea>
                     </div>
                 </div>
@@ -261,16 +201,16 @@ use yii\web\JsExpression;
 
 <!-- Objetivo Especifico 2 -->
 <div class="modal fade" id="objetivo_especifico_2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="z-index: 2000 !important">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Objetivo especifico 2</h4>
+                <h4 class="modal-title" id="myModalLabel">Objetivo especifico #2</h4>
             </div>
             <div class="modal-body">
                 <div class="col-xs-12 col-sm-7 col-md-12">
                     <div class="form-group field-proyecto-objetivo_especifico_2 required">
-                        <label class="control-label" for="proyecto-objetivo_especifico_2" title="Máximo 30 palabras">Objetivo objetivo especifico_2: *</label>
+                        <label class="control-label" for="proyecto-objetivo_especifico_2" title="Máximo 30 palabras">Descripción: *</label>
                         <textarea id="proyecto-objetivo_especifico_2" class="form-control" name="Proyecto[objetivo_especifico_2]"  maxlength="30" placeholder="Objetivo especifico 2" title="Máximo 30 palabras"></textarea>
                     </div>
                 </div>
@@ -324,16 +264,16 @@ use yii\web\JsExpression;
 
 <!-- Objetivo Especifico 3 -->
 <div class="modal fade" id="objetivo_especifico_3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="z-index: 2000 !important">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Objetivo especifico 3</h4>
+                <h4 class="modal-title" id="myModalLabel">Objetivo especifico #3</h4>
             </div>
             <div class="modal-body">
                 <div class="col-xs-12 col-sm-7 col-md-12">
                     <div class="form-group field-proyecto-objetivo_especifico_3 required">
-                        <label class="control-label" for="proyecto-objetivo_especifico_3" title="Máximo 30 palabras">Objetivo objetivo especifico_3: *</label>
+                        <label class="control-label" for="proyecto-objetivo_especifico_3" title="Máximo 30 palabras">Descripción: *</label>
                         <textarea id="proyecto-objetivo_especifico_3" class="form-control" name="Proyecto[objetivo_especifico_3]"  maxlength="30" placeholder="Objetivo especifico 3" title="Máximo 30 palabras"></textarea>
                     </div>
                 </div>
@@ -581,6 +521,7 @@ use yii\web\JsExpression;
         }
         $('.field-proyecto-objetivo_general').css( 'color', 'black' );
         $("#txt_objetivo_general").html($('#proyecto-objetivo_general').val());
+        
         return true;
     });
     

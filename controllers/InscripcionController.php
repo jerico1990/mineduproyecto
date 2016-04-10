@@ -17,6 +17,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\filters\AccessControl;
 use kartik\widgets\Growl;
+use yii\web\UploadedFile;
 /**
  * ParticipanteController implements the CRUD actions for Participante model.
  */
@@ -54,7 +55,7 @@ class InscripcionController extends Controller
         $this->layout='equipo';
         
         $equipo=new Equipo;
-        
+        $equipo->foto='no_disponible.jpg';
         $institucion=Institucion::find()
                     ->select('institucion.id,estudiante.id as estudiante_id,ubigeo.department_id')
                     ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
@@ -77,12 +78,15 @@ class InscripcionController extends Controller
         $invitacionContador=0;
         
         if ($equipo->load(Yii::$app->request->post()) && $equipo->validate() ) {
+            $equipo->foto_img = UploadedFile::getInstance($equipo, 'foto_img');
+            
             $bandera=true;
             $nombres="";
             $equipo->fecha_registro=date("Y-m-d H:i:s");
             $equipo->estado=0;
             $equipo->save();
-            
+            $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension;
+            $equipo->update();
             $lider=new Integrante;
             $lider->equipo_id=$equipo->id;
             $lider->estudiante_id=$institucion->estudiante_id;
@@ -111,27 +115,13 @@ class InscripcionController extends Controller
                         $invitacion->estado=1;
                         $invitacion->fecha_invitacion=date("Y-m-d H:i:s");
                         $invitacion->save();
-                    }/*
-                    else
-                    {
-                        $bandera=false;
-                        $nombres=$nombres." ".$integrante->nombres_apellidos." ";
-                    }*/
+                    }
                 }
             }
-            //if($bandera)
-            //{
-                return $this->redirect(['panel/index']);
-            //}
-            /*else
-            {
-                $actualizar= Yii::$app->getUrlManager()->createUrl('inscripcion/actualizar?id='.$institucion->estudiante_id);
-                echo "<script>
-                            alert('".$nombres." ya  estan en un equipo');
-                            window.location.href = '$actualizar';
-                            
-                        </script>";          
-            }  */ 
+            $equipo->foto_img->saveAs('foto_equipo/' . $equipo->id . '.' . $equipo->foto_img->extension);
+            
+            return $this->redirect(['panel/index']);
+           
         }
         return $this->render('index',[
                                       'equipo'=>$equipo,
@@ -156,11 +146,11 @@ class InscripcionController extends Controller
         $this->layout='equipo';
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one();
         $equipo=Equipo::find()->where('id=:id',[':id'=>$integrante->equipo_id])->one();
-        /*$institucion=Institucion::find()
-                    ->select('institucion.id,estudiante.id as estudiante_id')
-                    ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
-                    ->where('estudiante.id='.$id.'')
-                    ->one();*/
+        if(!$equipo->foto)
+        {
+            $equipo->foto='no_disponible.jpg';
+        }
+        
         $institucion=Institucion::find()
                     ->select('institucion.id,estudiante.id as estudiante_id,ubigeo.department_id')
                     ->innerJoin('estudiante','estudiante.institucion_id=institucion.id')
@@ -185,6 +175,13 @@ class InscripcionController extends Controller
         
         $invitacionContador=$invitacionContador+$integranteContador;
         if ($equipo->load(Yii::$app->request->post()) && $equipo->validate()) {
+            if($equipo->foto_img)
+            {
+                $equipo->foto_img = UploadedFile::getInstance($equipo, 'foto_img');
+                $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension; 
+            }
+            
+            
             $equipo->update();
             if(isset($equipo->invitaciones))
             {
@@ -200,8 +197,13 @@ class InscripcionController extends Controller
                     $invitacion->save();
                 }
             }
+            if($equipo->foto_img)
+            {
+                $equipo->foto_img->saveAs('foto_equipo/' . $equipo->id . '.' . $equipo->foto_img->extension);
+            }
             
-            return $this->redirect(['panel/index']);
+            return $this->refresh();
+            //return $this->redirect(['panel/index']);
         }
         return $this->render('index',[
                                       'equipo'=>$equipo,

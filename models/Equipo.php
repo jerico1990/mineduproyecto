@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "equipo".
  *
@@ -26,6 +26,7 @@ class Equipo extends \yii\db\ActiveRecord
     public $id_participante;
     public $invitaciones;
     public $tipo;
+    public $foto_img;
     public static function tableName()
     {
         return 'equipo';
@@ -41,7 +42,8 @@ class Equipo extends \yii\db\ActiveRecord
             [['asunto_id', 'estado','id','tipo'], 'integer'],
             [['fecha_registro','invitaciones'], 'safe'],
             [['descripcion_equipo'], 'string', 'max' => 250],
-            [['descripcion'], 'string', 'max' => 500]
+            [['descripcion'], 'string', 'max' => 500],
+            [['foto_img'], 'file'],
         ];
     }
 

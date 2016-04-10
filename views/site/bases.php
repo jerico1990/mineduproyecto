@@ -10,6 +10,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\VotacionPublica;
 use app\models\Ubigeo;
+use yii\widgets\Pjax;
+use yii\web\JsExpression;
+
 Modal::begin([
     'header' => '<h2>Hello world</h2>',
    // 'toggleButton' => ['label' => 'click me'],
@@ -20,9 +23,6 @@ Modal::end();
 
 $votacionpublica=VotacionPublica::find()->all();
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="../js/bootbox.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
 <h1>
 ¿Bases?
 </h1>
@@ -42,22 +42,14 @@ colectivo, relacionado con aspectos  sociales, políticos, económicos, éticos,
             </select>
         </div>
     </div>
-    <div id="mostrarvotacionpublica" class="col-xs-12 col-sm-12 col-md-12">
-    </div>
-    
+    <div id="mostrarvotacionpublica" class="col-xs-12 col-sm-12 col-md-12"></div>
 </div>
-
-
-
-
-
-
 
 
 <!-- Modal Votar -->
 <?php $form = ActiveForm::begin(); ?>
 <div class="modal fade" id="myModalVotacionPublica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="z-index: 5000 !important">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -77,7 +69,6 @@ colectivo, relacionado con aspectos  sociales, políticos, económicos, éticos,
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="votar2">Votar</button>
             </div>
-            
         </div>
     </div>
 </div>

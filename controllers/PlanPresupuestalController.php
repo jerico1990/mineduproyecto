@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\PlanPresupuestal;
 use app\models\PlanPresupuestalSearch;
+use app\models\Actividad;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -118,4 +120,33 @@ class PlanPresupuestalController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionActividades($id)
+    {
+        $countActividades=Actividad::find()
+                        ->select('actividad.id,actividad.descripcion')
+                        ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                        ->where('objetivo_especifico.id=:id and actividad.estado=1',[':id'=>$id])
+                        ->groupBy('actividad.id,actividad.descripcion')
+                        ->count();
+                        
+        $actividades=Actividad::find()
+                        ->select('actividad.id,actividad.descripcion')
+                        ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                        ->where('objetivo_especifico.id=:id and actividad.estado=1',[':id'=>$id])
+                        ->groupBy('actividad.id,actividad.descripcion')
+                        ->orderBy('actividad.descripcion')
+                        ->all();
+        
+        if($countActividades>0){
+            echo "<option value>Seleccionar</option>";
+            foreach($actividades as $actividad){
+                echo "<option value='".$actividad->id."'>".$actividad->descripcion."</option>";
+            }
+        }
+        else{
+            echo "<option value>Seleccionar</option>";
+        }
+    }
+    
 }

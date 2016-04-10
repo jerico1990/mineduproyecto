@@ -9,6 +9,7 @@ use Madcoda\Youtube;
 use app\models\Video;
 class VideoWidget extends Widget
 {
+    public $integrante;
     public function init()
     {
         parent::init();

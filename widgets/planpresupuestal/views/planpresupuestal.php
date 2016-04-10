@@ -10,152 +10,283 @@ use yii\web\JsExpression;
 /* @var $this \yii\web\View */
 /* @var $user \common\models\LoginForm */
 /* @var $title string */
-$options='';
-foreach($actividades as $actividad){ 
-    $options=$options.'<option value="'.$actividad->id.'">'.$actividad->descripcion.'</option>';
+$opciones_objetivos='';
+foreach($objetivos as $objetivo){ 
+    $opciones_objetivos=$opciones_objetivos.'<option value='.$objetivo->id.'>'.$objetivo->descripcion.'</option>';
 }
 
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<?php $form = ActiveForm::begin(); ?>
-<h2>Registrar Plan presupuestal</h2>
-<hr class="colorgraph">
-<div class="row">
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
-        <table class="table table-bordered table-hover" id="tab_logic">
-            <thead>
-                <tr>
-                    <th class="text-center"  rowspan="2" style="vertical-align: middle">
-                        #
-                    </th>
-                    <th class="text-center"  rowspan="2" style="vertical-align: middle">
-                        Actividad
-                    </th>
-		    <th class="text-center" colspan="2">
-                        Recursos
-                    </th>
-		    <th class="text-center" colspan="2">
-                        Precio
-                    </th>
-		    <th>
-			
-		    </th>
-                </tr>
-		<tr>
-		    <th class="text-center">
-                        Humanos
-                    </th>
-		    <th class="text-center">
-                        Materiales
-                    </th>
-		    <th class="text-center">
-                        Unitario
-                    </th>
-		    <th class="text-center">
-                        Subtotal
-                    </th>
-		    <th>
-			
-		    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id='addr0'>
-                    <td>
-                    1
-                    </td>
-                    <td>
-                        <div class="form-group field-planpresupuestal-actividad_0 required">
-                            <select type="text" id="planpresupuestal-actividad_0" class="form-control" name="PlanPresupuestal[actividades][]" >
-				<option value>Seleccionar</option>
-				<?= $options ?>
-			    </select>
-                        </div>
-                    </td>
-		    <td>
-                        <div class="form-group field-planpresupuestal-cantidad_rrhh_0 required">
-                            <input type="text" id="planpresupuestal-cantidad_rrhh_0" class="form-control" name="PlanPresupuestal[cantidades_rrhhs][]" />
-                        </div>
-                    </td>
-		    <td>
-                        <div class="form-group field-planpresupuestal-cantidad_material_0 required">
-                            <input type="text" id="planpresupuestal-cantidad_material_0" class="form-control" name="PlanPresupuestal[cantidades_materiales][]" />
-                        </div>
-                    </td>
-		    <td>
-                        <div class="form-group field-planpresupuestal-precio_unitario_0 required">
-                            <input type="text" id="planpresupuestal-precio_unitario_0" class="form-control" name="PlanPresupuestal[precios_unitarios][]" />
-                        </div>
-                    </td>
-		    <td>
-                        <div class="form-group field-planpresupuestal-subtotal_0 required">
-                            <input type="text" id="planpresupuestal-subtotal_0" class="form-control" name="PlanPresupuestal[subtotales][]" />
-                        </div>
-                    </td>
-		    <td>
-			<span class="remCF glyphicon glyphicon-minus-sign"></span>
-		    </td>
-                </tr>
-                <tr id='addr1'></tr>
-            </tbody>
-        </table>
-        <a id="add_row" class="btn btn-default pull-left">Add Row</a>
-        <a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
-        <br>
+	<table class="table table-bordered table-hover" id="tab_plan_presupuestal">
+	    <thead>
+		<th>Objetivo especifico</th>
+		<th>Actividad</th>
+		<th>Recursos</th>
+		<th>¿Como conseguirlo?</th>
+		<th colspan="3" class="text-center">Presupuesto</th>
+		<?= ($disabled=='')?'<th></th>':'' ?>
+	    </thead>
+	    <tbody>
+		
+		<?php if($planespresupuestales){?>
+		    <?php $plan=0; ?>
+		    <?php foreach($planespresupuestales as $planpresupuestal){?>
+			<tr id='plan_presupuestal_<?= $plan ?>'>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_objetivo_<?= $plan ?> required">
+				    <select id="proyecto-plan_presupuestal_objetivo_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_objetivos][]" onchange="actividad($(this).val(),<?= $plan ?>)" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($objetivos as $objetivo){  ?>
+					    <option value='<?= $objetivo->id ?>' <?= ($objetivo->id==$planpresupuestal->objetivo_especifico_id)?'selected':'' ?>><?= $objetivo->descripcion ?></option>
+					<?php }  ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_actividad_<?= $plan ?> required">
+				    <select id="proyecto-plan_presupuestal_actividad_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_actividades][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($actividades as $actividad){  ?>
+					    <option value='<?= $actividad->id ?>' <?= ($actividad->id==$planpresupuestal->actividad_id)?'selected':'' ?> ><?= $actividad->descripcion ?> </option>
+					<?php } ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_recurso_<?= $plan ?> required">
+				    <select id="proyecto-plan_presupuestal_recurso_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_recursos][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<option value=1 <?= ($planpresupuestal->recurso == 1) ? 'selected' : ''; ?> >Material</option>
+					<option value=2 <?= ($planpresupuestal->recurso == 2) ? 'selected' : ''; ?>>Humano</option>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_como_conseguirlo_<?= $plan ?> required">
+				    <select id="proyecto-plan_presupuestal_como_conseguirlo_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_comos_conseguirlos][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<option value=1 <?= ($planpresupuestal->como_conseguirlo == 1) ? 'selected' : ''; ?>>Pedir</option>
+					<option value=2 <?= ($planpresupuestal->como_conseguirlo == 2) ? 'selected' : ''; ?>>Crear</option>
+					<option value=3 <?= ($planpresupuestal->como_conseguirlo == 3) ? 'selected' : ''; ?>>Comprar</option>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_precio_unitario_<?= $plan ?> required">
+				    <input id="proyecto-plan_presupuestal_precio_unitario_<?= $plan ?>" onfocusout="Subtotal1(<?= $plan ?>,1)" class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" placeholder="Precio unitario" value="<?= $planpresupuestal->precio_unitario ?>" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_cantidad_<?= $plan ?> required">
+				    <input id="proyecto-plan_presupuestal_cantidad_<?= $plan ?>" onfocusout="Subtotal2(<?= $plan ?>,2)" class="form-control numerico" name="Proyecto[planes_presupuestales_cantidades][]" placeholder="Cantidad" value="<?= $planpresupuestal->cantidad ?>" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_subtotal_<?= $plan ?> required">
+				    <input id="proyecto-plan_presupuestal_subtotal_<?= $plan ?>" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal" value="<?= $planpresupuestal->subtotal ?>" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <?php if($disabled==''){?>
+			    <td>
+				<span class="remCF glyphicon glyphicon-minus-sign">
+				    <input class="id" type="hidden" name="Proyecto[planes_presupuestal_ids][]" value="<?= $planpresupuestal->id ?>" <?= $disabled ?>/>
+				</span>
+			    </td>
+			    <?php } ?>
+			</tr>
+			<?php $plan++; ?>
+		    <?php } ?>
+		<?php } else {?>
+			<tr id='plan_presupuestal_0'>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_objetivo_0 required">
+				    <select id="proyecto-plan_presupuestal_objetivo_0" class="form-control" name="Proyecto[planes_presupuestales_objetivos][]" onchange="actividad($(this).val(),0)" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?= $opciones_objetivos ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_actividad_0 required">
+				    <select id="proyecto-plan_presupuestal_actividad_0" class="form-control" name="Proyecto[planes_presupuestales_actividades][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_recurso_0 required">
+				    <select id="proyecto-plan_presupuestal_recurso_0" class="form-control" name="Proyecto[planes_presupuestales_recursos][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<option value=1>Material</option>
+					<option value=2>Humano</option>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_como_conseguirlo_0 required">
+				    <select id="proyecto-plan_presupuestal_como_conseguirlo_0" class="form-control" name="Proyecto[planes_presupuestales_comos_conseguirlos][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<option value=1>Pedir</option>
+					<option value=2>Crear</option>
+					<option value=3>Comprar</option>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_precio_unitario_0 required">
+				    <input id="proyecto-plan_presupuestal_precio_unitario_0" onfocusout="Subtotal1(0,1)" class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" placeholder="Precio unitario" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_cantidad_0 required">
+				    <input id="proyecto-plan_presupuestal_cantidad_0" onfocusout="Subtotal2(0,2)" class="form-control numerico" name="Proyecto[planes_presupuestales_cantidades][]" placeholder="Cantidad" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-plan_presupuestal_subtotal_0 required">
+				    <input id="proyecto-plan_presupuestal_subtotal_0" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <?php if($disabled==''){?>
+			    <td>
+				<!--<span class="remCF glyphicon glyphicon-minus-sign"></span>-->
+			    </td>
+			    <?php } ?>
+			</tr>
+		<?php $plan=1; ?>
+		<?php } ?>
+		<tr id='plan_presupuestal_<?= $plan ?>'></tr>
+	    </tbody>
+	</table>
+	<?php if($disabled==''){?>
+	<div  class="btn btn-default pull-right" onclick="InsertarPlanPresupuestal()">Agregar</div>
+	<?php } ?>
+	<!--<div class="btn btn-default pull-left" onclick="InsertarPlanPresupuestal()">Agregar</div>-->
     </div>
     <div class="clearfix"></div>
-       
-    <div class="modal-footer">
-       <button type="submit" id="btnproyecto" class="btn btn-primary">Guardar</button>
-    </div>
-</div>
-<?php ActiveForm::end(); ?>
+
 <?php
-    $this->registerJs(
-    "$('document').ready(function(){})");
+    $eliminarplanpresupuestal= Yii::$app->getUrlManager()->createUrl('actividad/eliminarplanpresupuestal');
 ?>
 <script>
-    var i=1;
-    var options='<?= $options ?>';
+    var plan=<?= $plan ?>;
+    var opciones_objetivos="<?= $opciones_objetivos ?>";
+    function actividad(value,contador) {
+	$.get( '<?= Yii::$app->urlManager->createUrl('plan-presupuestal/actividades?id=') ?>'+value, function( data ) {
+	    $( '#proyecto-plan_presupuestal_actividad_'+contador ).html( data );
+	});
+    }
     
-    $("#tab_logic").on('click','.remCF',function(){
-        $(this).parent().parent().remove();
+    $("#tab_plan_presupuestal").on('click',' .remCF',function(){
+	
+	
+        var r = confirm("Estas seguro?");
+        if (r == true) {
+            id=$(this).children().val();
+	    if (id) {
+		$.ajax({
+		    url: '<?= $eliminarplanpresupuestal ?>',
+		    type: 'GET',
+		    async: true,
+		    data: {id:id},
+		    success: function(data){
+			
+		    }
+		});
+		$(this).parent().parent().remove();	
+	    }
+	    else
+	    {
+		$(this).parent().parent().remove();
+	    }
+            
+        } 
     });
     
-    $("#add_row").click(function(){
+    
+    function InsertarPlanPresupuestal() {
 	var error='';
-	if ($('#planpresupuestal-actividad_'+(i-1)).val()=='') {
-	    var error=error+'seleccione la '+i+' actividad <br>';
-	    $('.field-planpresupuestal-actividad_'+(i-1)).addClass('has-error');
-	}
-	
-        if($('#planpresupuestal-cantidad_rrhh_'+(i-1)).val()=='')
-        {
-            var error=error+'ingrese la cantidad de rrhh '+i+' <br>';
-	    $('.field-planpresupuestal-cantidad_rrhh_'+(i-1)).addClass('has-error');
+	var planespresupuestales=$('input[name=\'Proyecto[planes_presupuestales_precios_unitarios][]\']').length;
+        for (var i=0; i<planespresupuestales; i++) {
+	    if($('#proyecto-plan_presupuestal_objetivo_'+i).val()=='')
+            {
+                error=error+'ingrese el #'+i+' objetivo <br>';
+                $('.field-proyecto-plan_presupuestal_objetivo_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_objetivo_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_objetivo_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-plan_presupuestal_actividad_'+i).val()=='')
+            {
+                error=error+'ingrese el #'+i+' actividad <br>';
+                $('.field-proyecto-plan_presupuestal_actividad_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_actividad_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_actividad_'+i).removeClass('has-error');
+            }
+	    
+            if($('#proyecto-plan_presupuestal_recurso_'+i).val()=='')
+            {
+                error=error+'ingrese el '+i+' recurso <br>';
+                $('.field-proyecto-plan_presupuestal_recurso_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_recurso_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_recurso_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-plan_presupuestal_como_conseguirlo_'+i).val()=='')
+            {
+                error=error+'ingrese el '+i+' como conseguirlo <br>';
+                $('.field-proyecto-plan_presupuestal_como_conseguirlo_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_como_conseguirlo_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_como_conseguirlo_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-plan_presupuestal_precio_unitario_'+i).val()=='')
+            {
+                error=error+'ingrese el '+i+' precio unitario <br>';
+                $('.field-proyecto-plan_presupuestal_precio_unitario_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_precio_unitario_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_precio_unitario_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-plan_presupuestal_cantidad_'+i).val()=='')
+            {
+                error=error+'ingrese la '+i+' cantidad <br>';
+                $('.field-proyecto-plan_presupuestal_cantidad_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_cantidad_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_cantidad_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-plan_presupuestal_subtotal_'+i).val()=='')
+            {
+                error=error+'ingrese el '+i+' subtotal <br>';
+                $('.field-proyecto-plan_presupuestal_subtotal_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-plan_presupuestal_subtotal_'+i).addClass('has-success');
+                $('.field-proyecto-plan_presupuestal_subtotal_'+i).removeClass('has-error');
+            }
         }
-	
-	if($('#planpresupuestal-cantidad_material_'+(i-1)).val()=='')
-        {
-            var error=error+'ingrese la cantidad de material '+i+' <br>';
-	    $('.field-planpresupuestal-cantidad_material_'+(i-1)).addClass('has-error');
-        }
-	
-	if($('#planpresupuestal-precio_unitario_'+(i-1)).val()=='')
-        {
-            var error=error+'ingrese el precio unitario '+i+' <br>';
-	    $('.field-planpresupuestal-precio_unitario_'+(i-1)).addClass('has-error');
-        }
-	
-	if($('#planpresupuestal-subtotal_'+(i-1)).val()=='')
-        {
-            var error=error+'ingrese el subtotal '+i+' <br>';
-	    $('.field-planpresupuestal-subtotal_'+(i-1)).addClass('has-error');
-        }
-	
-	if (error!='')
-	{
-            
+	if (error!='') {
             $.notify({
                 message: error 
             },{
@@ -167,107 +298,108 @@ foreach($actividades as $actividad){
                 },
             });
             return false;
-	}
+        }
         else
         {
-            $('.field-planpresupuestal-actividad_'+(i-1)).addClass('has-success');
-            $('.field-planpresupuestal-actividad_'+(i-1)).removeClass('has-error');
-	    $('.field-planpresupuestal-cantidad_rrhh_'+(i-1)).addClass('has-success');
-            $('.field-planpresupuestal-cantidad_rrhh_'+(i-1)).removeClass('has-error');
-	    $('.field-planpresupuestal-cantidad_material_'+(i-1)).addClass('has-success');
-            $('.field-planpresupuestal-cantidad_material_'+(i-1)).removeClass('has-error');
-	    $('.field-planpresupuestal-precio_unitario_'+(i-1)).addClass('has-success');
-            $('.field-planpresupuestal-precio_unitario_'+(i-1)).removeClass('has-error');
-	    $('.field-planpresupuestal-subtotal_'+(i-1)).addClass('has-success');
-            $('.field-planpresupuestal-subtotal_'+(i-1)).removeClass('has-error');
-            $('#addr'+i).html("<td>"+ (i+1) +"</td>"+
-			      "<td><div class='form-group field-planpresupuestal-actividad_"+i+" required'><select id='planpresupuestal-actividad_"+i+"' name='PlanPresupuestal[actividades][]' class='form-control'><option value>Seleccionar</option>"+options+"</select></div></td>"+
-			      "<td><div class='form-group field-planpresupuestal-cantidad_rrhh_"+i+" required'><input type='text' id='planpresupuestal-cantidad_rrhh_"+i+"' class='form-control' name='PlanPresupuestal[cantidades_rrhhs][]' /></div></td>"+
-			      "<td><div class='form-group field-planpresupuestal-cantidad_material_"+i+" required'><input type='text' id='planpresupuestal-cantidad_material_"+i+"' class='form-control' name='PlanPresupuestal[cantidades_materiales][]' /></div></td>"+
-			      "<td><div class='form-group field-planpresupuestal-precio_unitario_"+i+" required'><input type='text' id='planpresupuestal-precio_unitario_"+i+"' class='form-control' name='PlanPresupuestal[precios_unitarios][]' /></div></td>"+
-			      "<td><div class='form-group field-planpresupuestal-subtotal_"+i+" required'><input type='text' id='planpresupuestal-subtotal_"+i+"' class='form-control' name='PlanPresupuestal[subtotales][]' /></div></td>"+
-			      "<td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
-            $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-            i++;
-        }
-        return true;
+	    $('#plan_presupuestal_'+plan).html(
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_objetivo_"+plan+" required'>"+
+				    "<select id='proyecto-plan_presupuestal_objetivo_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_objetivos][]' onchange='actividad($(this).val(),"+plan+")'>"+
+					"<option value=''>seleccionar</option>"+
+					opciones_objetivos+
+				    "</select>"+
+			       "</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_actividad_"+plan+" required'>"+
+				    "<select id='proyecto-plan_presupuestal_actividad_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_actividades][]'>"+
+					"<option value=''>seleccionar</option>"+
+				    "</select>"+
+			       "</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_recurso_"+plan+" required'>"+
+				    "<select id='proyecto-plan_presupuestal_recurso_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_recursos][]'>"+
+					"<option value=''>seleccionar</option>"+
+					"<option value='1'>Material</option>"+
+					"<option value='2'>Humano</option>"+
+				    "</select>"+
+			       "</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_como_conseguirlo_"+plan+" required'>"+
+				    "<select id='proyecto-plan_presupuestal_como_conseguirlo_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_comos_conseguirlos][]'>"+
+					"<option value=''>seleccionar</option>"+
+					"<option value='1'>Pedir</option>"+
+					"<option value='2'>Crear</option>"+
+					"<option value='3'>Comprar</option>"+
+				    "</select>"+
+				"</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_precio_unitario_"+plan+" required'>"+
+				    "<input id='proyecto-plan_presupuestal_precio_unitario_"+plan+"' onfocusout='Subtotal1("+a+",1)' class='form-control' name='Proyecto[planes_presupuestales_precios_unitarios][]' placeholder='Precio unitario'>"+
+				"</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_cantidad_"+plan+" required'>"+
+				    "<input id='proyecto-plan_presupuestal_cantidad_"+plan+"' onfocusout='Subtotal2("+a+",2)' class='form-control' name='Proyecto[planes_presupuestales_cantidades][]' placeholder='Cantidad'>"+
+				"</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_subtotal_"+plan+" required'>"+
+				    "<input id='proyecto-plan_presupuestal_subtotal_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_subtotales][]' placeholder='Subtotal'>"+
+				"</div>"+
+			    "</td>"+
+			    "<td>"+
+				"<span class='remCF glyphicon glyphicon-minus-sign'></span>"+
+			    "</td>");
+	    $('#tab_plan_presupuestal').append('<tr id="plan_presupuestal_'+(plan+1)+'"></tr>');
+	    plan++;
+	}
+	return true;
+    }
+    
+    
+    
+    $('.numerico').keypress(function (tecla) {
+	var reg = /^[0-9\s]+$/;
+	if(!reg.test(String.fromCharCode(tecla.which))){
+	    return false;
+	}
+	return true;
+    });		
+    $('.texto').keypress(function(tecla) {
+	var reg = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ'_\s]+$/;
+	if(!reg.test(String.fromCharCode(tecla.which))){
+	    return false;
+	}
+	return true;
     });
-    
-    
-    $("#delete_row").click(function(){
-        if(i>1){
-            $("#addr"+(i-1)).html('');
-            i--;
-        }
-    });
-    
-    
-    
-    $("#btnproyecto").click(function(event){
-        var error='';
-        
-        var cantidades_rrhhs=$('input[name=\'PlanPresupuestal[cantidades_rrhhs][]\']').length;
-	 
-	for (var i=0; i<cantidades_rrhhs; i++) {
-	    if($('#planpresupuestal-actividad_'+i).val()=='')
-	    {
-		error=error+'ingrese si quiera '+i+' la actividad <br>';
-		$('.field-planpresupuestal-actividad_'+i).addClass('has-error');
-	    }
-	    else
-	    {
-		$('.field-planpresupuestal-actividad_'+i).addClass('has-success');
-		$('.field-planpresupuestal-actividad_'+i).removeClass('has-error');
-	    }
-	    
-	    if($('#planpresupuestal-cantidad_rrhh_'+i).val()=='')
-	    {
-		error=error+'ingrese si quiera '+i+' la fecha inicio <br>';
-		$('.field-planpresupuestal-cantidad_rrhh_'+i).addClass('has-error');
-	    }
-	    else
-	    {
-		$('.field-planpresupuestal-cantidad_rrhh_'+i).addClass('has-success');
-		$('.field-planpresupuestal-cantidad_rrhh_'+i).removeClass('has-error');
-	    }
-	    
-	    if($('#planpresupuestal-fecha_fin_'+i).val()=='')
-	    {
-		error=error+'ingrese si quiera '+i+' la fecha fin <br>';
-		$('.field-planpresupuestal-fecha_fin_'+i).addClass('has-error');
-	    }
-	    else
-	    {
-		$('.field-planpresupuestal-fecha_fin_'+i).addClass('has-success');
-		$('.field-planpresupuestal-fecha_fin_'+i).removeClass('has-error');
-	    }
-	}	
+    var x=1;
+    var y=1;
+    function Subtotal1(id,tipo) {
+	if (tipo==1) {
+	    x=$('#proyecto-plan_presupuestal_precio_unitario_'+id).val();
+	}
+	if ($('#proyecto-plan_presupuestal_cantidad_'+id).val()!='') {
+	    y=$('#proyecto-plan_presupuestal_cantidad_'+id).val();
+	}
 	
-        
+	var subtotal=x*y;
+	$('#proyecto-plan_presupuestal_subtotal_'+id).val(subtotal);
+    }
     
-        
-        
-        //var objetivos_especificos=$('input[name=\'Proyecto[objetivos_especificos][]\']:checked').length;
-        
-        
-        
-        if(error!='')
-        {
-            $.notify({
-                message: error 
-            },{
-                type: 'danger',
-                z_index: 1000000,
-                placement: {
-                    from: 'bottom',
-                    align: 'right'
-                },
-            });
-            return false;
-        }
-        return true;
-    });
-    
-
+    function Subtotal2(id,tipo) {
+	
+	if (tipo==2) {
+	    y=$('#proyecto-plan_presupuestal_cantidad_'+id).val();
+	}
+	
+	if ($('#proyecto-plan_presupuestal_precio_unitario_'+id).val()!='') {
+	    x=$('#proyecto-plan_presupuestal_precio_unitario_'+id).val();
+	}
+	var subtotal=x*y;
+	$('#proyecto-plan_presupuestal_subtotal_'+id).val(subtotal);
+    }
 </script>
-

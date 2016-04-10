@@ -27,8 +27,10 @@ if($integrante)
 $btninscribir=$integrante
 ?>
 
+
 <?php if(!$integrante) { ?>
-    
+
+        
     <h1>Mis invitaciones</h1>
     <table class="table">
         <thead>
@@ -46,8 +48,8 @@ $btninscribir=$integrante
                     <td>$invitacion->descripcion_equipo</td>
                     <td>$invitacion->nombres_apellidos</td>
                     <td>$invitacion->denominacion</td>
-                    <td><button class='btn' onclick='unirme($invitacion->id)'>aceptar invitación</button></td>
-                    <td><button class='btn' onclick='rechazar($invitacion->id)'>cancelar invitación</button></td>
+                    <td class='text-center'><div style='color:green;font-size:24px;cursor:pointer'  class='fa  fa-check-circle-o fa-6' onclick='unirme($invitacion->id)'></div></td>
+                    <td class='text-center'><div style='color:red;font-size:24px;cursor:pointer'  class='fa fa-times-circle-o fa-6' onclick='rechazar($invitacion->id)'></div></td>
                     </tr>";
         }
         ?>
@@ -57,12 +59,14 @@ $btninscribir=$integrante
 
 <?php if($integrante){ ?>
 <h1>Mi equipo</h1>
+<h4><label>Nombre:</label> <?= $equipo->descripcion_equipo ?> </h4>
 <table class="table ">
     <thead>
-        <th>N°</th>
-        <th>apellidos y nombres</th>
-        <th>estado</th>
-        <th>acción</th>
+        <th>Nombres y Apellidos</th>
+        <th>Estado</th>
+        <?php if($equipo->estado==0){ ?>
+        <th class='text-center'>Acción</th>
+        <?php } ?>
     </thead>
     <tbody>
 <?php
@@ -70,20 +74,19 @@ $btninscribir=$integrante
         foreach($equipoeinvitaciones as $equipoeinvitacion)
         {
             echo    "<tr>
-                        <td>$i</td>
                         <td>".$equipoeinvitacion['nombres_apellidos']."</td>";
                         
             if($integrante->rol==1)
             {
                 if($equipoeinvitacion['rol']==1)
                 {
-                    echo    "<td>Lider</td>
+                    echo    "<td>Coordinador</td>
                             <td></td>";
                 }
                 elseif($equipoeinvitacion['rol']==2 && $equipoeinvitacion['estado']==1)
                 {
                     echo    "<td>Integrante</td>
-                            <td><button class='btn' onclick='eliminarintegrante(".$equipoeinvitacion['estudiante_id'].")'>retirar integrante</button></td>";
+                            <td class='text-center'><div style='color:red;font-size:24px;cursor:pointer'  class='fa fa-times-circle-o fa-6' onclick='eliminarintegrante(".$equipoeinvitacion['estudiante_id'].")'></div></td>";
                 }
                 elseif($equipoeinvitacion['rol']==2 && $equipoeinvitacion['estado']==2)
                 {
@@ -93,7 +96,7 @@ $btninscribir=$integrante
                 elseif($equipoeinvitacion['rol']==0)
                 {
                     echo    "<td>invitado</td>
-                            <td><button class='btn' onclick='eliminarinvitado(".$equipoeinvitacion['estudiante_id'].",".$equipoeinvitacion['equipo_id'].")'>cancelar invitación</button></td>";
+                            <td class='text-center'><div style='color:red;font-size:24px;cursor:pointer'  class='fa fa-times-circle-o fa-6' onclick='eliminarinvitado(".$equipoeinvitacion['estudiante_id'].",".$equipoeinvitacion['equipo_id'].")'></div></td>";
                 }
             }
             elseif($integrante->rol==2)
@@ -106,7 +109,7 @@ $btninscribir=$integrante
                 elseif($equipoeinvitacion['rol']==2 && $equipoeinvitacion['estudiante_id']==$integrante->estudiante_id && $equipoeinvitacion['estado']==1)
                 {
                     echo    "<td>Integrante</td>
-                            <td><button class='btn' onclick='dejarequipo(".$equipoeinvitacion['estudiante_id'].")'>Retirarme del equipo</button></td>";
+                            <td class='text-center'><div style='color:red;font-size:24px;cursor:pointer'  class='fa fa-times-circle-o fa-6' onclick='dejarequipo(".$equipoeinvitacion['estudiante_id'].")'></div></td>";
                 }
                 elseif($equipoeinvitacion['rol']==2 && $equipoeinvitacion['estudiante_id']==$integrante->estudiante_id&& $equipoeinvitacion['estado']==2)
                 {
@@ -133,11 +136,11 @@ $btninscribir=$integrante
 </table>
 
 <?php } ?>
-
+<?php if(!$equipo->descripcion_equipo){?>
 <p>Si aun no tienes equipo, puedes crear tu propio equipo</p>
+<?php }?>
 
-
-
+<div class="text-right">
 <?php
 if(!$integrante)
 {
@@ -149,14 +152,8 @@ echo Html::a('Actualizar equipo',['inscripcion/actualizar','id'=>$estudiante->id
 echo " <button class='btn' onclick='dejarequipo(".$estudiante->id.")'>Cancelar equipo</button>";
 echo " <button class='btn' onclick='finalizarequipo(".$integrante->equipo_id.")'>Finalizar equipo</button>";
 }
-elseif($integrante && $integrante->rol==1 && $integrante->estado==2)
-{
-    
-}
 ?>
-
-
-
+</div>
 
 
 <?php

@@ -47,12 +47,12 @@ class ProyectoSearch extends Proyecto
         
         
         $query = Proyecto::find()
-                    ->select('proyecto.id,proyecto.titulo,pre_forum.forum_url,proyecto.region_id')
+                    ->select('foro.id foro_id,proyecto.id,proyecto.titulo,proyecto.region_id')
                     ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
-                    ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
+                    ->innerJoin('foro','foro.proyecto_id=proyecto.id')
                     ->where('proyecto.equipo_id not in ('.$integrante->equipo_id.') and equipo.etapa in (1,2)')
-                    ->groupBy('proyecto.titulo,pre_forum.forum_url');
+                    ->groupBy('proyecto.titulo');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -74,8 +74,7 @@ class ProyectoSearch extends Proyecto
         ]);
 
         $query->andFilterWhere(['like', 'proyecto.titulo', $this->titulo])
-            ->andFilterWhere(['like', 'resumen', $this->resumen])
-            ->andFilterWhere(['like', 'forum_url', $this->forum_url]);
+            ->andFilterWhere(['like', 'resumen', $this->resumen]);
             
             
 
@@ -86,14 +85,14 @@ class ProyectoSearch extends Proyecto
     {
         
         $query = Proyecto::find()
-                    ->select('proyecto.id,proyecto.titulo,pre_forum.forum_url,proyecto.region_id')
+                    ->select('foro.id foro_id ,proyecto.id,proyecto.titulo,proyecto.region_id')
                     //->innerJoin('ubigeo','ubigeo.department_id=proyecto.region_id')
                     ->innerJoin('equipo','equipo.id=proyecto.equipo_id')
                     //->innerJoin('integrante','integrante.')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
-                    ->innerJoin('pre_forum','pre_forum.proyecto_id=proyecto.id')
+                    ->innerJoin('foro','foro.proyecto_id=proyecto.id')
                     ->where('equipo.etapa in (1,2)')
-                    ->groupBy('proyecto.titulo,pre_forum.forum_url');
+                    ->groupBy('proyecto.titulo,foro.id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -115,8 +114,7 @@ class ProyectoSearch extends Proyecto
         ]);
 
         $query->andFilterWhere(['like', 'proyecto.titulo', $this->titulo])
-            ->andFilterWhere(['like', 'resumen', $this->resumen])
-            ->andFilterWhere(['like', 'forum_url', $this->forum_url]);
+            ->andFilterWhere(['like', 'resumen', $this->resumen]);
             
             
 

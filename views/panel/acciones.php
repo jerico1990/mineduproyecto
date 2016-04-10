@@ -43,6 +43,22 @@ if($votacionpublica || $etapa->etapa!=3)
 
 <script>
     $( '#cerrarvoto' ).click(function() {
+        var countvoto=<?= $countVoto ?>;
+        if (countvoto==0) {
+            $.notify({
+                // options
+                message: 'Deberia registrar mínimo 3 votos' 
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+            return false;
+        }
         $.ajax({
             url: 'cerrar',
             //dataType: 'json',
@@ -86,9 +102,27 @@ if($votacionpublica || $etapa->etapa!=3)
                             }, 2000);
             }
         });
+        return true;
     });
     
     $('#cerrar1entrega').click(function(events){
+        var countvoto=<?= $countVoto ?>;
+        if (countvoto==0) {
+            $.notify({
+                // options
+                message: 'Deberia cerrar votación' 
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+            return false;
+        }
+        
         var finalizar=$.ajax({
             url: '<?= $cerrarprimeraentrega ?>',
             type: 'POST',
@@ -117,6 +151,22 @@ if($votacionpublica || $etapa->etapa!=3)
         if(finalizar.responseText==2)
         {
             $.notify({
+                message: 'Para cerrar debe tener mínimo un equipo finalizado' 
+            },{
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
+            setTimeout(function(){
+                                window.location.reload(1);
+                            }, 2000);
+        }
+        if(finalizar.responseText==3)
+        {
+            $.notify({
                 message: 'Ya se ha cerrado el proceso de 1ra entrega' 
             },{
                 type: 'danger',
@@ -131,7 +181,7 @@ if($votacionpublica || $etapa->etapa!=3)
                             }, 2000);
         }
         
-        
+        return true;
     });
     
     

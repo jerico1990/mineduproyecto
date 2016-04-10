@@ -21,7 +21,6 @@ Modal::end();
 
 $resultados=Resultados::find()->all();
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <h1>
 ¿Qué son los asuntos públicos?
 </h1>
@@ -123,7 +122,7 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
 <!-- Modal Votar -->
 <?php $form = ActiveForm::begin(); ?>
 <div class="modal fade" id="myModalVotar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -149,12 +148,6 @@ Hay un listado de 33 asuntos públicos. Cada uno debe tener:
 		    </div>
 		</div>
 		<div class="clearfix"></div>
-		
-                <?php //= Html::label('DNI', 'Voto[dni]', ['class' => '']) ?>
-                <?php //= Html::input('text', 'Voto[dni]', '', ['id'=>'voto-dni','class' => 'form-control numerico','maxlength'=>8,'pattern'=>'.{8,8}']) ?>
-                
-                <?php //= Html::label('Región', 'Voto[region]', ['class' => '']) ?>
-                <?php //= Html::dropDownList('Voto[region]', '', ArrayHelper::map(Ubigeo::find()->select('department_id,department')->groupBy('department')->all(), 'department_id', 'department'),['id'=>'voto-region','class' => 'form-control','prompt'=>'seleccionar']) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

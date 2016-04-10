@@ -13,7 +13,7 @@ if($equipo->id)
 }
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 <h1>Creando mi equipo</h1>
 <hr class="colorgraph">
     <div class="row">
@@ -23,77 +23,93 @@ if($equipo->id)
                 <input value="<?= $equipo->descripcion_equipo?>" type="text" id="equipo-descripcion_equipo" class="form-control texto" name="Equipo[descripcion_equipo]" placeholder="Nombre de equipo">
             </div>
         </div>
-   
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group field-equipo-descripcion required">
-            <label class="control-label" for="equipo-descripcion">Danos una breve descripción de tu equipo: *</label>
-            <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?></textarea>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group field-equipo-descripcion required">
+                <label class="control-label" for="equipo-descripcion">Danos una breve descripción de tu equipo: *</label>
+                <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?></textarea>
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-equipo-asunto_id required">
-            <label class="control-label" for="equipo-asunto_id">Asunto público: *</label>
-            <select id="equipo-asunto_id" class="form-control" name="Equipo[asunto_id]">
-                <option value="">Seleccionar asunto</option>
-                <?php
-                    $resultados=Resultados::find()->where('region_id=:region_id',['region_id'=>$institucion->department_id])->all();
-                    foreach($resultados as $resultado)
-                    {
-                        if($equipo->asunto_id==$resultado->asunto_id)
-                        {
-                            echo "<option value='$resultado->asunto_id' selected='selected'>".$resultado->asunto->descripcion_cabecera."</option>";
-                        }
-                        else
-                        {
-                            echo "<option value='$resultado->asunto_id'>".$resultado->asunto->descripcion_cabecera."</option>";
-                        }
-                    }
-                ?>
-                
-            </select>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-7 col-md-5">
+            <div class="form-group field-equipo-foto_img required">
+                <label class="control-label" for="equipo-foto_img">Foto: *</label>
+                <input type="file" id="equipo-foto_img" class="form-control file" name="Equipo[foto_img]">
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <th>N°</th>
-                        <th>Participante</th>
-                    </tr>
-                    
-                        <?php
-                            $i=1;
-                            foreach($estudiantes as $estudiante)
+        <div class="col-xs-12 col-sm-7 col-md-5">
+            <?= Html::img('../foto_equipo/'.$equipo->foto,['class'=>'img-responsive logo', 'alt'=>'Responsive image']) ?>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-7 col-md-5">
+            <div class="form-group field-equipo-asunto_id required">
+                <label class="control-label" for="equipo-asunto_id">Asunto público: *</label>
+                <select id="equipo-asunto_id" class="form-control" name="Equipo[asunto_id]">
+                    <option value="">Seleccionar asunto</option>
+                    <?php
+                        $resultados=Resultados::find()->where('region_id=:region_id',['region_id'=>$institucion->department_id])->all();
+                        foreach($resultados as $resultado)
+                        {
+                            if($equipo->asunto_id==$resultado->asunto_id)
                             {
-                                echo "<tr>
-                                        <td><input name='Equipo[invitaciones][]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id,$equipoid,$(this))'></td>
-                                        <td><span id='snum'>$i</span></td>
-                                        <td>$estudiante->nombres_apellidos</td>
-                                </tr>";
-                                 
-                                $i++;
+                                echo "<option value='$resultado->asunto_id' selected='selected'>".$resultado->asunto->descripcion_cabecera."</option>";
                             }
-                        ?>
-                       
-                        
-                        
-                   
-                </tbody>
-            </table>
+                            else
+                            {
+                                echo "<option value='$resultado->asunto_id'>".$resultado->asunto->descripcion_cabecera."</option>";
+                            }
+                        }
+                    ?>
+                    
+                </select>
+            </div>
         </div>
-       
-    </div>
-    <div class="clearfix"></div>
-    <div class="modal-footer">
-       <button type="submit" id="btnequipo" class="btn btn-primary">Guardar</button>
-    </div>
+        
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+        <p>Invita a tus compañeros de tu Institución Educativa para que sean parte de tu equipo</p>
+        </div>
+        <div class="clearfix"></div>
+    
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            
+            <div class="table-responsive">
+                <table class="table ">
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>N°</th>
+                            <th>Participante</th>
+                            <th>Grado</th>
+                        </tr>
+                        
+                            <?php
+                                $i=1;
+                                foreach($estudiantes as $estudiante)
+                                {
+                                    echo "<tr>
+                                            <td><input name='Equipo[invitaciones][]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id,$equipoid,$(this))'></td>
+                                            <td><span id='snum'>$i</span></td>
+                                            <td>$estudiante->nombres_apellidos</td>
+                                            <td>$estudiante->grado</td>
+                                    </tr>";
+                                     
+                                    $i++;
+                                }
+                            ?>
+                           
+                            
+                            
+                       
+                    </tbody>
+                </table>
+            </div>
+           
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+           <button type="submit" id="btnequipo" class="btn btn-primary">Guardar</button>
+        </div>
     <?php ActiveForm::end(); ?>
 </div> 
 

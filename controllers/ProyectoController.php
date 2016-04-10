@@ -21,7 +21,7 @@ use app\models\Video;
 use app\models\Evaluacion;
 use app\models\VotacionInterna;
 use app\models\Ubigeo;
-
+use yii\db\Query;
 
 /**
  * ProyectoController implements the CRUD actions for Proyecto model.
@@ -331,8 +331,10 @@ class ProyectoController extends Controller
     }
     public function actionReflexion()
     {
+        //var_dump($_REQUEST);die;
         $reflexion=new Reflexion;
         $reflexion->load(Yii::$app->request->post());
+        
         $reflexiona=Reflexion::find()->where('proyecto_id=:proyecto_id and user_id=:user_id',
                                             [':proyecto_id'=>$reflexion->proyecto_id,':user_id'=>$reflexion->user_id])->one();
         $reflexiona->reflexion=$reflexion->reflexion;
@@ -357,14 +359,20 @@ class ProyectoController extends Controller
         $etapa=Etapa::find()->where('estado=1 and etapa=1')->one();
         if($proyectoexiste && $etapa)
         {
-            $pre_forum_proyectos = 'insert into pre_forum (forum_name,forum_desc,user_id,status,proyecto_id)
+            /*$pre_forum_proyectos = 'insert into pre_forum (forum_name,forum_desc,user_id,status,proyecto_id)
                     select proyecto.titulo,proyecto.titulo,1,1,proyecto.id from proyecto
                     inner join equipo on equipo.id=proyecto.equipo_id
                     where  equipo.etapa=1';
             
-            \Yii::$app->db->createCommand($pre_forum_proyectos)->execute();
+            \Yii::$app->db->createCommand($pre_forum_proyectos)->execute();*/
             
-            $uppre_forum_proyectos = 'update pre_forum set forum_url=id';
+            $foros = 'insert into foro (titulo,descripcion,user_id,post_count,proyecto_id)
+                    select proyecto.titulo,proyecto.resumen,1,0,proyecto.id from proyecto
+                    inner join equipo on equipo.id=proyecto.equipo_id
+                    where  equipo.etapa=1';
+            \Yii::$app->db->createCommand($foros)->execute();
+            
+            /*$uppre_forum_proyectos = 'update pre_forum set forum_url=id';
             
             \Yii::$app->db->createCommand($uppre_forum_proyectos)->execute();
             
@@ -373,6 +381,7 @@ class ProyectoController extends Controller
                     where  pre_forum.id not in (1,2)';
             
             \Yii::$app->db->createCommand($pre_forum_board_proyectos)->execute();
+            */
             
             $etapa->estado=0;
             $etapa->update();
@@ -382,9 +391,13 @@ class ProyectoController extends Controller
             $nuevaetapa->save();
             echo 1;
         }
-        else
+        elseif(!$proyectoexiste)
         {
             echo 2;
+        }
+        else
+        {
+            echo 3;
         }
     }
     
@@ -468,7 +481,7 @@ class ProyectoController extends Controller
                                     [':user_id'=>\Yii::$app->user->id])
                             ->count();
                             
-        if($countvotacioninterna<3)
+        if($countvotacioninterna<3 || $votacioninterna)
         {
             if(!$votacioninterna)
             {
@@ -527,22 +540,46 @@ class ProyectoController extends Controller
         $connection = \Yii::$app->db;
         $ubigeos=Ubigeo::find()->select('department_id,department')->groupBy('department_id')->orderBy('department desc')->all();
         
-            foreach($ubigeos as $ubigeo)
-            {
-                $command=$connection->createCommand("
-                    insert into votacion_publica (proyecto_id,region_id,estado)
-                    select votacion_interna.proyecto_id,votacion_interna.region_id,1 from votacion_interna
-                    inner join proyecto on proyecto.id=votacion_interna.proyecto_id
-                    where votacion_interna.region_id='$ubigeo->department_id' and votacion_interna.estado=2
-                    group by votacion_interna.proyecto_id,votacion_interna.region_id,1
-                    order by proyecto.resultado desc
-                    limit 3;
-                ");
-                
-                $command->execute();
-                
-            }
-            echo 1;
+        foreach($ubigeos as $ubigeo)
+        {
+            $command=$connection->createCommand("
+                insert into votacion_publica (proyecto_id,region_id,estado)
+                select votacion_interna.proyecto_id,votacion_interna.region_id,1 from votacion_interna
+                inner join proyecto on proyecto.id=votacion_interna.proyecto_id
+                where votacion_interna.region_id='$ubigeo->department_id' and votacion_interna.estado=2
+                group by votacion_interna.proyecto_id,votacion_interna.region_id,1
+                order by proyecto.resultado desc
+                limit 3;
+            ");
+            $command->execute();
+        }
+        echo 1;
         
+    }
+    
+    public function actionPrueba()
+    {
+        $connection = \Yii::$app->db;
+        $ubigeos=Ubigeo::find()->select('department_id,department')->groupBy('department_id')->orderBy('department desc')->all();
+        
+        foreach($ubigeos as $ubigeo)
+        {
+            
+            $query = new Query;
+            $threads = $query->select('i.id')
+            ->from('{{%institucion}} as i')
+            ->join('INNER JOIN','{{%ubigeo}} as u', 'u.district_id=i.ubigeo_id')
+            ->where('u.department_id=:id', [':id'=>$ubigeo->department_id])
+            ->limit(3)
+            ->all();
+            
+            foreach($threads as $thread)
+            {
+                echo $thread["id"]."<br>";
+                //var_dump($thread["id"]);
+            }
+            
+            
+        }
     }
 }

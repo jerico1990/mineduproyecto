@@ -81,8 +81,15 @@ class PanelController extends Controller
         
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $estudiante=Estudiante::find()->where('id=:id',[':id'=>$usuario->estudiante_id])->one();
-        //$lider=Integrante::find()->where('estudiante_id=:estudiante_id and rol=1',[':estudiante_id'=>$estudiante->id])->one();
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$estudiante->id])->one();
+        if($integrante)
+        {
+            $equipo=Equipo::findOne($integrante->equipo_id);
+        }
+        else
+        {
+            $equipo = new Equipo;
+        }
         
         $invitaciones=Invitacion::find()
                         ->select('invitacion.id,equipo.descripcion_equipo,lider.nombres_apellidos,institucion.denominacion')
@@ -98,12 +105,14 @@ class PanelController extends Controller
         return $this->render('index', ['invitaciones'=>$invitaciones,
                                        'integrante'=>$integrante,
                                        'estudiante'=>$estudiante,
+                                       'equipo'=>$equipo
                             ]);
     }
     
     public function actionAcciones()
     {
         $this->layout='registrar';
+        $countVoto=Voto::find()->count();
         $resultados=Resultados::find()->all();
         $votacionpublica=VotacionPublica::find()->all();
         $etapa=Etapa::find()->where('estado=1')->one();
@@ -113,7 +122,8 @@ class PanelController extends Controller
         
         return $this->render('acciones',['resultados'=>$resultados,'etapa'=>$etapa,
                                          'faltavalorporcentual'=>$faltavalorporcentual,
-                                         'votacionpublica'=>$votacionpublica]);
+                                         'votacionpublica'=>$votacionpublica,
+                                         'countVoto'=>$countVoto]);
     }
     
     public function actionCerrar($bandera)

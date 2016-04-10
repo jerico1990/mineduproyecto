@@ -21,6 +21,7 @@ class PlanPresupuestal extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $objetivo_especifico_id;
     public static function tableName()
     {
         return 'plan_presupuestal';

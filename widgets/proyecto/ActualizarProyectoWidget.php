@@ -13,10 +13,17 @@ use app\models\Actividad;
 use app\models\Equipo;
 use app\models\ObjetivoEspecifico;
 use app\models\Evaluacion;
+use app\models\PlanPresupuestal;
+use app\models\Cronograma;
+use app\models\Video;
+use app\models\VideoCopia;
+
+use yii\web\UploadedFile;
+Yii::setAlias('video', '@web/video_carga/');
 class ActualizarProyectoWidget extends Widget
 {
     public $message;
-
+    public $entrega;
     public function init()
     {
         parent::init();
@@ -35,10 +42,14 @@ class ActualizarProyectoWidget extends Widget
         
         $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
         $objetivos_especificos=ObjetivoEspecifico::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->all();
-        $actividades=Actividad::find()
-                    ->select('objetivo_especifico.id objetivo_especifico_id,actividad.id actividad_id,actividad.descripcion')
-                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
-                    ->where('proyecto_id=:proyecto_id and actividad.estado=1',[':proyecto_id'=>$proyecto->id])->all();
+        
+        $video=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
+                                    [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
+        if(!$video)
+        {
+            $video=new Video;
+        }
+        
         $i=1;
         foreach($objetivos_especificos as $objetivo_especifico)
         {
@@ -59,26 +70,91 @@ class ActualizarProyectoWidget extends Widget
             }
             $i++;
         }
-        
-        $reflexion=Reflexion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
+        $actividades=Actividad::find()
+                    ->select('objetivo_especifico.id objetivo_especifico_id,actividad.id actividad_id,actividad.descripcion,actividad.resultado_esperado')
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('proyecto_id=:proyecto_id and actividad.estado=1',[':proyecto_id'=>$proyecto->id])->all();
+        $actividades1=Actividad::find()
+                    ->select('objetivo_especifico.id objetivo_especifico_id,actividad.id actividad_id,actividad.descripcion')
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('proyecto_id=:proyecto_id and actividad.estado=1 and objetivo_especifico.id=:id',[':proyecto_id'=>$proyecto->id,':id'=>$proyecto->objetivo_especifico_1_id])->all();
+        $actividades2=Actividad::find()
+                    ->select('objetivo_especifico.id objetivo_especifico_id,actividad.id actividad_id,actividad.descripcion')
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('proyecto_id=:proyecto_id and actividad.estado=1 and objetivo_especifico.id=:id',[':proyecto_id'=>$proyecto->id,':id'=>$proyecto->objetivo_especifico_2_id])->all();
+        $actividades3=Actividad::find()
+                    ->select('objetivo_especifico.id objetivo_especifico_id,actividad.id actividad_id,actividad.descripcion')
+                    ->innerJoin('objetivo_especifico','objetivo_especifico.id=actividad.objetivo_especifico_id')
+                    ->where('proyecto_id=:proyecto_id and actividad.estado=1 and objetivo_especifico.id=:id',[':proyecto_id'=>$proyecto->id,':id'=>$proyecto->objetivo_especifico_3_id])->all();
+                    
+        $reflexion=Reflexion::find()->where('proyecto_id=:proyecto_id and user_id=:user_id',[':user_id'=>$usuario->id,':proyecto_id'=>$proyecto->id])->one();
         $proyecto->reflexion=$reflexion->reflexion;
+        //var_dump($proyecto->reflexion);die;
         if($equipo->etapa==1 || $equipo->etapa==2)
         {
-            $evaluacion=Evaluacion::find()->where('user_id=:user_id',[':user_id'=>$usuario->id])->one();
+            $evaluacion=Evaluacion::find()->where('proyecto_id=:proyecto_id and user_id=:user_id',[':user_id'=>$usuario->id,':proyecto_id'=>$proyecto->id])->one();
             $proyecto->evaluacion=$evaluacion->evaluacion;
         }
         
         
         
         if ($proyecto->load(\Yii::$app->request->post())) {
+            //var_dump(\Yii::$app->request->post());die;
             $reflexion->reflexion=$proyecto->reflexion;
             $reflexion->update();
-            //$evaluacion->reflexion=$proyecto->evaluacion;
-            
             $proyecto->update();
-            $countActividades1=count($proyecto->actividades_1);
-            $countActividades2=count($proyecto->actividades_2);
-            $countActividades3=count($proyecto->actividades_3);
+            if(!$proyecto->actividades_1)
+            {
+                $countActividades1=0;
+            }
+            else
+            {
+                $countActividades1=count(array_filter($proyecto->actividades_1));
+            }
+            if(!$proyecto->actividades_2)
+            {
+                $countActividades2=0;
+            }
+            else
+            {
+                $countActividades2=count(array_filter($proyecto->actividades_2));
+            }
+            if(!$proyecto->actividades_3)
+            {
+                $countActividades3=0;
+            }
+            else
+            {
+                $countActividades3=count(array_filter($proyecto->actividades_3));
+            }
+            
+            if(!$proyecto->planes_presupuestales_precios_unitarios)
+            {
+                $countPlanesPresupuestalesPreciosUnitarios=0;
+            }
+            else
+            {
+                $countPlanesPresupuestalesPreciosUnitarios=count(array_filter($proyecto->planes_presupuestales_precios_unitarios));
+            }
+            
+            if(!$proyecto->cronogramas_fechas_inicios)
+            {
+                $countCronogramasFechasInicios=0;
+            }
+            else
+            {
+                $countCronogramasFechasInicios=count(array_filter($proyecto->cronogramas_fechas_inicios));
+            }
+            
+            if(!$proyecto->resultados_esperados)
+            {
+                $countResultadosEsperados=0;
+            }
+            else
+            {
+                $countResultadosEsperados=count(array_filter($proyecto->resultados_esperados));
+            }
+            
             
             if($proyecto->objetivo_especifico_1!=='')
             {
@@ -177,14 +253,134 @@ class ActualizarProyectoWidget extends Widget
                     
                 }
             }
+            
+            /*Plan presupuestal*/
+            for($i=0;$i<$countPlanesPresupuestalesPreciosUnitarios;$i++)
+            {
+                if(isset($proyecto->planes_presupuestal_ids[$i]))
+                {
+                    $planpresupuestal=PlanPresupuestal::find()->where('id=:id',[':id'=>$proyecto->planes_presupuestal_ids[$i]])->one();
+                    $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades[$i];
+                    $planpresupuestal->recurso=$proyecto->planes_presupuestales_recursos[$i];
+                    $planpresupuestal->como_conseguirlo=$proyecto->planes_presupuestales_comos_conseguirlos[$i];
+                    $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
+                    $planpresupuestal->cantidad=$proyecto->planes_presupuestales_cantidades[$i];
+                    $planpresupuestal->subtotal=$proyecto->planes_presupuestales_subtotales[$i];
+                    $planpresupuestal->update();
+                }
+                else
+                {
+                    
+                    $planpresupuestal=new PlanPresupuestal;
+                    $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades[$i];
+                    $planpresupuestal->recurso=$proyecto->planes_presupuestales_recursos[$i];
+                    $planpresupuestal->como_conseguirlo=$proyecto->planes_presupuestales_comos_conseguirlos[$i];
+                    $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
+                    $planpresupuestal->cantidad=$proyecto->planes_presupuestales_cantidades[$i];
+                    $planpresupuestal->subtotal=$proyecto->planes_presupuestales_subtotales[$i];
+                    $planpresupuestal->estado=1;
+                    $planpresupuestal->save();
+                }
+            }
+            
+            /*Cronograma*/
+            for($i=0;$i<$countCronogramasFechasInicios;$i++)
+            {
+                if(isset($proyecto->cronogramas_ids[$i]))
+                {
+                    $cronograma=Cronograma::find()->where('id=:id',[':id'=>$proyecto->cronogramas_ids[$i]])->one();
+                    $cronograma->actividad_id=$proyecto->cronogramas_actividades[$i];
+                    $cronograma->responsable_id=$proyecto->cronogramas_responsables[$i];
+                    $cronograma->fecha_inicio=$proyecto->cronogramas_fechas_inicios[$i];
+                    $cronograma->fecha_fin=$proyecto->cronogramas_fechas_fines[$i];
+                    $cronograma->save();
+                }
+                else
+                {
+                    $cronograma=new Cronograma;
+                    $cronograma->actividad_id=$proyecto->cronogramas_actividades[$i];
+                    $cronograma->responsable_id=$proyecto->cronogramas_responsables[$i];
+                    $cronograma->fecha_inicio=$proyecto->cronogramas_fechas_inicios[$i];
+                    $cronograma->fecha_fin=$proyecto->cronogramas_fechas_fines[$i];
+                    $cronograma->estado=1;
+                    $cronograma->save();
+                }
+            }
+            
+            /*Resultado*/
+            for($i=0;$i<$countResultadosEsperados;$i++)
+            {
+                
+                if(isset($proyecto->resultados_ids[$i]))
+                {
+                    $actividad=Actividad::find()->where('id=:id',[':id'=>$proyecto->resultados_ids[$i]])->one();
+                    $actividad->resultado_esperado=$proyecto->resultados_esperados[$i];
+                    $actividad->update();
+                }
+            }
+            
+            $video->archivo = UploadedFile::getInstance($video, 'archivo');
+            
+            if($video->archivo) {
+                
+                $video->proyecto_id=$proyecto->id;
+                $video->etapa=0;
+                $video->save();
+                $videoup=Video::findOne($video->id);
+                $videoup->ruta=$video->id. '.' . $video->archivo->extension;
+                $videoup->update();
+                $old=$video->id. '.' . $video->archivo->extension.".old";
+                if (file_exists(\Yii::$app->basePath."/web/video_carga/".$videoup->ruta)) {
+                    //$this->rename_win(\Yii::$app->basePath."/web/video_carga/".$videoup->ruta,\Yii::$app->basePath."/web/video_carga/$videoup->ruta.old");
+                    //rename(\Yii::$app->basePath."/web/video_carga/$videoup->ruta", \Yii::$app->basePath."/web/video_carga/$videoup->ruta.old");
+                }
+                $video->archivo->saveAs('video_carga/' . $videoup->id . '.' . $video->archivo->extension);
+            }
             return \Yii::$app->getResponse()->refresh();
         }
+        
+        if($this->entrega==1)
+        {
+            $disabled='disabled';
+            $videoprimera=VideoCopia::find()->where('proyecto_id=:proyecto_id and etapa in (0,1)',[':proyecto_id'=>$proyecto->id])->one();
+            $videosegunda=VideoCopia::find()->where('proyecto_id=:proyecto_id and etapa in (0,2)',[':proyecto_id'=>$proyecto->id])->one();
+        }
+        else
+        {
+            $videoprimera=NULL;
+            $videosegunda=NULL;
+        }
+        
+        if($equipo->etapa==2)
+        {
+            $disabled='disabled';
+        }
+        
         
         return $this->render('actualizar',
                              ['proyecto'=>$proyecto,
                               'objetivos_especificos'=>$objetivos_especificos,
                               'actividades'=>$actividades,
+                              'actividades1'=>$actividades1,
+                              'actividades2'=>$actividades2,
+                              'actividades3'=>$actividades3,
                               'disabled'=>$disabled,
-                              'equipo'=>$equipo]);
+                              'equipo'=>$equipo,
+                              'integrante'=>$integrante,
+                              'video'=>$video,
+                              'videoprimera'=>$videoprimera,
+                              'videosegunda'=>$videosegunda,
+                              'entrega'=>$this->entrega]);
     }
+    
+    public function rename_win($oldfile,$newfile) {
+    if (!rename($oldfile,$newfile)) {
+        if (copy ($oldfile,$newfile)) {
+            unlink($oldfile);
+            return TRUE;
+        }
+        return FALSE;
+    }
+    return TRUE;
+}
 }

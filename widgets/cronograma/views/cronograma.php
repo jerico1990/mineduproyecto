@@ -10,123 +10,236 @@ use yii\web\JsExpression;
 /* @var $this \yii\web\View */
 /* @var $user \common\models\LoginForm */
 /* @var $title string */
-$options='';
-foreach($actividades as $actividad){ 
-    $options=$options.'<option value="'.$actividad->id.'">'.$actividad->descripcion.'</option>';
+$opciones_objetivos='';
+foreach($objetivos as $objetivo){ 
+    $opciones_objetivos=$opciones_objetivos.'<option value='.$objetivo->id.'>'.$objetivo->descripcion.'</option>';
 }
 
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<?php $form = ActiveForm::begin(); ?>
-<h2>Registrar Cronograma</h2>
-<hr class="colorgraph">
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-5">
-	<div class="form-group field-cronograma-medicion_tiempo required">
-	    <label class="control-label" for="cronograma-medicion_tiempo">Medición: *</label>
-	    <select type="text" id="cronograma-medicion_tiempo" class="form-control" name="Cronograma[medicion_tiempo]" >
-		<option value>Seleccionar</option>
-		<option value="1">Semana</option>
-		<option value="2">Mes</option>
-	    </select>
-	</div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <table class="table table-bordered table-hover" id="tab_logic">
-            <thead>
-                <tr>
-                    <th class="text-center">
-                        #
-                    </th>
-                    <th class="text-center">
-                        Actividad
-                    </th>
-		    <th class="text-center">
-                        Fecha inicio
-                    </th>
-		    <th class="text-center">
-                        Fecha fin
-                    </th>
-		    <th>
-			
-		    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id='addr0'>
-                    <td>
-                    1
-                    </td>
-                    <td>
-                        <div class="form-group field-cronograma-actividad_0 required">
-                            <select type="text" id="cronograma-actividad_0" class="form-control" name="Cronograma[actividades][]" >
-				<option value>Seleccionar</option>
-				<?= $options ?>
-			    </select>
-                        </div>
-                    </td>
-		    <td>
-                        <div class="form-group field-cronograma-fecha_inicio_0 required">
-                            <input type="date" id="cronograma-fecha_inicio_0" class="form-control" name="Cronograma[fechas_inicios][]" />
-                        </div>
-                    </td>
-		    <td>
-                        <div class="form-group field-cronograma-fecha_fin_0 required">
-                            <input type="date" id="cronograma-fecha_fin_0" class="form-control" name="Cronograma[fechas_fines][]" />
-                        </div>
-                    </td>
-		    <td>
-			<span class="remCF glyphicon glyphicon-minus-sign"></span>
-		    </td>
-                </tr>
-                <tr id='addr1'></tr>
-            </tbody>
-        </table>
-        <a id="add_row" class="btn btn-default pull-left">Add Row</a>
-        <a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
-        <br>
-    </div>
     <div class="clearfix"></div>
-       
-    <div class="modal-footer">
-       <button type="submit" id="btnproyecto" class="btn btn-primary">Guardar</button>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+	<table class="table table-bordered table-hover" id="tab_cronograma">
+	    <thead>
+		<th>Objetivo especifico</th>
+		<th>Actividad</th>
+		<th>Responsable</th>
+		<th colspan="2" align="center">Fecha inicio</th>
+		<?= ($disabled=='')?'<th></th>':'' ?>
+	    </thead>cesarin
+	    <tbody>
+		<?php if($cronogramas){?>
+		    <?php $cron=0; ?>
+		    <?php foreach($cronogramas as $cronograma){?>
+			<tr id='cronograma_<?= $cron ?>'>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_objetivo_<?= $cron ?> required">
+				    <select id="proyecto-cronograma_objetivo_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_objetivos][]" onchange="actividad2($(this).val(),<?= $cron ?>)" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($objetivos as $objetivo){  ?>
+					    <option value='<?= $objetivo->id ?>' <?= ($objetivo->id==$cronograma->objetivo_especifico_id)?'selected':'' ?>><?= $objetivo->descripcion ?></option>
+					<?php }  ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_actividad_<?= $cron ?> required">
+				    <select id="proyecto-cronograma_actividad_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_actividades][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($actividades as $actividad){  ?>
+					    <option value='<?= $actividad->id ?>' <?= ($actividad->id==$cronograma->actividad_id)?'selected':'' ?> ><?= $actividad->descripcion ?> </option>
+					<?php } ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_responsable_<?= $cron ?> required">
+				    
+				    <select id="proyecto-cronograma_responsable_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_responsables][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($responsables as $responsable){ ?>
+					    <?php if($responsable->estudiante_id==$cronograma->responsable_id){ ?>
+						<option value="<?= $responsable->estudiante_id ?>" selected > <?= $responsable->estudiante->nombres_apellidos ?></option>
+					    <?php } else { ?>
+						<option value="<?= $responsable->estudiante_id ?>" > <?= $responsable->estudiante->nombres_apellidos ?></option>
+					    <?php } ?>
+					<?php } ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_fecha_inicio_<?= $cron ?> required">
+				    <input type='date' id="proyecto-cronograma_fecha_inicio_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_fechas_inicios][]" placeholder="Fecha inicio" value="<?= date("Y-m-d",strtotime($cronograma->fecha_inicio));  ?>" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_fecha_fin_<?= $cron ?> required">
+				    <input type='date' id="proyecto-cronograma_fecha_fin_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_fechas_fines][]" placeholder="Fecha fin" value="<?= date("Y-m-d",strtotime($cronograma->fecha_fin));  ?>" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <?php if($disabled==''){?>
+			    <td>
+				<span class="remCF glyphicon glyphicon-minus-sign">
+				    <input type="hidden" name="Proyecto[cronogramas_ids][]" value="<?= $cronograma->id ?>"/>
+				</span>
+			    </td>
+			    <?php } ?>
+			</tr>
+			<?php $cron++; ?>
+		    <?php } ?>
+		<?php } else {?>
+			<tr id='cronograma_0'>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_objetivo_0 ?> required">
+				    <select id="proyecto-cronograma_objetivo_0" class="form-control" name="Proyecto[cronogramas_objetivos][]" onchange="actividad2($(this).val(),0)" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($objetivos as $objetivo){  ?>
+					    <option value='<?= $objetivo->id ?>' ><?= $objetivo->descripcion ?></option>
+					<?php }  ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_actividad_0 required">
+				    <select id="proyecto-cronograma_actividad_0" class="form-control" name="Proyecto[cronogramas_actividades][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_responsable_0 required">
+				    <select id="proyecto-cronograma_responsable_0" class="form-control" name="Proyecto[cronogramas_responsables][]" <?= $disabled ?>>
+					<option value>seleccionar</option>
+					<?php foreach($responsables as $responsable){ ?>
+					    <option value="<?= $responsable->estudiante_id ?>"><?= $responsable->estudiante->nombres_apellidos ?></option>
+					<?php } ?>
+				    </select>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_fecha_inicio_0 required">
+				    <input type='date' id="proyecto-cronograma_fecha_inicio_0" class="form-control" name="Proyecto[cronogramas_fechas_inicios][]" placeholder="Fecha inicio" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <td>
+				<div class="form-group field-proyecto-cronograma_fecha_fin_0 required">
+				    <input type='date' id="proyecto-cronograma_fecha_fin_0" class="form-control" name="Proyecto[cronogramas_fechas_fines][]" placeholder="Fecha fin" <?= $disabled ?>/>
+				</div>
+			    </td>
+			    <?php if($disabled==''){?>
+			    <td>
+				<!--<span class="remCF glyphicon glyphicon-minus-sign"></span>-->
+			    </td>
+			    <?php } ?>
+			</tr>
+		<?php $cron=1; ?>
+		<?php } ?>
+			<tr id='cronograma_<?= $cron?>'></tr>
+	    </tbody>
+	</table>
+	<?php if($disabled==''){?>
+	<div  class="btn btn-default pull-right" onclick="InsertarCronograma()">Agregar</div>
+	<?php } ?>
     </div>
-</div>
-<?php ActiveForm::end(); ?>
+<div class="clearfix"></div>
 <?php
-    $this->registerJs(
-    "$('document').ready(function(){})");
+    $eliminarcronograma=Yii::$app->getUrlManager()->createUrl('actividad/eliminarcronograma');
 ?>
 <script>
-    var i=1;
-    var options='<?= $options ?>';
+    var cron=<?= $cron ?>;
+    var opciones_objetivos="<?= $opciones_objetivos ?>";
+    function actividad2(value,contador) {
+	$.get( '<?= Yii::$app->urlManager->createUrl('plan-presupuestal/actividades?id=') ?>'+value, function( data ) {
+	    $( '#proyecto-cronograma_actividad_'+contador ).html( data );
+	});
+    }
     
-    $("#tab_logic").on('click','.remCF',function(){
-        $(this).parent().parent().remove();
+    $("#tab_cronograma").on('click',' .remCF',function(){
+        var r = confirm("Estas seguro?");
+	id=$(this).children().val();
+	//console.log(id);
+        if (r == true) {
+            
+	    if (id) {
+		$.ajax({
+		    url: '<?= $eliminarcronograma ?>',
+		    type: 'GET',
+		    async: true,
+		    data: {id:id},
+		    success: function(data){
+			
+		    }
+		});
+		$(this).parent().parent().remove();	
+	    }
+	    else
+	    {
+		$(this).parent().parent().remove();
+	    }
+            
+        } 
     });
     
-    $("#add_row").click(function(){
+    function InsertarCronograma() {
 	var error='';
-	if ($('#cronograma-actividad_'+(i-1)).val()=='') {
-	    var error=error+'seleccione la '+i+' actividad <br>';
-	    $('.field-cronograma-actividad_'+(i-1)).addClass('has-error');
-	}
-	
-        if($('#cronograma-fecha_inicio_'+(i-1)).val()=='')
-        {
-            var error=error+'ingrese la fecha de inicio '+i+' <br>';
-	    $('.field-cronograma-fecha_inicio_'+(i-1)).addClass('has-error');
+	var cronogramas=$('input[name=\'Proyecto[cronogramas_fechas_inicios][]\']').length;
+        for (var i=0; i<cronogramas; i++) {
+	    
+	    if($('#proyecto-cronograma_objetivo_'+i).val()=='')
+            {
+                error=error+'ingrese el #'+i+' objetivo <br>';
+                $('.field-proyecto-cronograma_objetivo_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-cronograma_objetivo_'+i).addClass('has-success');
+                $('.field-proyecto-cronograma_objetivo_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-cronograma_actividad_'+i).val()=='')
+            {
+                error=error+'ingrese el #'+i+' actividad <br>';
+                $('.field-proyecto-cronograma_actividad_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-cronograma_actividad_'+i).addClass('has-success');
+                $('.field-proyecto-cronograma_actividad_'+i).removeClass('has-error');
+            }
+	    
+            if($('#proyecto-cronograma_responsable_'+i).val()=='')
+            {
+                error=error+'ingrese el responsable '+i+' <br>';
+                $('.field-proyecto-cronograma_responsable_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-cronograma_responsable_'+i).addClass('has-success');
+                $('.field-proyecto-cronograma_responsable_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-cronograma_fecha_inicio_'+i).val()=='')
+            {
+                error=error+'ingrese la fecha inicio de '+i+' <br>';
+                $('.field-proyecto-cronograma_fecha_inicio_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-cronograma_fecha_inicio_'+i).addClass('has-success');
+                $('.field-proyecto-cronograma_fecha_inicio_'+i).removeClass('has-error');
+            }
+	    
+	    if($('#proyecto-cronograma_fecha_fin_'+i).val()=='')
+            {
+                error=error+'ingrese la fecha fin de '+i+' <br>';
+                $('.field-proyecto-cronograma_fecha_fin_'+i).addClass('has-error');
+            }
+            else
+            {
+                $('.field-proyecto-cronograma_fecha_fin_'+i).addClass('has-success');
+                $('.field-proyecto-cronograma_fecha_fin_'+i).removeClass('has-error');
+            }
         }
-	
-	if($('#cronograma-fecha_fin_'+(i-1)).val()=='')
-        {
-            var error=error+'ingrese la fecha de inicio '+i+' <br>';
-	    $('.field-cronograma-fecha_fin_'+(i-1)).addClass('has-error');
-        }
-	
-	if (error!='')
-	{
-            
+	if (error!='') {
             $.notify({
                 message: error 
             },{
@@ -138,112 +251,55 @@ foreach($actividades as $actividad){
                 },
             });
             return false;
-	}
+        }
         else
         {
-            $('.field-cronograma-actividad_'+(i-1)).addClass('has-success');
-            $('.field-cronograma-actividad_'+(i-1)).removeClass('has-error');
-	    $('.field-cronograma-fecha_inicio_'+(i-1)).addClass('has-success');
-            $('.field-cronograma-fecha_inicio_'+(i-1)).removeClass('has-error');
-	    $('.field-cronograma-fecha_fin_'+(i-1)).addClass('has-success');
-            $('.field-cronograma-fecha_fin_'+(i-1)).removeClass('has-error');
-            $('#addr'+i).html("<td>"+ (i+1) +"</td>"+
-			      "<td><div class='form-group field-cronograma-actividad_"+i+" required'><select id='cronograma-actividad_"+i+"' name='Cronograma[actividades][]' class='form-control'><option value>Seleccionar</option>"+options+"</select></div></td>"+
-			      "<td><div class='form-group field-cronograma-fecha_inicio_"+i+" required'><input type='date' id='cronograma-fecha_inicio_"+i+"' class='form-control' name='Cronograma[fechas_inicios][]' /></div></td>"+
-			      "<td><div class='form-group field-cronograma-fecha_fin_"+i+" required'><input type='date' id='cronograma-fecha_fin_"+i+"' class='form-control' name='Cronograma[fechas_fines][]' /></div></td>"+
-			      "<td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
-            $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-            i++;
-        }
-        return true;
-    });
-    
-    
-    $("#delete_row").click(function(){
-        if(i>1){
-            $("#addr"+(i-1)).html('');
-            i--;
-        }
-    });
-    
-    
-    
-    $("#btnproyecto").click(function(event){
-        var error='';
-        
-        var fechas_inicios=$('input[name=\'Cronograma[fechas_inicios][]\']').length;
-	
-	if($('#cronograma-medicion_tiempo').val()=='')
-	{
-	    error=error+'ingrese la medición tiempo <br>';
-	    $('.field-cronograma-medicion_tiempo').addClass('has-error');
+	   
+	    $('#cronograma_'+cron).html(
+		    "<td>"+
+			"<div class='form-group field-proyecto-cronograma_objetivo_"+cron+" required'>"+
+			    "<select id='proyecto-cronograma_objetivo_"+cron+"' class='form-control' name='Proyecto[cronogramas_objetivos][]' onchange='actividad2($(this).val(),"+cron+")'>"+
+				"<option value=''>seleccionar</option>"+
+				opciones_objetivos+
+			    "</select>"+
+		       "</div>"+
+		    "</td>"+
+		    "<td>"+
+			"<div class='form-group field-proyecto-cronograma_actividad_"+cron+" required'>"+
+			    "<select id='proyecto-cronograma_actividad_"+cron+"' class='form-control' name='Proyecto[cronogramas_actividades][]'>"+
+				"<option value=''>seleccionar</option>"+
+			    "</select>"+
+		       "</div>"+
+		    "</td>"+
+		    "<td>"+
+			"<div class='form-group field-proyecto-cronograma_responsable_"+cron+" required'>"+
+			    "<select id='proyecto-cronograma_responsable_"+cron+"' class='form-control' name='Proyecto[cronogramas_responsables][]' >"+
+				"<option value>seleccionar</option>"+
+				<?php foreach($responsables as $responsable){ ?>
+				    "<option value='<?= $responsable->estudiante_id ?>'><?= $responsable->estudiante->nombres_apellidos ?></option>"+
+				<?php } ?>
+			    "</select>"+
+			"</div>"+
+		    "</td>"+
+		   "<td>"+
+			"<div class='form-group field-proyecto-cronograma_fecha_inicio_"+cron+" required'>"+
+			    "<input type='date' id='proyecto-cronograma_fecha_inicio_"+cron+"' class='form-control' name='Proyecto[cronogramas_fechas_inicios][]' placeholder='Fecha inicio' />"+
+			"</div>"+
+		    "</td>"+
+		    "<td>"+
+			"<div class='form-group field-proyecto-cronograma_fecha_fin_"+cron+" required'>"+
+			    "<input type='date' id='proyecto-cronograma_fecha_fin_"+cron+"' class='form-control' name='Proyecto[cronogramas_fechas_fines][]' placeholder='Fecha fin' />"+
+			"</div>"+
+		    "</td>"+
+		    "<td>"+
+			"<span class='remCF glyphicon glyphicon-minus-sign'></span>"+
+		    "</td>");
+	    $('#tab_cronograma').append('<tr id="cronograma_'+(cron+1)+'"></tr>');
+	    cron++;
 	}
-	else
-	{
-	    $('.field-cronograma-medicion_tiempo').addClass('has-success');
-	    $('.field-cronograma-medicion_tiempo').removeClass('has-error');
-	}
-	    
-	for (var i=0; i<fechas_inicios; i++) {
-	    if($('#cronograma-actividad_'+i).val()=='')
-	    {
-		error=error+'ingrese si quiera '+i+' la actividad <br>';
-		$('.field-cronograma-actividad_'+i).addClass('has-error');
-	    }
-	    else
-	    {
-		$('.field-cronograma-actividad_'+i).addClass('has-success');
-		$('.field-cronograma-actividad_'+i).removeClass('has-error');
-	    }
-	    
-	    if($('#cronograma-fecha_inicio_'+i).val()=='')
-	    {
-		error=error+'ingrese si quiera '+i+' la fecha inicio <br>';
-		$('.field-cronograma-fecha_inicio_'+i).addClass('has-error');
-	    }
-	    else
-	    {
-		$('.field-cronograma-fecha_inicio_'+i).addClass('has-success');
-		$('.field-cronograma-fecha_inicio_'+i).removeClass('has-error');
-	    }
-	    
-	    if($('#cronograma-fecha_fin_'+i).val()=='')
-	    {
-		error=error+'ingrese si quiera '+i+' la fecha fin <br>';
-		$('.field-cronograma-fecha_fin_'+i).addClass('has-error');
-	    }
-	    else
-	    {
-		$('.field-cronograma-fecha_fin_'+i).addClass('has-success');
-		$('.field-cronograma-fecha_fin_'+i).removeClass('has-error');
-	    }
-	}	
 	
-        
-    
-        
-        
-        //var objetivos_especificos=$('input[name=\'Proyecto[objetivos_especificos][]\']:checked').length;
-        
-        
-        
-        if(error!='')
-        {
-            $.notify({
-                message: error 
-            },{
-                type: 'danger',
-                z_index: 1000000,
-                placement: {
-                    from: 'bottom',
-                    align: 'right'
-                },
-            });
-            return false;
-        }
-        return true;
-    });
-    
-
+	return true;
+	
+    }
 </script>
 

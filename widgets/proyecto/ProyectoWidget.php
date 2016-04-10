@@ -26,9 +26,6 @@ class ProyectoWidget extends Widget
         if ($proyecto->load(\Yii::$app->request->post()) && $proyecto->save()) {
             $usuario=Usuario::findOne(\Yii::$app->user->id);
             $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
-            //$proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
-            //$countIntegrantes=Integrante::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->count();
-            
             $reflexion = 'insert into reflexion (reflexion,proyecto_id,user_id)
                     select "" , '.$proyecto->id.' , usuario.id from integrante
                     inner join usuario on usuario.estudiante_id=integrante.estudiante_id
@@ -43,9 +40,9 @@ class ProyectoWidget extends Widget
             $reflexion->save();
              
                     
-            $countActividades1=count($proyecto->actividades_1);
-            $countActividades2=count($proyecto->actividades_2);
-            $countActividades3=count($proyecto->actividades_3);
+            $countActividades1=count(array_filter($proyecto->actividades_1));
+            $countActividades2=count(array_filter($proyecto->actividades_2));
+            $countActividades3=count(array_filter($proyecto->actividades_3));
             
             if($proyecto->objetivo_especifico_1!=='')
             {

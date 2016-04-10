@@ -10,12 +10,17 @@ use yii\widgets\Pjax;
 /* @var $model app\models\ProyectoSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <?php if (!$votacionesinternasfinalizadasCount){?>
 <?php Pjax::begin(); ?>
 <?php $form = ActiveForm::begin([
         'action' => ['votacion'],
         'method' => 'get',
     ]); ?>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <h1>Votación interna</h1>
+    </div>
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group field-proyecto-region_id required">
             <label class="control-label" for="proyecto-region_id">Región: *</label>
@@ -27,20 +32,23 @@ use yii\widgets\Pjax;
             </select>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group field-proyecto-titulo required">
             <label class="control-label" for="proyecto-titulo">Proyecto: *</label>
             <input type="text" name="ProyectoSearch[titulo]" class="form-control" value="<?= $searchModel->titulo?>">
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary pull-right']) ?>
         </div>
     </div>
+    <div class="clearfix"></div>
 <?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
-
+<div class="clearfix"></div>
 <div class="col-md-6">
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
@@ -48,16 +56,13 @@ use yii\widgets\Pjax;
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-    
             'titulo',
-            
-    
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {like}',
                 'buttons' => [
                     'view' => function ($url,$model,$key) {
-                        return Html::a('<span class="glyphicon glyphicon-edit" ></span>',['pre-forum/ver2?id='.$model->forum_url],[]);
+                        return Html::a('<span class="glyphicon glyphicon-edit" ></span>',['foro/view?id='.$model->foro_id],[]);
                     },//style="color:green"
                     'like' => function ($url,$model,$key) {
                         $votacioninterna=VotacionInterna::find()
@@ -66,11 +71,11 @@ use yii\widgets\Pjax;
                             ->one();
                         if($votacioninterna)
                         {
-                            return Html::a('<span class="glyphicon glyphicon-thumbs-up" style="color:green"></span>',['votacion'],['onclick'=>'Seleccionar('.$model->id.')']);
+                            return Html::a('<span class="glyphicon glyphicon-thumbs-up" style="color:green"></span>',['votacion#'],['onclick'=>'Seleccionar2('.$model->id.')']);
                         }
                         else
                         {
-                            return Html::a('<span class="glyphicon glyphicon-thumbs-up" ></span>',['votacion'],['onclick'=>'Seleccionar('.$model->id.')']);
+                            return Html::a('<span class="glyphicon glyphicon-thumbs-up" ></span>',['votacion#'],['onclick'=>'Seleccionar2('.$model->id.')']);
                         }
                     }
                 ],
@@ -92,9 +97,10 @@ use yii\widgets\Pjax;
         <?php } ?>
     </table>
     <?php if (!$votacionesinternasfinalizadasCount){?>
-    <button type="button" id="btnfinalizarvotacion" class="btn btn-primary">Finalizar votación</button>
+    <button type="button" id="btnfinalizarvotacion" class="btn btn-primary pull-right">Finalizar votación</button>
     <?php } ?>
 </div>
+<div class="clearfix"></div>
 <?php
     $votacion= Yii::$app->getUrlManager()->createUrl('proyecto/votacioninterna');
     $finalizarvotacion= Yii::$app->getUrlManager()->createUrl('proyecto/finalizarvotacioninterna');
@@ -102,13 +108,15 @@ use yii\widgets\Pjax;
 <script>
 var countvotacion=<?= $votacionesinternasCount ?>;
     
-function Seleccionar(id) {
+function Seleccionar2(id) {
+    
     $.ajax({
         url: '<?= $votacion ?>',
         type: 'GET',
         async: true,
         data: {id:id},
         success: function(data){
+            
             if (data==1) {
                 $.notify({
                     // options
@@ -152,8 +160,8 @@ function Seleccionar(id) {
                 }); 
             }
             setTimeout(function(){
-                window.location.reload(1);
-            }, 1000);
+                        window.location.reload(1);
+                    }, 1000);
         }
     });
 }

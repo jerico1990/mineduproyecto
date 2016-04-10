@@ -16,6 +16,10 @@ use yii\widgets\Pjax;
         'method' => 'get',
     ]); ?>
     <div class="col-xs-12 col-sm-12 col-md-12">
+        <h1>Búsqueda de proyectos</h1>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group field-proyecto-region_id required">
             <label class="control-label" for="proyecto-region_id">Región: *</label>
             <select id="proyecto-region_id" class="form-control" name="ProyectoSearch[region_id]" >
@@ -26,20 +30,24 @@ use yii\widgets\Pjax;
             </select>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group field-proyecto-titulo required">
             <label class="control-label" for="proyecto-titulo">Proyecto: *</label>
             <input type="text" name="ProyectoSearch[titulo]" class="form-control" value="<?= $searchModel->titulo?>">
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary pull-right']) ?>
         </div>
     </div>
+    <div class="clearfix"></div>
 <?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
-
+<div class="col-xs-12 col-sm-12 col-md-12">
+<div class="clearfix"></div>
 <?php Pjax::begin(); ?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
@@ -55,10 +63,11 @@ use yii\widgets\Pjax;
             'template' => '{view}',
             'buttons' => [
                 'view' => function ($url,$model,$key) {
-                    return Html::a('<span class="glyphicon glyphicon-edit"></span>',['pre-forum/ver?id='.$model->forum_url],[]);
+                    return Html::a('<span class="glyphicon glyphicon-edit"></span>',['foro/view?id='.$model->foro_id],[]);
                 }
             ],
         ]
     ],
 ]); ?>
+</div>
 <?php Pjax::end(); ?>
