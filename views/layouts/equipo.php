@@ -8,7 +8,6 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use app\models\PreForum;
 use app\models\Foro;
 use app\models\Usuario;
 use app\models\Integrante;
@@ -33,9 +32,6 @@ if($integrante)
     }
 }
 $foros=Foro::find()->orderBy('id DESC')->all();
-$forums=PreForum::find()->where('status=1')->orderBy('id DESC')->all();
-$myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_icon, status FROM {{%pre_forum}} WHERE user_id=' . Yii::$app->user->id)->queryAll();
-        
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -45,7 +41,6 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="stylesheet" type="text/css" href="../css/equipo.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src='../AdminLTE/bootstrap/js/bootstrap.min.js'></script>
         
@@ -69,15 +64,15 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="../AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs"><?= $usuario->estudiante->nombres_apellidos ?></span>
+                  <span class="hidden-xs"><?= $usuario->estudiante->nombres." ".$usuario->estudiante->apellido_paterno." ".$usuario->estudiante->apellido_materno ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="../AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                     <p>
-                      <?= $usuario->estudiante->nombres_apellidos ?>
-                      <small><?= date('d-m-Y')?></small>
+                        <?= $usuario->estudiante->nombres." ".$usuario->estudiante->apellido_paterno." ".$usuario->estudiante->apellido_materno ?>
+                        <small><?= date('d-m-Y')?></small>
                     </p>
                   </li>
                   <!-- Menu Footer-->
@@ -105,7 +100,7 @@ $myForums = Yii::$app->db->createCommand('SELECT forum_url, forum_name, forum_ic
               <img src="../AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-              <p style="font-size: 9px"><?= $usuario->estudiante->nombres_apellidos ?></p>
+              <p style="font-size: 9px"><?= $usuario->estudiante->nombres." ".$usuario->estudiante->apellido_paterno." ".$usuario->estudiante->apellido_materno ?></p>
 
               <a href="#"><i class="fa fa-circle text-success"></i> En linea</a>
             </div>

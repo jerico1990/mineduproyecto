@@ -92,7 +92,7 @@ class PanelController extends Controller
         }
         
         $invitaciones=Invitacion::find()
-                        ->select('invitacion.id,equipo.descripcion_equipo,lider.nombres_apellidos,institucion.denominacion')
+                        ->select('invitacion.id,equipo.descripcion_equipo,lider.nombres,lider.apellido_paterno,lider.apellido_materno,lider.nombres_apellidos,institucion.denominacion')
                         ->innerJoin('equipo','equipo.id=invitacion.equipo_id')
                         ->innerJoin('estudiante lider','invitacion.estudiante_id=lider.id')
                         ->innerJoin('institucion','institucion.id=lider.institucion_id')

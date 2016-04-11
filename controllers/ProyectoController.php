@@ -229,13 +229,6 @@ class ProyectoController extends Controller
             $equipo->etapa=$etapa->etapa;
             $equipo->update();
             
-            /*$proyectoetapa=Proyecto::findOne($proyecto->id);
-            $proyectoetapa->etapa=$etapa->etapa;
-            $proyectoetapa->update();
-            $video=Video::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
-            $video->etapa=$etapa->etapa;
-            $video->update();
-            */
             echo 1;
         }
         else
@@ -301,27 +294,11 @@ class ProyectoController extends Controller
                                         [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
             $video->etapa=2;
             $video->update();
-            /*$evaluacion = 'insert into evaluacion (evaluacion,proyecto_id,user_id)
-                    select "" , '.$proyecto->id.' , usuario.id from integrante
-                    inner join usuario on usuario.estudiante_id=integrante.estudiante_id
-                    where  integrante.equipo_id='.$integrante->equipo_id.' ';
-            
-            \Yii::$app->db->createCommand($evaluacion)->execute();
-            */
-            
-            
             $proyectoetapa=Proyecto::findOne($proyecto->id);
             $equipo=Equipo::findOne($proyectoetapa->equipo_id);
             $equipo->etapa=$etapa->etapa;
             $equipo->update();
             
-            /*$proyectoetapa=Proyecto::findOne($proyecto->id);
-            $proyectoetapa->etapa=$etapa->etapa;
-            $proyectoetapa->update();
-            $video=Video::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
-            $video->etapa=$etapa->etapa;
-            $video->update();
-            */
             echo 1;
         }
         else
@@ -359,30 +336,12 @@ class ProyectoController extends Controller
         $etapa=Etapa::find()->where('estado=1 and etapa=1')->one();
         if($proyectoexiste && $etapa)
         {
-            /*$pre_forum_proyectos = 'insert into pre_forum (forum_name,forum_desc,user_id,status,proyecto_id)
-                    select proyecto.titulo,proyecto.titulo,1,1,proyecto.id from proyecto
-                    inner join equipo on equipo.id=proyecto.equipo_id
-                    where  equipo.etapa=1';
-            
-            \Yii::$app->db->createCommand($pre_forum_proyectos)->execute();*/
             
             $foros = 'insert into foro (titulo,descripcion,user_id,post_count,proyecto_id)
                     select proyecto.titulo,proyecto.resumen,1,0,proyecto.id from proyecto
                     inner join equipo on equipo.id=proyecto.equipo_id
                     where  equipo.etapa=1';
             \Yii::$app->db->createCommand($foros)->execute();
-            
-            /*$uppre_forum_proyectos = 'update pre_forum set forum_url=id';
-            
-            \Yii::$app->db->createCommand($uppre_forum_proyectos)->execute();
-            
-            $pre_forum_board_proyectos = 'insert into pre_forum_board (parent_id,name,columns,forum_id,user_id)
-                    select 1,pre_forum.forum_name,1,pre_forum.id,1 from pre_forum
-                    where  pre_forum.id not in (1,2)';
-            
-            \Yii::$app->db->createCommand($pre_forum_board_proyectos)->execute();
-            */
-            
             $etapa->estado=0;
             $etapa->update();
             $nuevaetapa=new Etapa;
@@ -566,7 +525,7 @@ class ProyectoController extends Controller
         {
             
             $query = new Query;
-            $threads = $query->select('i.id')
+            $threads = $query->select('u.department_id,i.id')
             ->from('{{%institucion}} as i')
             ->join('INNER JOIN','{{%ubigeo}} as u', 'u.district_id=i.ubigeo_id')
             ->where('u.department_id=:id', [':id'=>$ubigeo->department_id])
@@ -575,7 +534,7 @@ class ProyectoController extends Controller
             
             foreach($threads as $thread)
             {
-                echo $thread["id"]."<br>";
+                echo $thread["department_id"]."             ".$thread["id"]."<br>";
                 //var_dump($thread["id"]);
             }
             

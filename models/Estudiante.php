@@ -43,7 +43,7 @@ class Estudiante extends \yii\db\ActiveRecord
             //[['id'], 'required'],
             [['id', 'institucion_id', 'grado'], 'integer'],
             [['fecha_nac'], 'safe'],
-            [['nombres_apellidos'], 'string', 'max' => 250],
+            [['nombres','apellido_paterno','apellido_materno'], 'string', 'max' => 250],
             [['sexo'], 'string', 'max' => 10],
             [['dni'], 'string', 'max' => 8],
             [['email'], 'string', 'max' => 150],

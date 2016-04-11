@@ -55,7 +55,10 @@ class RegistrarController extends Controller
             
             //var_dump($registrar->p1);die;
             $estudiante =new Estudiante;
-            $estudiante->nombres_apellidos=$registrar->nombres_apellidos;
+            //$estudiante->nombres_apellidos=$registrar->nombres_apellidos;
+            $estudiante->nombres=$registrar->nombres;
+            $estudiante->apellido_paterno=$registrar->apellido_paterno;
+            $estudiante->apellido_materno=$registrar->apellido_materno;
             $estudiante->sexo=$registrar->sexo;
             $estudiante->dni=$registrar->dni;
             $estudiante->fecha_nac=date("Y-m-d",strtotime($registrar->fecha_nac));

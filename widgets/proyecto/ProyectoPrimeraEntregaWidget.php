@@ -42,8 +42,8 @@ class ProyectoPrimeraEntregaWidget extends Widget
             $disabled='disabled';
         }
         
-        $proyecto=ProyectoCopia::find()->where('equipo_id=:equipo_id and etapa=2',[':equipo_id'=>$integrante->equipo_id])->one();
-        $objetivos_especificos=ObjetivoEspecificoCopia::find()->where('proyecto_id=:proyecto_id and etapa=2',[':proyecto_id'=>$proyecto->id])->all();
+        $proyecto=ProyectoCopia::find()->where('equipo_id=:equipo_id and etapa=1',[':equipo_id'=>$integrante->equipo_id])->one();
+        $objetivos_especificos=ObjetivoEspecificoCopia::find()->where('proyecto_id=:proyecto_id and etapa=1',[':proyecto_id'=>$proyecto->id])->all();
         
         $i=1;
         foreach($objetivos_especificos as $objetivo_especifico)
@@ -68,7 +68,7 @@ class ProyectoPrimeraEntregaWidget extends Widget
         $actividades=ActividadCopia::find()
                     ->select('objetivo_especifico_copia.id objetivo_especifico_id,actividad_copia.id actividad_id,actividad_copia.descripcion,actividad_copia.resultado_esperado')
                     ->innerJoin('objetivo_especifico_copia','objetivo_especifico_copia.id=actividad_copia.objetivo_especifico_id')
-                    ->where('proyecto_id=:proyecto_id and actividad_copia.estado=1  and actividad_copia.etapa=1',[':proyecto_id'=>$proyecto->id])->all();
+                    ->where('proyecto_id=:proyecto_id and actividad_copia.estado=1  and actividad_copia.etapa=1 and objetivo_especifico_copia.etapa=1',[':proyecto_id'=>$proyecto->id])->all();
         $actividades1=ActividadCopia::find()
                     ->select('objetivo_especifico_copia.id objetivo_especifico_id,actividad_copia.id actividad_id,actividad_copia.descripcion')
                     ->innerJoin('objetivo_especifico_copia','objetivo_especifico_copia.id=actividad_copia.objetivo_especifico_id')

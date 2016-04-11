@@ -14,11 +14,13 @@ if($integrante)
                 
     $connection = \Yii::$app->db;
     $command=$connection->createCommand("
-                select 1 tipo,integrante.equipo_id,integrante.id,estudiante.nombres_apellidos,integrante.estudiante_id,integrante.rol,integrante.estado from integrante
+                select 1 tipo,integrante.equipo_id,integrante.id,estudiante.nombres_apellidos,estudiante.nombres,estudiante.apellido_paterno,estudiante.apellido_materno,
+                integrante.estudiante_id,integrante.rol,integrante.estado from integrante
                 inner join estudiante on integrante.estudiante_id=estudiante.id
                 where integrante.equipo_id=".$integrante->equipo_id." and integrante.estado in (1,2)
                 union
-                select 2 tipo,invitacion.equipo_id,invitacion.id,estudiante.nombres_apellidos,estudiante.id,0,6 from invitacion
+                select 2 tipo,invitacion.equipo_id,invitacion.id,estudiante.nombres_apellidos,estudiante.nombres,estudiante.apellido_paterno,estudiante.apellido_materno,
+                estudiante.id,0,6 from invitacion
                 inner join estudiante on invitacion.estudiante_invitado_id=estudiante.id
                 where invitacion.equipo_id=".$integrante->equipo_id." and invitacion.estado=1
                ");
@@ -74,7 +76,7 @@ $btninscribir=$integrante
         foreach($equipoeinvitaciones as $equipoeinvitacion)
         {
             echo    "<tr>
-                        <td>".$equipoeinvitacion['nombres_apellidos']."</td>";
+                        <td>".$equipoeinvitacion['nombres']." ".$equipoeinvitacion['apellido_paterno']." ".$equipoeinvitacion['apellido_materno']."</td>";
                         
             if($integrante->rol==1)
             {

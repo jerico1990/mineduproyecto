@@ -10,7 +10,7 @@ use yii\base\Model;
  */
 class Registrar extends Model
 {
-    public $nombres_apellidos;
+    //public $nombres_apellidos;
     //ublic $proyecto_trabajar_donde;
     public $sexo;
     public $dni;
@@ -30,6 +30,9 @@ class Registrar extends Model
     public $p6;
     public $password;
     public $repassword;
+    public $nombres;
+    public $apellido_paterno;
+    public $apellido_materno;
     /**
      * @return array the validation rules.
      */
@@ -37,12 +40,12 @@ class Registrar extends Model
     {
         return [
             // name, email, subject and body are required
-            [['nombres_apellidos','sexo','dni','fecha_nac','email','celular','departamento',
+            [['sexo','dni','fecha_nac','email','celular','departamento',
               'provincia','distrito','institucion','grado','p1','p2','p3','p4','p5','p6',
               'password','repassword'], 'required'],
             // email has to be a valid email address
             [['sexo','departamento','provincia','distrito','institucion'], 'string', 'max' => 10],
-            [['nombres_apellidos','email','password','repassword'], 'string', 'max' => 250],
+            [['email','password','repassword','nombres','apellido_paterno','apellido_materno'], 'string', 'max' => 250],
             [['dni','celular','grado'],'integer'],
             [['fecha_nac','p1','p2','p3','p4','p5','p6'],'safe'],
             [['email'],'email'],

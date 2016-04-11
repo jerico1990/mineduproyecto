@@ -58,9 +58,9 @@ foreach($objetivos as $objetivo){
 					<option value>seleccionar</option>
 					<?php foreach($responsables as $responsable){ ?>
 					    <?php if($responsable->estudiante_id==$cronograma->responsable_id){ ?>
-						<option value="<?= $responsable->estudiante_id ?>" selected > <?= $responsable->estudiante->nombres_apellidos ?></option>
+						<option value="<?= $responsable->estudiante_id ?>" selected > <?= $responsable->estudiante->nombres." ".$responsable->estudiante->apellido_paterno." ".$responsable->estudiante->apellido_materno ?></option>
 					    <?php } else { ?>
-						<option value="<?= $responsable->estudiante_id ?>" > <?= $responsable->estudiante->nombres_apellidos ?></option>
+						<option value="<?= $responsable->estudiante_id ?>" > <?= $responsable->estudiante->nombres." ".$responsable->estudiante->apellido_paterno." ".$responsable->estudiante->apellido_materno ?></option>
 					    <?php } ?>
 					<?php } ?>
 				    </select>
@@ -110,7 +110,7 @@ foreach($objetivos as $objetivo){
 				    <select id="proyecto-cronograma_responsable_0" class="form-control" name="Proyecto[cronogramas_responsables][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($responsables as $responsable){ ?>
-					    <option value="<?= $responsable->estudiante_id ?>"><?= $responsable->estudiante->nombres_apellidos ?></option>
+					    <option value="<?= $responsable->estudiante_id ?>"><?= $responsable->estudiante->nombres." ".$responsable->estudiante->apellido_paterno." ".$responsable->estudiante->apellido_materno ?></option>
 					<?php } ?>
 				    </select>
 				</div>
@@ -276,7 +276,7 @@ foreach($objetivos as $objetivo){
 			    "<select id='proyecto-cronograma_responsable_"+cron+"' class='form-control' name='Proyecto[cronogramas_responsables][]' >"+
 				"<option value>seleccionar</option>"+
 				<?php foreach($responsables as $responsable){ ?>
-				    "<option value='<?= $responsable->estudiante_id ?>'><?= $responsable->estudiante->nombres_apellidos ?></option>"+
+				    "<option value='<?= $responsable->estudiante_id ?>'><?= $responsable->estudiante->nombres." ".$responsable->estudiante->apellido_paterno." ".$responsable->estudiante->apellido_materno ?></option>"+
 				<?php } ?>
 			    "</select>"+
 			"</div>"+

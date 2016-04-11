@@ -20,9 +20,22 @@ use yii\widgets\Pjax;
 <hr class="colorgraph">
 <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-registrar-nombres_apellidos required">
-            <label class="control-label" for="registrar-nombres_apellidos">Nombres y apellidos: *</label>
-            <input type="text" id="registrar-nombres_apellidos" class="form-control texto" name="Registrar[nombres_apellidos]" placeholder="Nombres y apellidos" required/>
+        <div class="form-group field-registrar-nombres required">
+            <label class="control-label" for="registrar-nombres">Nombres: *</label>
+            <input type="text" id="registrar-nombres" class="form-control texto" name="Registrar[nombres]" placeholder="Nombres" required/>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-4">
+        <div class="form-group field-registrar-apellido_paterno required">
+            <label class="control-label" for="registrar-apellido_paterno">Apellido paterno: *</label>
+            <input type="text" id="registrar-apellido_paterno" class="form-control texto" name="Registrar[apellido_paterno]" placeholder="Apellido paterno" required/>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-7 col-md-5">
+        <div class="form-group field-registrar-apellido_materno required">
+            <label class="control-label" for="registrar-apellido_materno">Apellido materno: *</label>
+            <input type="text" id="registrar-apellido_materno" class="form-control texto" name="Registrar[apellido_materno]" placeholder="Apellido materno" required/>
         </div>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
@@ -394,14 +407,34 @@ use yii\widgets\Pjax;
         var p5=$('input[name=\'Registrar[p5][]\']:checked').length;
         var p6=$('input[name=\'Registrar[p6][]\']:checked').length;
         
-        if ($('#registrar-nombres_apellidos').val()=='') {
-            error=error+'Ingrese nombres y apellidos <br>';
-            $('.field-registrar-nombres_apellidos').addClass('has-error');
+        if ($('#registrar-nombres').val()=='') {
+            error=error+'Ingrese nombres <br>';
+            $('.field-registrar-nombres').addClass('has-error');
         }
         else
         {
-            $('.field-registrar-nombres_apellidos').addClass('has-success');
-            $('.field-registrar-nombres_apellidos').removeClass('has-error');
+            $('.field-registrar-nombres').addClass('has-success');
+            $('.field-registrar-nombres').removeClass('has-error');
+        }
+        
+        if ($('#registrar-apellido_paterno').val()=='') {
+            error=error+'Ingrese su apellido paterno <br>';
+            $('.field-registrar-apellido_paterno').addClass('has-error');
+        }
+        else
+        {
+            $('.field-registrar-apellido_paterno').addClass('has-success');
+            $('.field-registrar-apellido_paterno').removeClass('has-error');
+        }
+        
+        if ($('#registrar-apellido_materno').val()=='') {
+            error=error+'Ingrese su apellido materno <br>';
+            $('.field-registrar-apellido_materno').addClass('has-error');
+        }
+        else
+        {
+            $('.field-registrar-apellido_materno').addClass('has-success');
+            $('.field-registrar-apellido_materno').removeClass('has-error');
         }
         
         if ($('#registrar-sexo').val()=='') {

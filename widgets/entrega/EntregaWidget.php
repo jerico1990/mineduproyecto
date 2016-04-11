@@ -64,7 +64,7 @@ class EntregaWidget extends Widget
         $errorasuntoprivado='';
         foreach($asuntosprivados as $asuntoprivado)
         {
-            $errorasuntoprivado='Falta comentar en el foro de "Asuntos Privados" ha '.$asuntoprivado->estudiante->nombres_apellidos.' <br>'.$errorasuntoprivado;
+            $errorasuntoprivado='Falta comentar en el foro de "Asuntos Privados" ha '.$asuntoprivado->estudiante->nombres.' '.$asuntoprivado->estudiante->apellido_paterno.' '.$asuntoprivado->estudiante->apellido_materno.' <br>'.$errorasuntoprivado;
         }
         
         $asuntospublicos=Integrante::find()
@@ -74,7 +74,7 @@ class EntregaWidget extends Widget
         $errorasuntopublico='';
         foreach($asuntospublicos as $asuntopublico)
         {
-            $errorasuntopublico='Falta comentar en el foro de "Asuntos Públicos" ha '.$asuntopublico->estudiante->nombres_apellidos.' <br>'.$errorasuntopublico;
+            $errorasuntopublico='Falta comentar en el foro de "Asuntos Públicos" ha '.$asuntopublico->estudiante->nombres.' '.$asuntopublico->estudiante->apellido_paterno.' '.$asuntopublico->estudiante->apellido_materno.' <br>'.$errorasuntopublico;
             
         }
         
@@ -84,7 +84,7 @@ class EntregaWidget extends Widget
         {
             if(trim($reflexion->reflexion)=='')
             {
-                $errorreflexion="Falta ingresar una reflexión ".$reflexion->usuario->estudiante->nombres_apellidos." <br>".$errorreflexion;
+                $errorreflexion="Falta ingresar una reflexión ".$reflexion->usuario->estudiante->nombres." ".$reflexion->usuario->estudiante->apellido_paterno." ".$reflexion->usuario->estudiante->apellido_materno." <br>".$errorreflexion;
             }
         }
         
@@ -95,7 +95,7 @@ class EntregaWidget extends Widget
         {
             if(trim($evaluacion->evaluacion)=='')
             {
-                $errorevaluacion="Falta ingresar una evaluación de ".$evaluacion->usuario->estudiante->nombres_apellidos." <br>".$errorevaluacion;
+                $errorevaluacion="Falta ingresar una evaluación de ".$evaluacion->usuario->estudiante->nombres." ".$evaluacion->usuario->estudiante->apellido_paterno." ".$evaluacion->usuario->estudiante->apellido_materno." <br>".$errorevaluacion;
             }
         }
         
@@ -106,7 +106,7 @@ class EntregaWidget extends Widget
         $errorrecomendaciones='';
         foreach($recomendaciones as $recomendacion)
         {
-            $errorrecomendaciones='Falta realizar mínimo una recomendación en cualquiera de los proyectos '.$recomendacion->estudiante->nombres_apellidos.' <br>'.$errorrecomendaciones;
+            $errorrecomendaciones='Falta realizar mínimo una recomendación en cualquiera de los proyectos '.$recomendacion->estudiante->nombres.' '.$recomendacion->estudiante->apellido_paterno.' '.$recomendacion->estudiante->apellido_materno.' <br>'.$errorrecomendaciones;
         }
         
         return $this->render('entrega',['proyecto'=>$proyecto,'actividades'=>$actividades,

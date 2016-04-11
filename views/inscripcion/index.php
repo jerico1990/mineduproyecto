@@ -90,7 +90,7 @@ if($equipo->id)
                                     echo "<tr>
                                             <td><input name='Equipo[invitaciones][]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id,$equipoid,$(this))'></td>
                                             <td><span id='snum'>$i</span></td>
-                                            <td>$estudiante->nombres_apellidos</td>
+                                            <td>$estudiante->nombres $estudiante->apellido_paterno $estudiante->apellido_materno</td>
                                             <td>$estudiante->grado</td>
                                     </tr>";
                                      
