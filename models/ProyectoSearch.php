@@ -91,7 +91,7 @@ class ProyectoSearch extends Proyecto
                     //->innerJoin('integrante','integrante.')
                     ->innerJoin('asunto','asunto.id=equipo.asunto_id')
                     ->innerJoin('foro','foro.proyecto_id=proyecto.id')
-                    ->where('equipo.etapa in (1,2)')
+                    ->where('equipo.etapa in (2)')
                     ->groupBy('proyecto.titulo,foro.id');
 
         $dataProvider = new ActiveDataProvider([

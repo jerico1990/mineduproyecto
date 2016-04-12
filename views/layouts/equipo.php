@@ -14,6 +14,7 @@ use app\models\Integrante;
 use app\models\Equipo;
 use app\models\Proyecto;
 use app\models\Etapa;
+use app\models\Invitacion;
 AppAsset::register($this);
 
 if (!\Yii::$app->user->isGuest) {
@@ -21,17 +22,19 @@ if (!\Yii::$app->user->isGuest) {
 $etapa2=Etapa::find()->where('etapa=2')->one();
 $etapa3=Etapa::find()->where('etapa=3')->one();
 $usuario=Usuario::find()->where('id=:id',[':id'=>\Yii::$app->user->id])->one();
-
+//$invitacion=Invitacion::find()->where('equipo_id=:equipo_id and estado=1',[':equipo_id'=>$equipo->id])->one();
 $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
 if($integrante)
 {
     $equipo=Equipo::find()->where('id=:id and estado=1',[':id'=>$integrante->equipo_id])->one();
     if($equipo)
     {
+        
         $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$equipo->id])->one();
     }
 }
 $foros=Foro::find()->orderBy('id DESC')->all();
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -111,36 +114,15 @@ $foros=Foro::find()->orderBy('id DESC')->all();
             <li class="header">Menú</li>
             <li><?= Html::a('<i class="fa fa-book"></i> Ideas en acción',['panel/ideas-accion'],[]);?></li>
             <li><?= Html::a('<i class="fa fa-book"></i> Mi equipo',['panel/index'],[]);?></li>
-            
-                
-            
-            <?php /* if (!empty($forums) && $integrante && $equipo){ ?>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-share"></i> <span>Foros</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              
-              <ul class="treeview-menu">
-                <?php foreach($forums as $model): ?>
-                    <?php if($model->id==1 || $model->id==2){?>
-                    <li><a href="#" onclick="window.location.href= '<?= \yii\helpers\Url::toRoute(['/pre-forum/view', 'id' => $model->forum_url]) ?>';return false"> <?= Html::encode($model->forum_name); ?></a></li>
-                    <?php } ?>
-                <?php endforeach; ?>
-                
-                
-              </ul>
-              
-            </li>
-            <?php }*/ ?>
-            
+            <?php if($integrante){ ?>
+            <li><?= Html::a('<i class="fa fa-book"></i> Ruta',['ruta/index'],[]);?></li>
+            <?php } ?>
             <?php if ($integrante && $equipo){ ?>
             <li class="treeview">
-              <a href="#">
-                <i class="fa fa-share"></i> <span>Foros</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              
+                <a href="#">
+                    <i class="fa fa-share"></i> <span>Foros</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
                 <ul class="treeview-menu">
                 <?php foreach($foros as $foro): ?>
                     <?php if($foro->id==1 || $foro->id==2){?>
@@ -156,11 +138,7 @@ $foros=Foro::find()->orderBy('id DESC')->all();
             <li><?= Html::a("Mi proyecto",['proyecto/actualizar'],[]);?></li>
             <!--<li><?= Html::a("Mi video",['video/index'],[]);?></li>-->
             <li><?= Html::a("Mis entregas",['entrega/index'],[]);?></li>
-            <?php } /*elseif($integrante && $equipo && $proyecto && $integrante->rol==2){ ?>
-                <li><?= Html::a("Mi proyecto",['proyecto/actualizar'],[]);?></li>
-                <li><a href="../video/index"> Mi video</a></li>
-                <li><a href="../entrega/index"> Mis entregas</a></li>
-                <?php } */?>
+            <?php } ?>
             <?php if($integrante && $equipo && $etapa2 && ($equipo->etapa==1 || $equipo->etapa==2)){?>
             <li><?= Html::a("Búsqueda de proyectos",['proyecto/buscar'],[]);?></li>
             <?php } ?>

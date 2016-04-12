@@ -68,7 +68,7 @@ class InscripcionController extends Controller
                     ->where('estudiante.institucion_id=:institucion_id and estudiante.id
                             not in (select estudiante_id from integrante) and estudiante.id!=:id
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
-                    ->all();
+                    ->orderBy('grado asc')->all();
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$institucion->estudiante_id])->one();
         if($integrante)
         {
@@ -85,7 +85,11 @@ class InscripcionController extends Controller
             $equipo->fecha_registro=date("Y-m-d H:i:s");
             $equipo->estado=0;
             $equipo->save();
-            $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension;
+            if($equipo->foto_img)
+            {
+                $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension;
+            }
+            
             $equipo->update();
             $lider=new Integrante;
             $lider->equipo_id=$equipo->id;
@@ -118,7 +122,11 @@ class InscripcionController extends Controller
                     }
                 }
             }
-            $equipo->foto_img->saveAs('foto_equipo/' . $equipo->id . '.' . $equipo->foto_img->extension);
+            if($equipo->foto_img)
+            {
+                $equipo->foto_img->saveAs('foto_equipo/' . $equipo->id . '.' . $equipo->foto_img->extension);
+            }
+            
             
             return $this->redirect(['panel/index']);
            
@@ -165,7 +173,7 @@ class InscripcionController extends Controller
                             and estudiante.id
                             not in (select estudiante_id from integrante) and estudiante.id!=:id
                             ',[':institucion_id'=>$institucion->id,':id'=>$institucion->estudiante_id])
-                    ->all();
+                    ->orderBy('grado asc')->all();
         
         $invitacionContador=Invitacion::find()->where('estado=1 and equipo_id=:equipo_id ',
                                               [':equipo_id'=>$equipo->id])->count();

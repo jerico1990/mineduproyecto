@@ -22,6 +22,10 @@ class Integrante extends \yii\db\ActiveRecord
      */
     public $nombres_apellidos;
     public $department_id;
+    public $user_id;
+    public $nombres;
+    public $apellido_paterno;
+    public $apellido_materno;
     public static function tableName()
     {
         return 'integrante';
