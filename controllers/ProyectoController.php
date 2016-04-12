@@ -472,10 +472,6 @@ class ProyectoController extends Controller
     
     public function actionFinalizarvotacioninterna()
     {
-        /*$votacioninterna=VotacionInterna::find()
-                            ->where('proyecto_id=:proyecto_id and user_id=:user_id and estado=1',
-                                    [':proyecto_id'=>$proyecto->id,':user_id'=>\Yii::$app->user->id])
-                            ->all();*/
         $updatevotacioninterna =    'update votacion_interna set estado=2 where user_id='.\Yii::$app->user->id.' and estado=1';
             
         \Yii::$app->db->createCommand($updatevotacioninterna)->execute();

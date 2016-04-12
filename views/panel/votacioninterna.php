@@ -64,7 +64,7 @@ use yii\widgets\Pjax;
                 //'attribute' => 'codigo_modular',
                 'format'=>'raw',
                 'value'=>function($data) {
-                    return "<div id='proyecto_".$data->id."'> ".(int)$data->resultado."</div>";
+                    return "<div id='proyecto_".$data->id."'> ".(double)$data->resultado."</div>";
                 },
             ],
             
