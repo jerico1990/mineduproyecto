@@ -26,15 +26,15 @@ use yii\web\JsExpression;
             <div class="tab-pane active" id="tab_1">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group field-proyecto-titulo required">
-                            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: *</label>
-                            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="10" title="Máximo 10 palabras">
+                            <label class="control-label" for="proyecto-titulo" title="Máximo 200 palabras">Título: *</label>
+                            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="200" title="Máximo 10 palabras">
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group field-proyecto-resumen required">
-                            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label>
-                            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 100 palabras"></textarea>
+                            <label class="control-label" for="proyecto-resumen" title="Mínimo 500 palabras">Resumen: *</label>
+                            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 500 palabras"></textarea>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -124,8 +124,8 @@ use yii\web\JsExpression;
             </div>
             <div class="modal-body">
                 <div class="form-group field-proyecto-objetivo_general required">
-                    <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Descripción: *</label>
-                    <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="30" placeholder="Objetivo General" title="Máximo 30 palabras"></textarea>
+                    <label class="control-label" for="proyecto-objetivo_general" title="Máximo 200 palabras">Descripción: *</label>
+                    <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="200" placeholder="Objetivo General" title="Máximo 200 palabras"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -148,8 +148,8 @@ use yii\web\JsExpression;
             <div class="modal-body">
                 <div class="col-xs-12 col-sm-7 col-md-12">
                     <div class="form-group field-proyecto-objetivo_especifico_1 required">
-                        <label class="control-label" for="proyecto-objetivo_especifico_1" title="Máximo 30 palabras">Descripción: *</label>
-                        <textarea id="proyecto-objetivo_especifico_1" class="form-control" name="Proyecto[objetivo_especifico_1]"  maxlength="30" placeholder="Objetivo especifico 1" title="Máximo 30 palabras"></textarea>
+                        <label class="control-label" for="proyecto-objetivo_especifico_1" title="Máximo 200 palabras">Descripción: *</label>
+                        <textarea id="proyecto-objetivo_especifico_1" class="form-control" name="Proyecto[objetivo_especifico_1]"  maxlength="200" placeholder="Objetivo especifico 1" title="Máximo 200 palabras"></textarea>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -210,8 +210,8 @@ use yii\web\JsExpression;
             <div class="modal-body">
                 <div class="col-xs-12 col-sm-7 col-md-12">
                     <div class="form-group field-proyecto-objetivo_especifico_2 required">
-                        <label class="control-label" for="proyecto-objetivo_especifico_2" title="Máximo 30 palabras">Descripción: *</label>
-                        <textarea id="proyecto-objetivo_especifico_2" class="form-control" name="Proyecto[objetivo_especifico_2]"  maxlength="30" placeholder="Objetivo especifico 2" title="Máximo 30 palabras"></textarea>
+                        <label class="control-label" for="proyecto-objetivo_especifico_2" title="Máximo 200 palabras">Descripción: *</label>
+                        <textarea id="proyecto-objetivo_especifico_2" class="form-control" name="Proyecto[objetivo_especifico_2]"  maxlength="200" placeholder="Objetivo especifico 2" title="Máximo 200 palabras"></textarea>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -273,8 +273,8 @@ use yii\web\JsExpression;
             <div class="modal-body">
                 <div class="col-xs-12 col-sm-7 col-md-12">
                     <div class="form-group field-proyecto-objetivo_especifico_3 required">
-                        <label class="control-label" for="proyecto-objetivo_especifico_3" title="Máximo 30 palabras">Descripción: *</label>
-                        <textarea id="proyecto-objetivo_especifico_3" class="form-control" name="Proyecto[objetivo_especifico_3]"  maxlength="30" placeholder="Objetivo especifico 3" title="Máximo 30 palabras"></textarea>
+                        <label class="control-label" for="proyecto-objetivo_especifico_3" title="Máximo 200 palabras">Descripción: *</label>
+                        <textarea id="proyecto-objetivo_especifico_3" class="form-control" name="Proyecto[objetivo_especifico_3]"  maxlength="200" placeholder="Objetivo especifico 3" title="Máximo 200 palabras"></textarea>
                     </div>
                 </div>
                 <div class="clearfix"></div>

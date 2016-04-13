@@ -88,7 +88,7 @@ class Proyecto extends \yii\db\ActiveRecord
                 'planes_presupuestales_cantidades','planes_presupuestales_subtotales','planes_presupuestal_ids'],'safe'],
             [['id','actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
             [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id','region_id'], 'integer'],
-            [['titulo'], 'string', 'max' => 20],
+            [['titulo'], 'string', 'max' => 200],
             [['resumen','beneficiario','evaluacion'], 'string', 'max' => 25000],
             [['forum_url','reflexion','objetivo_general','objetivo_especifico_1','objetivo_especifico_2','objetivo_especifico_3'], 'string', 'max' => 300],
         ];
