@@ -271,11 +271,7 @@ class EquipoController extends Controller
     public function actionFinalizarequipo($id)
     {
         $integrante=Integrante::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$id])->count();
-        if($integrante<3)
-        {
-            echo 2; 
-        }
-        elseif($integrante>=3)
+        if($integrante>=3)
         {
             $equipo=Equipo::findOne($id);
             $equipo->estado=1;
@@ -289,6 +285,10 @@ class EquipoController extends Controller
                               [':equipo_id'=>$id]);
             
             echo 1;
+        }
+        elseif($integrante<3)
+        {
+            echo 2; 
         }
     }
     

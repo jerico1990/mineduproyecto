@@ -410,13 +410,13 @@ function finalizarequipo(id) {
         async: true,
         data: {id:id},
         success: function(data){
-            if (data==2) {
+            if (data==1) {
                 $.notify({
                     // options
-                    message: 'No tiene la cantidad suficiente para finalizar el equipo, deben ser 3 integrantes' 
+                    message: 'Ha finalizado su equipo' 
                 },{
                     // settings
-                    type: 'danger',
+                    type: 'success',
                     z_index: 1000000,
                     placement: {
                             from: 'bottom',
@@ -424,13 +424,14 @@ function finalizarequipo(id) {
                     },
                 });
             }
-            else if (data==1) {
+            else if (data==2) {
+                
                 $.notify({
                     // options
-                    message: 'Ha finalizado su equipo' 
+                    message: 'No tiene la cantidad suficiente para finalizar el equipo, deben ser 3 integrantes' 
                 },{
                     // settings
-                    type: 'success',
+                    type: 'danger',
                     z_index: 1000000,
                     placement: {
                             from: 'bottom',
