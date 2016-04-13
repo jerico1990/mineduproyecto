@@ -27,7 +27,7 @@ use yii\web\JsExpression;
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group field-proyecto-titulo required">
                             <label class="control-label" for="proyecto-titulo" title="Máximo 200 palabras">Título: *</label>
-                            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="200" title="Máximo 10 palabras">
+                            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="200" title="Máximo 200 palabras">
                         </div>
                     </div>
                     <div class="clearfix"></div>
