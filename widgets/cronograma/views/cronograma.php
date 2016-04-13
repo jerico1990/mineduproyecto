@@ -25,7 +25,7 @@ foreach($objetivos as $objetivo){
 		<th>Responsable</th>
 		<th colspan="2" align="center">Fecha inicio</th>
 		<?= ($disabled=='')?'<th></th>':'' ?>
-	    </thead>cesarin
+	    </thead>
 	    <tbody>
 		<?php if($cronogramas){?>
 		    <?php $cron=0; ?>
