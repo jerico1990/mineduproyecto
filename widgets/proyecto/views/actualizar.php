@@ -1216,14 +1216,17 @@ use yii\web\JsExpression;
                 var percentVal = '100%';
                 bar.width(percentVal)
                 percent.html(percentVal);
-                $( "#w0" ).submit();
+               // $( "#w0" ).submit();
+               setTimeout(function(){
+                                        window.location.reload(1);
+                                    }, 10);
             },
             complete: function(xhr) {
                 status.html(xhr.responseText);
-                $( "#w0" ).submit();
-                /*setTimeout(function(){
+               // $( "#w0" ).submit();
+                setTimeout(function(){
                                         window.location.reload(1);
-                                    }, 10);*/
+                                    }, 10);
             }
         }); });
     //})();  
