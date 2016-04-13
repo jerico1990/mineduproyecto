@@ -22,20 +22,20 @@ use yii\widgets\Pjax;
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-nombres required">
             <label class="control-label" for="registrar-nombres">Nombres: *</label>
-            <input type="text" id="registrar-nombres" class="form-control texto" name="Registrar[nombres]" placeholder="Nombres" required/>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-nombres" class="form-control texto" name="Registrar[nombres]" placeholder="Nombres" required/>
         </div>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-apellido_paterno required">
             <label class="control-label" for="registrar-apellido_paterno">Apellido paterno: *</label>
-            <input type="text" id="registrar-apellido_paterno" class="form-control texto" name="Registrar[apellido_paterno]" placeholder="Apellido paterno" required/>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_paterno" class="form-control texto" name="Registrar[apellido_paterno]" placeholder="Apellido paterno" required/>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-apellido_materno required">
             <label class="control-label" for="registrar-apellido_materno">Apellido materno: *</label>
-            <input type="text" id="registrar-apellido_materno" class="form-control texto" name="Registrar[apellido_materno]" placeholder="Apellido materno" required/>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_materno" class="form-control texto" name="Registrar[apellido_materno]" placeholder="Apellido materno" required/>
         </div>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
@@ -52,13 +52,13 @@ use yii\widgets\Pjax;
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-dni required">
             <label class="control-label" for="registrar-dni">DNI: *</label>
-            <input type="text" id="registrar-dni" class="form-control numerico" name="Registrar[dni]" maxlength="8" placeholder="DNI">
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-dni" class="form-control numerico" name="Registrar[dni]" maxlength="8" placeholder="DNI">
         </div>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-fecha_nac required">
             <label class="control-label" for="registrar-fecha_nac">Fecha de nacimiento: *</label>
-            <input type="date" id="registrar-fecha_nac" class="form-control" name="Registrar[fecha_nac]" placeholder="Fecha de nacimiento">
+            <input type="date" onpaste="return false;" onCopy="return false" id="registrar-fecha_nac" class="form-control" name="Registrar[fecha_nac]" placeholder="Fecha de nacimiento">
         </div>
     </div>
     
@@ -66,26 +66,26 @@ use yii\widgets\Pjax;
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-email required">
             <label class="control-label" for="registrar-email">Correo electrónico: *</label>
-            <input type="email" id="registrar-email" class="form-control" name="Registrar[email]" placeholder="Correo electrónico">
+            <input type="email" onpaste="return false;" onCopy="return false" id="registrar-email" class="form-control" name="Registrar[email]" placeholder="Correo electrónico">
         </div>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-celular required">
             <label class="control-label" for="registrar-celular">N°  celular: *</label>
-            <input type="text" id="registrar-celular" class="form-control numerico" name="Registrar[celular]" maxlength="9" placeholder="N°  celular">
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-celular" class="form-control numerico" name="Registrar[celular]" maxlength="9" placeholder="N°  celular">
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-7 col-md-5">
         <div class="form-group field-registrar-password required">
             <label class="control-label" for="registrar-password">Contraseña: *</label>
-            <input type="password" id="registrar-password" class="form-control" name="Registrar[password]" placeholder="Contraseña">
+            <input type="password" onpaste="return false;" onCopy="return false" id="registrar-password" class="form-control" name="Registrar[password]" placeholder="Contraseña">
         </div>      
     </div>
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-repassword required">
             <label class="control-label" for="registrar-repassword">Repetir Contraseña: *</label>
-            <input type="password" id="registrar-repassword" class="form-control" name="Registrar[repassword]" placeholder="Repetir contraseña">
+            <input type="password" onpaste="return false;" onCopy="return false" id="registrar-repassword" class="form-control" name="Registrar[repassword]" placeholder="Repetir contraseña">
         </div>
     </div>
     <div class="clearfix"></div>

@@ -31,7 +31,7 @@ $resultados=Resultados::find()->all();
             <?php if(!$resultados){ ?>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="proyecto<?= $asunto->id ?>c">Guardar</button>
+                <button type="button" class="btn btn-primary" id="proyecto<?= $asunto->id ?>c">Seleccionar</button>
             </div>
             <?php } ?>
         </div>
