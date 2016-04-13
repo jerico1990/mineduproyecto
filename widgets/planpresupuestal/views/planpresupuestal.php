@@ -90,7 +90,7 @@ foreach($objetivos as $objetivo){
 			    <?php if($disabled==''){?>
 			    <td>
 				<span class="remCF glyphicon glyphicon-minus-sign">
-				    <input class="id" type="hidden" name="Proyecto[planes_presupuestal_ids][]" value="<?= $planpresupuestal->id ?>" <?= $disabled ?>/>
+				    <input class="id" type="hidden" name="Proyecto[planes_presupuestal_ids][]" value="<?= $planpresupuestal->id ?>" />
 				</span>
 			    </td>
 			    <?php } ?>
@@ -338,12 +338,12 @@ foreach($objetivos as $objetivo){
 			    "</td>"+
 			    "<td>"+
 				"<div class='form-group field-proyecto-plan_presupuestal_precio_unitario_"+plan+" required'>"+
-				    "<input id='proyecto-plan_presupuestal_precio_unitario_"+plan+"' onfocusout='Subtotal1("+a+",1)' class='form-control' name='Proyecto[planes_presupuestales_precios_unitarios][]' placeholder='Precio unitario'>"+
+				    "<input id='proyecto-plan_presupuestal_precio_unitario_"+plan+"' onfocusout='Subtotal1("+plan+",1)' class='form-control' name='Proyecto[planes_presupuestales_precios_unitarios][]' placeholder='Precio unitario'>"+
 				"</div>"+
 			    "</td>"+
 			    "<td>"+
 				"<div class='form-group field-proyecto-plan_presupuestal_cantidad_"+plan+" required'>"+
-				    "<input id='proyecto-plan_presupuestal_cantidad_"+plan+"' onfocusout='Subtotal2("+a+",2)' class='form-control' name='Proyecto[planes_presupuestales_cantidades][]' placeholder='Cantidad'>"+
+				    "<input id='proyecto-plan_presupuestal_cantidad_"+plan+"' onfocusout='Subtotal2("+plan+",2)' class='form-control' name='Proyecto[planes_presupuestales_cantidades][]' placeholder='Cantidad'>"+
 				"</div>"+
 			    "</td>"+
 			    "<td>"+
