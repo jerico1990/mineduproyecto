@@ -105,7 +105,7 @@ $btninscribir=$integrante
             {
                 if($equipoeinvitacion['rol']==1)
                 {
-                    echo    "<td>Lider</td>
+                    echo    "<td>Coordinador</td>
                             <td></td>";
                 }
                 elseif($equipoeinvitacion['rol']==2 && $equipoeinvitacion['estudiante_id']==$integrante->estudiante_id && $equipoeinvitacion['estado']==1)
