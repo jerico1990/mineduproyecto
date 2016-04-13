@@ -26,9 +26,6 @@ $posts = $model->posts;
                 </div>
             </div>
         </header>
-        <article class="thread-main">
-            <?= $model->descripcion ?>
-        </article>
     </article>
     <!-- Post Form Begin -->
         <?= $this->render('/foro-comentario/_form',[
