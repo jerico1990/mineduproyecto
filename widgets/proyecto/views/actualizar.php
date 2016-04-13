@@ -1194,8 +1194,8 @@ use yii\web\JsExpression;
     });
     
     
-    (function() {
-    
+    //(function() {
+    $('#btnvideo').click(function(events){
         var bar = $('.bar');
         var percent = $('.percent');
         var status = $('#status');
@@ -1225,8 +1225,8 @@ use yii\web\JsExpression;
                                         window.location.reload(1);
                                     }, 10);*/
             }
-        }); 
-    })();  
+        }); });
+    //})();  
 </script>
 
 

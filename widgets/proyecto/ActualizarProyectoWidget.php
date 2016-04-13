@@ -257,6 +257,7 @@ class ActualizarProyectoWidget extends Widget
             /*Plan presupuestal*/
             for($i=0;$i<$countPlanesPresupuestalesPreciosUnitarios;$i++)
             {
+                //var_dump($countPlanesPresupuestalesPreciosUnitarios);die;
                 if(isset($proyecto->planes_presupuestal_ids[$i]))
                 {
                     $planpresupuestal=PlanPresupuestal::find()->where('id=:id',[':id'=>$proyecto->planes_presupuestal_ids[$i]])->one();
