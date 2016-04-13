@@ -23,7 +23,7 @@ if($votacionpublica || $etapa->etapa!=3)
             <div class="clearfix"></div>
             <button class="btn btn-success" id="cerrarvoto" <?= $resultados?'disabled':'' ?>>cerrar votación</button>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrar1entrega" <?= ($etapa->etapa!=1)?'disabled':'' ?> >cerrar 1era entrega</button>
+            <button class="btn  btn-success" id="cerrar1entrega" <?= ($etapa->etapa!=1 || !$resultados)?'disabled':'' ?> >cerrar 1era entrega</button>
             <div class="clearfix"></div><p></p>
             <button class="btn  btn-success" id="cerrar2entrega" <?= ($etapa->etapa!=2)?'disabled':'' ?> >cerrar 2da entrega</button>
             <div class="clearfix"></div><p></p>

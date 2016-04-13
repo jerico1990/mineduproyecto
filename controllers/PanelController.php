@@ -114,6 +114,7 @@ class PanelController extends Controller
         $this->layout='registrar';
         $countVoto=Voto::find()->count();
         $resultados=Resultados::find()->all();
+        $Countresultados=Resultados::find()->count();
         $votacionpublica=VotacionPublica::find()->all();
         $etapa=Etapa::find()->where('estado=1')->one();
         $faltavalorporcentual=VotacionInterna::find()
@@ -123,7 +124,7 @@ class PanelController extends Controller
         return $this->render('acciones',['resultados'=>$resultados,'etapa'=>$etapa,
                                          'faltavalorporcentual'=>$faltavalorporcentual,
                                          'votacionpublica'=>$votacionpublica,
-                                         'countVoto'=>$countVoto]);
+                                         'countVoto'=>$countVoto,'Countresultados'=>$Countresultados]);
     }
     
     public function actionCerrar($bandera)
