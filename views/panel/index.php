@@ -439,10 +439,10 @@ function finalizarequipo(id) {
                     },
                 });
             }
-            
+            /*
             setTimeout(function(){
                 window.location.reload(1);
-            }, 2000);
+            }, 2000);*/
         }
     });
 }
