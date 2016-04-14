@@ -149,7 +149,7 @@ class UsuarioController extends Controller
             
             if(trim($registrar->password)!='')
             {
-                $usuario->password=$registrar->password;
+                $usuario->password=md5($registrar->password);
             }
             $usuario->save();
             return $this->refresh();

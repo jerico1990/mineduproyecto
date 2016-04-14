@@ -84,7 +84,8 @@ foreach($objetivos as $objetivo){
 			    </td>
 			    <td>
 				<div class="form-group field-proyecto-plan_presupuestal_subtotal_<?= $plan ?> required">
-				    <input id="proyecto-plan_presupuestal_subtotal_<?= $plan ?>" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal" value="<?= $planpresupuestal->subtotal ?>" <?= $disabled ?>/>
+				    <input id="proyecto-plan_presupuestal_subtotal1_<?= $plan ?>" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales1][]" placeholder="Subtotal" value="<?= $planpresupuestal->subtotal ?>" disabled />
+				    <input type="hidden" id="proyecto-plan_presupuestal_subtotal_<?= $plan ?>" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal" value="<?= $planpresupuestal->subtotal ?>" />
 				</div>
 			    </td>
 			    <?php if($disabled==''){?>
@@ -145,7 +146,8 @@ foreach($objetivos as $objetivo){
 			    </td>
 			    <td>
 				<div class="form-group field-proyecto-plan_presupuestal_subtotal_0 required">
-				    <input id="proyecto-plan_presupuestal_subtotal_0" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal" <?= $disabled ?>/>
+				    <input id="proyecto-plan_presupuestal_subtotal1_0" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales1][]" placeholder="Subtotal" disabled/>
+				    <input type="hidden" id="proyecto-plan_presupuestal_subtotal_0" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal"  />
 				</div>
 			    </td>
 			    <?php if($disabled==''){?>
@@ -348,7 +350,8 @@ foreach($objetivos as $objetivo){
 			    "</td>"+
 			    "<td>"+
 				"<div class='form-group field-proyecto-plan_presupuestal_subtotal_"+plan+" required'>"+
-				    "<input id='proyecto-plan_presupuestal_subtotal_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_subtotales][]' placeholder='Subtotal'>"+
+				    "<input id='proyecto-plan_presupuestal_subtotal1_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_subtotales1][]' placeholder='Subtotal' disabled>"+
+				    "<input type='hidden' id='proyecto-plan_presupuestal_subtotal_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_subtotales][]' placeholder='Subtotal'>"+
 				"</div>"+
 			    "</td>"+
 			    "<td>"+
@@ -388,6 +391,8 @@ foreach($objetivos as $objetivo){
 	
 	var subtotal=x*y;
 	$('#proyecto-plan_presupuestal_subtotal_'+id).val(subtotal);
+	$('#proyecto-plan_presupuestal_subtotal1_'+id).val(subtotal);
+	
     }
     
     function Subtotal2(id,tipo) {
@@ -401,5 +406,6 @@ foreach($objetivos as $objetivo){
 	}
 	var subtotal=x*y;
 	$('#proyecto-plan_presupuestal_subtotal_'+id).val(subtotal);
+	$('#proyecto-plan_presupuestal_subtotal1_'+id).val(subtotal);
     }
 </script>

@@ -61,7 +61,7 @@ class ProyectoController extends Controller
         $proyecto=Proyecto::find()->where('user_id=:user_id',[':user_id'=>\Yii::$app->user->id])->one();
         if($proyecto)
         {
-            return $this->redirect(['panel/index']);
+            return $this->redirect(['proyecto/actualizar']);
         }
         return $this->render('index');
     }
