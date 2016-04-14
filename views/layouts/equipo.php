@@ -142,7 +142,7 @@ $foros=Foro::find()->orderBy('id DESC')->all();
             <?php if($integrante && $equipo && $etapa2 && ($equipo->etapa==1 || $equipo->etapa==2)){?>
             <li><?= Html::a("Búsqueda de proyectos",['proyecto/buscar'],[]);?></li>
             <?php } ?>
-            <?php if($integrante && $equipo && $etapa3 && ($equipo->etapa==1 || $equipo->etapa==2)){?>
+            <?php if($integrante && $equipo && $etapa3 && ($equipo->etapa==2)){?>
             <li><?= Html::a("Votación interna",['proyecto/votacion'],[]);?></li>
             <?php } ?>
           </ul>
