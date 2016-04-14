@@ -143,10 +143,10 @@ class UsuarioController extends Controller
             $estudiante->apellido_materno=$registrar->apellido_materno;
             $estudiante->sexo=$registrar->sexo;
             $estudiante->dni=$registrar->dni;
-            //$estudiante->fecha_nac=$registrar->fecha_nac;
             $estudiante->email=$registrar->email;
             $estudiante->celular=$registrar->celular;
             $estudiante->update();
+            return $this->refresh();
         } else {
             return $this->render('configuracion',['registrar'=>$registrar]);
         }

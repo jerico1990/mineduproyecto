@@ -51,9 +51,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout='index';
-        //var_dump("a");die;
-        if (\Yii::$app->user->isGuest) {
-            //var_dump("dd");die;
+        if (!\Yii::$app->user->isGuest) {
             return $this->redirect(['panel/index']);
         }
         return $this->render('index');
@@ -62,8 +60,14 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $this->layout='registrar';
-        if (!\Yii::$app->user->isGuest) {
+        /*if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
+        }*/
+        
+        
+        if (!\Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+            //return $this->redirect(['panel/index']);
         }
 
         $model = new LoginForm();
@@ -107,10 +111,6 @@ class SiteController extends Controller
     public function actionQueEs()
     {
         $this->layout='minedu';
-        if (!\Yii::$app->user->isGuest) {
-            
-            return $this->redirect(['panel/index']);
-        }
         return $this->render('que-es');
     }
     public function actionBases()
