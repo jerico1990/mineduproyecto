@@ -323,12 +323,17 @@ class ActualizarProyectoWidget extends Widget
             $video->archivo = UploadedFile::getInstance($video, 'archivo');
             
             if($video->archivo) {
+                $vid = 'insert into video (proyecto_id,etapa) values ('.$proyecto->id.',0)';
+                \Yii::$app->db->createCommand($vid)->execute();
+                $videoa=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
+                                    [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
                 
-                $video->proyecto_id=$proyecto->id;
-                $video->etapa=0;
-                $video->save();
-                $videoup=Video::findOne($video->id);
-                $videoup->ruta=$video->id. '.' . $video->archivo->extension;
+                //$video->proyecto_id=$proyecto->id;
+                //$video->etapa=0;
+                //$video->insert();
+                
+                $videoup=Video::findOne($videoa->id);
+                $videoup->ruta=$videoa->id. '.' . $video->archivo->extension;
                 $videoup->update();
                 if (file_exists(\Yii::$app->basePath."/web/video_carga/".$videoup->ruta)) {
                     //$this->rename_win(\Yii::$app->basePath."/web/video_carga/".$videoup->ruta,\Yii::$app->basePath."/web/video_carga/$videoup->ruta.old");
