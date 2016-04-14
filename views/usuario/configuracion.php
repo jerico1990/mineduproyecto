@@ -86,8 +86,8 @@ use yii\widgets\ActiveForm;
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-9" id="example-progress-bar-container"></div>
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-md-6">
-        <input type="submit" id="registrar" value="Registrar" class="btn btn-primary" >
+    <div class="col-xs-12 col-md-12 pull-right">
+        <input type="submit" id="registrar" value="Guardar" class="btn btn-primary" >
     </div>
     
     <div class="clearfix"></div>
@@ -345,7 +345,7 @@ use yii\widgets\ActiveForm;
             $('.field-registrar-celular').removeClass('has-error');
         }*/
         $('.field-registrar-password').addClass('has-success');
-        $('.field-registrar-repassword').addClass('has-success');
+        //$('.field-registrar-repassword').addClass('has-success');
         /*
         if ($('#registrar-password').val()=='') {
             error=error+'Ingrese contraseña <br>';
@@ -356,8 +356,8 @@ use yii\widgets\ActiveForm;
             $('.field-registrar-password').addClass('has-success');
             $('.field-registrar-password').removeClass('has-error');
         }
-        
-        if ($('#registrar-repassword').val()=='') {
+        */
+        if ($('#registrar-password').val()!='' && $('#registrar-repassword').val()=='') {
             error=error+'Ingrese repetir contraseña <br>';
             $('.field-registrar-repassword').addClass('has-error');
         }
@@ -365,7 +365,7 @@ use yii\widgets\ActiveForm;
         {
             $('.field-registrar-repassword').addClass('has-success');
             $('.field-registrar-repassword').removeClass('has-error');
-        }*/
+        }
         
         
         
