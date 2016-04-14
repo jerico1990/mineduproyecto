@@ -146,6 +146,12 @@ class UsuarioController extends Controller
             $estudiante->email=$registrar->email;
             $estudiante->celular=$registrar->celular;
             $estudiante->update();
+            
+            if(trim($registrar->password)!='')
+            {
+                $usuario->password=$registrar->password;
+            }
+            $usuario->save();
             return $this->refresh();
         } else {
             return $this->render('configuracion',['registrar'=>$registrar]);

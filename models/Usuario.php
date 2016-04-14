@@ -36,7 +36,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['password', 'status'], 'required'],
+            //[['password', 'status'], 'required'],
             [['status', 'auth', 'estudiante_id'], 'integer'],
             [['username', 'password'], 'string', 'max' => 100],
             [['verification_code'], 'string', 'max' => 250],
