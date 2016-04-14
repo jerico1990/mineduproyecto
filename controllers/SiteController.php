@@ -51,7 +51,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout='index';
-        if (!\Yii::$app->user->isGuest) {
+        //var_dump("a");die;
+        if (\Yii::$app->user->isGuest) {
+            //var_dump("dd");die;
             return $this->redirect(['panel/index']);
         }
         return $this->render('index');
@@ -105,6 +107,10 @@ class SiteController extends Controller
     public function actionQueEs()
     {
         $this->layout='minedu';
+        if (!\Yii::$app->user->isGuest) {
+            
+            return $this->redirect(['panel/index']);
+        }
         return $this->render('que-es');
     }
     public function actionBases()

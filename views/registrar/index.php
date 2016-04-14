@@ -494,17 +494,6 @@ use yii\widgets\Pjax;
         }
         
         
-        if ($('#registrar-celular').val()=='') {
-            error=error+'Ingrese celular <br>';
-            $('.field-registrar-celular').addClass('has-error');
-        }
-        else
-        {
-            $('.field-registrar-celular').addClass('has-success');
-            $('.field-registrar-celular').removeClass('has-error');
-        }
-        
-        
         if ($('#registrar-password').val()=='') {
             error=error+'Ingrese contraseña <br>';
             $('.field-registrar-password').addClass('has-error');
