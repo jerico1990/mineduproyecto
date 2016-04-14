@@ -47,7 +47,7 @@ use yii\widgets\Pjax;
 <?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
 <div class="col-xs-12 col-sm-12 col-md-12">
-<div class="clearfix"></div>
+
 <?php Pjax::begin(); ?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
@@ -70,4 +70,6 @@ use yii\widgets\Pjax;
     ],
 ]); ?>
 </div>
+
 <?php Pjax::end(); ?>
+<div class="clearfix"></div>

@@ -337,6 +337,7 @@ class ActualizarProyectoWidget extends Widget
                     //rename(\Yii::$app->basePath."/web/video_carga/$videoup->ruta", \Yii::$app->basePath."/web/video_carga/$videoup->ruta.old");
                 }
                 $video->archivo->saveAs('video_carga/' . $videoup->id . '.' . $video->archivo->extension);
+                //unlink($videoup->archivo->tempName);
             }
             return \Yii::$app->getResponse()->refresh();
         }

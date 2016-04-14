@@ -150,7 +150,7 @@ if($proyecto)
     ?>
 </div>
 <?php } ?>
-    <?php if($equipo->etapa==1 && $etapa->etapa==2) {?>
+    <?php if(($equipo->etapa==1 || $equipo->etapa==2) && ($etapa->etapa==2 || $etapa->etapa==3)) {?>
     <div class="col-md-12">
         <h2>VI. Recomendación de proyectos</h2>
         <hr>
@@ -183,7 +183,7 @@ if($proyecto)
     </div>
     <?php }?>
     <?php
-    if($proyecto && $etapa->etapa==2)
+    if($proyecto && ($equipo->etapa==1 || $equipo->etapa==2) && ($etapa->etapa==2 || $etapa->etapa==3))
     {
     ?>
     <div class="col-md-12">
@@ -205,7 +205,7 @@ if($proyecto)
     <?php } ?>
     
     <?php
-    if($proyecto && $etapa->etapa==2)
+    if($proyecto &&  ($equipo->etapa==1 || $equipo->etapa==2) && ($etapa->etapa==2 || $etapa->etapa==3))
     {
     ?>
     <div class="col-md-12">
@@ -230,7 +230,7 @@ if($proyecto)
     <?php } ?>
     
     <?php
-    if($proyecto && $etapa->etapa==3)
+    if($proyecto && ($equipo->etapa==2) && $etapa->etapa==3)
     {
         
     ?>
