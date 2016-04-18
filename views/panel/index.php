@@ -428,7 +428,7 @@ function finalizarequipo(id) {
                 
                 $.notify({
                     // options
-                    message: 'No tiene la cantidad suficiente para finalizar el equipo, deben ser 3 integrantes' 
+                    message: 'No tiene la cantidad suficiente para finalizar el equipo, deben ser 4 integrantes' 
                 },{
                     // settings
                     type: 'danger',
@@ -439,10 +439,10 @@ function finalizarequipo(id) {
                     },
                 });
             }
-            /*
+            
             setTimeout(function(){
                 window.location.reload(1);
-            }, 2000);*/
+            }, 2000);
         }
     });
 }

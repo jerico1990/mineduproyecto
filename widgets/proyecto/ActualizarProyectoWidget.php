@@ -17,6 +17,10 @@ use app\models\PlanPresupuestal;
 use app\models\Cronograma;
 use app\models\Video;
 use app\models\VideoCopia;
+use app\models\Etapa;
+use app\models\ForoComentario;
+use app\models\Foro;
+
 
 use yii\web\UploadedFile;
 Yii::setAlias('video', '@web/video_carga/');
@@ -31,6 +35,7 @@ class ActualizarProyectoWidget extends Widget
 
     public function run()
     {
+        $newComentario = new ForoComentario();
         $usuario=Usuario::findOne(\Yii::$app->user->id);
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
         $equipo=Equipo::findOne($integrante->equipo_id);
@@ -323,17 +328,12 @@ class ActualizarProyectoWidget extends Widget
             $video->archivo = UploadedFile::getInstance($video, 'archivo');
             
             if($video->archivo) {
-                $vid = 'insert into video (proyecto_id,etapa) values ('.$proyecto->id.',0)';
-                \Yii::$app->db->createCommand($vid)->execute();
-                $videoa=Video::find()->where('proyecto_id=:proyecto_id and etapa=:etapa',
-                                    [':proyecto_id'=>$proyecto->id,':etapa'=>0])->one();
                 
-                //$video->proyecto_id=$proyecto->id;
-                //$video->etapa=0;
-                //$video->insert();
-                
-                $videoup=Video::findOne($videoa->id);
-                $videoup->ruta=$videoa->id. '.' . $video->archivo->extension;
+                $video->proyecto_id=$proyecto->id;
+                $video->etapa=0;
+                $video->save();
+                $videoup=Video::findOne($video->id);
+                $videoup->ruta=$video->id. '.' . $video->archivo->extension;
                 $videoup->update();
                 if (file_exists(\Yii::$app->basePath."/web/video_carga/".$videoup->ruta)) {
                     //$this->rename_win(\Yii::$app->basePath."/web/video_carga/".$videoup->ruta,\Yii::$app->basePath."/web/video_carga/$videoup->ruta.old");
@@ -342,6 +342,11 @@ class ActualizarProyectoWidget extends Widget
                 $video->archivo->saveAs('video_carga/' . $videoup->id . '.' . $video->archivo->extension);
                 //unlink($videoup->archivo->tempName);
             }
+            $model=Foro::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
+            $newComentario->load(Yii::$app->request->post());
+            $newComentario->foro_id = $model->id;
+            $newComentario->save();
+                
             return \Yii::$app->getResponse()->refresh();
         }
         
@@ -362,6 +367,7 @@ class ActualizarProyectoWidget extends Widget
             $disabled='disabled';
         }
         
+        $etapa=Etapa::find()->where('estado=1')->one();
         
         return $this->render('actualizar',
                              ['proyecto'=>$proyecto,
@@ -376,7 +382,8 @@ class ActualizarProyectoWidget extends Widget
                               'video'=>$video,
                               'videoprimera'=>$videoprimera,
                               'videosegunda'=>$videosegunda,
-                              'entrega'=>$this->entrega]);
+                              'entrega'=>$this->entrega,
+                              'etapa'=>$etapa]);
     }
     
     public function rename_win($oldfile,$newfile) {

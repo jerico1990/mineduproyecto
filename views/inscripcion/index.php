@@ -133,6 +133,7 @@ if($equipo->id)
 
 <script>
     var contador=<?= $invitacionContador ?>;
+    console.log(contador);
     var equipo=<?= $invitacionContador ?>;
     $( '#btnequipo' ).click(function( event ) {
         var error='';
@@ -176,7 +177,7 @@ if($equipo->id)
         {
             var existeequipo=$.ajax({
                 url: '<?= $existeequipo ?>',
-                type: 'GET',
+                //type: 'GET',
                 async: false,
                 //data: {},
                 success: function(data){
@@ -257,8 +258,8 @@ if($equipo->id)
     function validar(estudiante,equipo,elemento)
     {
         var invitaciones=($('input[name=\'Equipo[invitaciones][]\']:checked').length) + contador;
-        
-        if (invitaciones>=5) {
+        console.log(invitaciones);
+        if (invitaciones>=6) {
             elemento.prop( "checked", false );
             $.notify({
                 // options

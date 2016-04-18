@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<?php if (!$votacionesinternasfinalizadasCount){?>
+<?php if (!$votacionesinternasfinalizadasCount || $votacion_publica){?>
 <?php Pjax::begin(); ?>
 <?php $form = ActiveForm::begin([
         'action' => ['votacion'],

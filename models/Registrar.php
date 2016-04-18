@@ -41,7 +41,7 @@ class Registrar extends Model
         return [
             // name, email, subject and body are required
             [['sexo','dni','fecha_nac','email','celular','departamento',
-              'provincia','distrito','institucion','grado','p1','p2','p3','p4','p5','p6',
+              'provincia','distrito','institucion','grado',
               'password','repassword'], 'required'],
             // email has to be a valid email address
             [['sexo','departamento','provincia','distrito','institucion'], 'string', 'max' => 10],

@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
    
         <textarea name="ForoComentario[contenido]" class="textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; " ></textarea>
     
-    <?= Html::submitButton(Yii::t('app', 'Responder'), ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton(Yii::t('app', 'Comentar'), ['class' => 'btn btn-success']) ?>
 
     <?php ActiveForm::end(); ?>
 

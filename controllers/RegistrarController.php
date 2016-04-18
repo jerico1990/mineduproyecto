@@ -310,4 +310,15 @@ class RegistrarController extends Controller
             echo 0;
         }
     }
+    
+    public function actionGuardar()
+    {
+        var_dump($_POST);
+    }
+    
+    public function actionPrueba()
+    {
+        $this->layout='equipobk';
+        return $this->render('prueba');
+    }
 }

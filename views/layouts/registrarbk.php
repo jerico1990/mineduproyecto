@@ -28,7 +28,7 @@ AppAssetInterno::register($this);
 <body >
 <?php $this->beginBody() ?>
 
-<div class="wrap"  >
+<div class="wrap" ng-app="app" >
     
     <div class="container">
         <?= Breadcrumbs::widget([

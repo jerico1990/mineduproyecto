@@ -1,5 +1,7 @@
 <?php
+
 namespace app\controllers;
+
 use Yii;
 use app\models\Institucion;
 use app\models\Ubigeo;
@@ -7,6 +9,7 @@ use app\models\UbigeoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 /**
  * UbigeoController implements the CRUD actions for Ubigeo model.
  */
@@ -23,6 +26,7 @@ class UbigeoController extends Controller
             ],
         ];
     }
+
     /**
      * Lists all Ubigeo models.
      * @return mixed
@@ -31,11 +35,13 @@ class UbigeoController extends Controller
     {
         $searchModel = new UbigeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
     /**
      * Displays a single Ubigeo model.
      * @param string $department_id
@@ -48,6 +54,7 @@ class UbigeoController extends Controller
             'model' => $this->findModel($department_id, $district_id),
         ]);
     }
+
     /**
      * Creates a new Ubigeo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -56,6 +63,7 @@ class UbigeoController extends Controller
     public function actionCreate()
     {
         $model = new Ubigeo();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'department_id' => $model->department_id, 'district_id' => $model->district_id]);
         } else {
@@ -64,6 +72,7 @@ class UbigeoController extends Controller
             ]);
         }
     }
+
     /**
      * Updates an existing Ubigeo model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -74,6 +83,7 @@ class UbigeoController extends Controller
     public function actionUpdate($department_id, $district_id)
     {
         $model = $this->findModel($department_id, $district_id);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'department_id' => $model->department_id, 'district_id' => $model->district_id]);
         } else {
@@ -82,6 +92,7 @@ class UbigeoController extends Controller
             ]);
         }
     }
+
     /**
      * Deletes an existing Ubigeo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -92,8 +103,10 @@ class UbigeoController extends Controller
     public function actionDelete($department_id, $district_id)
     {
         $this->findModel($department_id, $district_id)->delete();
+
         return $this->redirect(['index']);
     }
+
     /**
      * Finds the Ubigeo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -111,41 +124,62 @@ class UbigeoController extends Controller
         }
     }
     
+    public function actionDepartamentos()
+    {
+        $ArrayDepartamentos=[];
+        $countDepartamentos=Ubigeo::find()
+                        ->select('department_id,department')
+                        ->groupBy('department_id,department')
+                        ->count();
+        $AllDepartamentos=Ubigeo::find()->select('department_id,department')
+                        ->groupBy('department_id,department')
+                        ->orderBy('department')
+                        ->all();
+        
+        if($countDepartamentos>0){
+            foreach($AllDepartamentos as $OneDepartamento){
+                array_push($ArrayDepartamentos,$OneDepartamento->attributes);
+            }
+        }
+        echo json_encode($ArrayDepartamentos); 
+    }
     
     
     public function actionProvincias($departamento)
     {
-        
+        $ArrayProvincias=[];
         $countProvincias=Ubigeo::find()
                         ->select('province_id,province')
                         ->innerJoin('institucion i','i.ubigeo_id=ubigeo.district_id')
-                        ->where('department_id=:department_id',[':department_id'=>$departamento])->groupBy('province_id,province')->count();
-        $provincias=Ubigeo::find()->select('province_id,province')
+                        ->where('department_id=:department_id',[':department_id'=>$departamento])
+                        ->groupBy('province_id,province')
+                        ->count();
+                        
+        $AllProvincias=Ubigeo::find()->select('province_id,province')
                         ->innerJoin('institucion i','i.ubigeo_id=ubigeo.district_id')
-                        ->where('department_id=:department_id',[':department_id'=>$departamento])->groupBy('province_id,province')->orderBy('province')->all();
+                        ->where('department_id=:department_id',[':department_id'=>$departamento])
+                        ->groupBy('province_id,province')
+                        ->orderBy('province')->all();
         
         if($countProvincias>0){
-            echo "<option value>Provincia</option>";
-            foreach($provincias as $provincia){
-                echo "<option value='".$provincia->province_id."'>".$provincia->province."</option>";
+            foreach($AllProvincias as $OneProvincias){
+                array_push($ArrayProvincias,$OneProvincias->attributes);
             }
         }
-        else{
-            echo "<option value>Provincia</option>";
-        }
+        echo json_encode($ArrayProvincias); 
     }
     
     
     public function actionDistritos($provincia)
     {
-        
+        $ArrayDistritos=[];
         $countDistritos=Ubigeo::find()
                         ->select('district_id,district')
                         ->innerJoin('institucion i','i.ubigeo_id=ubigeo.district_id')
                         ->where('province_id=:province_id',[':province_id'=>$provincia])
                         ->groupBy('district_id,district')
                         ->count();
-        $distritos=Ubigeo::find()
+        $AllDistritos=Ubigeo::find()
                     ->select('district_id,district')
                     ->innerJoin('institucion i','i.ubigeo_id=ubigeo.district_id')
                     ->where('province_id=:province_id',[':province_id'=>$provincia])
@@ -154,40 +188,35 @@ class UbigeoController extends Controller
                     ->all();
       
         if($countDistritos>0){
-            echo "<option value>Distrito</option>";
-            foreach($distritos as $distrito){
-                echo "<option value='".$distrito->district_id."'>".$distrito->district."</option>";
+            foreach($AllDistritos as $OneDistrito){
+                array_push($ArrayDistritos,$OneDistrito->attributes);
             }
         }
-        else{
-            echo "<option value>Distrito</option>";
-        }
-        
+        echo json_encode($ArrayDistritos);         
     }
     
     
     public function actionInstituciones($distrito)
-    {         
+    {
+        $ArrayInstituciones=[];
         $countInstitucion=Institucion::find()
                     ->select('id,denominacion,codigo_modular')
                     ->where('ubigeo_id=:ubigeo_id and estado=1',[':ubigeo_id'=>$distrito])
-                    ->groupBy('id,denominacion,codigo_modular')->count();
+                    ->groupBy('id,denominacion,codigo_modular')
+                    ->count();
                     
-        $instituciones=Institucion::find()
+        $AllInstituciones=Institucion::find()
                     ->select('id,denominacion,codigo_modular')
                     ->where('ubigeo_id=:ubigeo_id and estado=1',[':ubigeo_id'=>$distrito])
                     ->groupBy('id,denominacion,codigo_modular')
-                    ->orderBy('denominacion asc')->all();
+                    ->orderBy('denominacion asc')
+                    ->all();
         
         if($countInstitucion>0){
-            echo "<option value>Institución</option>";
-            foreach($instituciones as $institucion){
-                echo "<option value='".$institucion->id."'>".$institucion->codigo_modular." - ".$institucion->denominacion."</option>";
+            foreach($AllInstituciones as $OneInstitucion){
+                array_push($ArrayInstituciones,$OneInstitucion->attributes);
             }
         }
-        else{
-           echo "<option value>Institución</option>";
-        }
-        
+        echo json_encode($ArrayInstituciones);     
     }
 }

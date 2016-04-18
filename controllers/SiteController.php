@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Usuario;
 
 class SiteController extends Controller
 {
@@ -133,5 +134,68 @@ class SiteController extends Controller
     {
         $this->layout='minedu';
         return $this->render('resultados');
+    }
+    
+    public function actionRecuperar()
+    {
+        $this->layout='minedu';
+        $usuario=new LoginForm;
+        if($usuario->load(Yii::$app->request->post()))
+        {
+            $urlRecuperar= \Yii::$app->request->BaseUrl.Yii::$app->getUrlManager()->createUrl('site/resetear');
+            $usuario=Usuario::find()->where('username=:username',[':username'=>$usuario->username])->one();
+            $usuario->verification_code=$this->randKey("abcdefghijklmnopqrstuvwxyz0123456789", 24);
+            $usuario->update();
+            
+            $subject="Sistema de recuperación de contraseña";
+            $content="Estimado/a docente:<br><br>
+                     ¡Bienvenido/a al sistema de evaluación por competencias socioemocionales CSE!
+                     Para finalizar el proceso de inscripción, por favor ingrese al siguiente <a href='localhost/mineduproyecto/web/site/resetear?url=".$usuario->verification_code."'>enlace</a>.
+                   
+                     Saludos cordiales,<br><br>
+                     <br>
+                     ";
+            Yii::$app->mail->compose('@app/mail/layouts/html',['content'=>$content])
+           ->setFrom('cesar.gago.egocheaga@gmail.com')
+           ->setTo($usuario->username)
+           ->setSubject($subject)
+           ->send();
+           
+        }
+        return $this->render('recuperar',['usuario'=>$usuario]);
+    }
+    
+    public function actionResetear($url)
+    {
+        $this->layout='minedu';
+        $loginForm=new LoginForm;
+        $usuario=Usuario::find()->where('verification_code=:verification_code',[':verification_code'=>$url])->one();
+        if($usuario){
+            if($loginForm->load(Yii::$app->request->post())){
+                $usuario->verification_code="";
+                ///var_dump($loginForm->password);die;
+                $usuario->password=$loginForm->password;
+                $usuario->update();
+                $this->refresh();
+            }
+            return $this->render('resetear',['loginForm'=>$loginForm]);
+        }
+        else{
+            return $this->redirect(['site/login']);
+        }
+    }
+    
+    
+    private function randKey($str='', $long=0)
+    {
+        $key = null;
+        $str = str_split($str);
+        $start = 0;
+        $limit = count($str)-1;
+        for($x=0; $x<$long; $x++)
+        {
+            $key .= $str[rand($start, $limit)];
+        }
+        return $key;
     }
 }

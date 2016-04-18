@@ -401,9 +401,6 @@ class ProyectoController extends Controller
         $this->layout='equipo';
         $searchModel = new ProyectoSearch();
         $dataProvider = $searchModel->votacion(Yii::$app->request->queryParams);
-        ///$usuario=Usuario::findOne(\Yii::$app->user->id);
-        //$integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
-       // $proyecto=Proyecto::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$integrante->equipo_id])->one();
         $votacionesinternas=VotacionInterna::find()
                             ->where('user_id=:user_id and estado in (1,2)',
                                     [':user_id'=>\Yii::$app->user->id])
@@ -418,13 +415,14 @@ class ProyectoController extends Controller
                             ->where('user_id=:user_id and estado=2',
                                     [':user_id'=>\Yii::$app->user->id])
                             ->count();                    
-                            
+        $votacion_publica=VotacionPublica::find()->all();                    
         return $this->render('votacion',[
                                         'searchModel' => $searchModel,
                                         'dataProvider' => $dataProvider,
                                         'votacionesinternas'=>$votacionesinternas,
                                         'votacionesinternasCount'=>$votacionesinternasCount,
-                                        'votacionesinternasfinalizadasCount'=>$votacionesinternasfinalizadasCount]);
+                                        'votacionesinternasfinalizadasCount'=>$votacionesinternasfinalizadasCount,
+                                        'votacion_publica'=>$votacion_publica]);
     }
     
     public function actionVotacioninterna($id)

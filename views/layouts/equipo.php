@@ -125,7 +125,7 @@ $foros=Foro::find()->orderBy('id DESC')->all();
                 </a>
                 <ul class="treeview-menu">
                 <?php foreach($foros as $foro): ?>
-                    <?php if($foro->id==1 || $foro->id==2){?>
+                    <?php if($foro->id==2 || ($integrante && $foro->asunto_id==$equipo->asunto_id)){?>
                     <li><?= Html::a("$foro->titulo",['foro/view','id'=>$foro->id],[]);?></li>
                     <?php } ?>
                 <?php endforeach; ?>

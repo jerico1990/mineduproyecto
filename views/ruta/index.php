@@ -40,7 +40,12 @@ use app\models\VotacionInterna;
         <tbody>
             <?php foreach($integrantes as $integrante){ ?>
             <?php
-                $foropublico=ForoComentario::find()->where('user_id=:user_id and foro_id=1',[':user_id'=>$integrante->user_id])->count();
+                $foropublico=ForoComentario::find()
+                            ->innerJoin('foro','foro.id=foro_comentario.foro_id')
+                            ->where('foro_comentario.user_id=:user_id  and
+                                    foro.asunto_id=:asunto_id',[':user_id'=>$integrante->user_id,
+                                                                ':asunto_id'=>$equipo->asunto_id])
+                            ->count();
                 $foroprivado=ForoComentario::find()->where('user_id=:user_id and foro_id=2',[':user_id'=>$integrante->user_id])->count();
             ?>
             <tr>
@@ -163,7 +168,7 @@ if($proyecto)
             <tbody>
                 <?php foreach($integrantes as $integrante){ ?>
                 <?php
-                    $foroproyectos=ForoComentario::find()->where('user_id=:user_id and foro_id not in (1,2)',[':user_id'=>$integrante->user_id])->count();
+                    $foroproyectos=ForoComentario::find()->where('user_id=:user_id and foro_id>35',[':user_id'=>$integrante->user_id])->count();
                     
                 ?>
                 <tr>

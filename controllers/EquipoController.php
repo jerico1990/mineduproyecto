@@ -271,8 +271,8 @@ class EquipoController extends Controller
     public function actionFinalizarequipo($id)
     {
         $integrante=Integrante::find()->where('equipo_id=:equipo_id',[':equipo_id'=>$id])->count();
-        var_dump($integrante);die;
-        if($integrante>=3)
+        //var_dump($integrante);die;
+        if($integrante>=4)
         {
             $equipo=Equipo::findOne($id);
             $equipo->estado=1;
@@ -287,7 +287,7 @@ class EquipoController extends Controller
             
             echo 1;
         }
-        elseif($integrante<3)
+        elseif($integrante<4)
         {
             echo 2; 
         }
@@ -401,7 +401,7 @@ class EquipoController extends Controller
     {
         $bandera=0;
         $lider=Usuario::findOne(\Yii::$app->user->id);
-        $lider_integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$lider->estudiante_id])->one();
+        $lider_integrante=Integrante::find()->where('estudiante_id=:estudiante_id and rol=1',[':estudiante_id'=>$lider->estudiante_id])->one();
         $equipo=Equipo::findOne($lider_integrante->equipo_id);
         if($equipo)
         {

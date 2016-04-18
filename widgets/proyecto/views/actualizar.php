@@ -25,7 +25,10 @@ use yii\web\JsExpression;
             <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Cronograma</a></li>
             <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">Mi Video</a></li>
             <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Reflexión</a></li>
+            <?php if($etapa->etapa==2){ ?>
             <li class=""><a href="#tab_7" data-toggle="tab" aria-expanded="false">Mi evaluación</a></li>
+            <li class=""><a href="#tab_8" data-toggle="tab" aria-expanded="false">Foro</a></li>
+            <?php } ?>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
@@ -210,6 +213,9 @@ use yii\web\JsExpression;
                 </div>
                 <?php } ?>
                 <div class="clearfix"></div>
+            </div><!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_8">
+                <?= \app\widgets\foro\ForoWidget::widget(['proyecto_id'=>$proyecto->id]); ?> 
             </div><!-- /.tab-pane -->
         </div><!-- /.tab-content -->
     </div>

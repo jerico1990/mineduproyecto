@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -16,28 +15,30 @@ use yii\widgets\Pjax;
 <script src="../bootstrap-strength-meter-master/password-score/password-score.js"></script>
 <script src="../bootstrap-strength-meter-master/password-score/password-score-options.js"></script>
 <?php $form = ActiveForm::begin(['options' => ['class' => 'formularios', ]]); ?>
-<h1>Registro de estudiantes</h1>
+<h1 class="text-center">Formulario de Inscripción</h1>
 <hr class="colorgraph">
 <div class="row">
-    <div class="col-xs-12 col-sm-7 col-md-5">
+    <div class="col-xs-12 col-sm-8 col-md-8">
         <div class="form-group field-registrar-nombres required">
             <label class="control-label" for="registrar-nombres">Nombres: *</label>
             <input type="text" onpaste="return false;" onCopy="return false" id="registrar-nombres" class="form-control texto" name="Registrar[nombres]" placeholder="Nombres" required/>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-5 col-md-4">
+    <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="form-group field-registrar-apellido_paterno required">
             <label class="control-label" for="registrar-apellido_paterno">Apellido paterno: *</label>
             <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_paterno" class="form-control texto" name="Registrar[apellido_paterno]" placeholder="Apellido paterno" required/>
         </div>
     </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
+    <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="form-group field-registrar-apellido_materno required">
             <label class="control-label" for="registrar-apellido_materno">Apellido materno: *</label>
             <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_materno" class="form-control texto" name="Registrar[apellido_materno]" placeholder="Apellido materno" required/>
         </div>
     </div>
+    
+    <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-5 col-md-4">
         <div class="form-group field-registrar-sexo required">
             <label class="control-label" for="registrar-sexo">Sexo: *</label>
@@ -148,89 +149,7 @@ use yii\widgets\Pjax;
     </div>
     <div class="clearfix"></div>
 </div>
-<h1>Encuesta</h1>
-<hr class="colorgraph">
 <div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-8">
-        <div class="form-group field-registrar-p1 required">
-            <label class="control-label" for="registrar-p1">¿De qué manera planeas acceder a la plataforma?</label>
-            <input type="hidden" name="Registrar[p1]" value="">
-                <div id="registrar-p1">
-                    <input type="checkbox" name="Registrar[p1][]" value="0"> Desde mi teléfono celular<br>
-                    <input type="checkbox" name="Registrar[p1][]" value="1"> Desde una cabina de internet<br>
-                    <input type="checkbox" name="Registrar[p1][]" value="2"> Desde la computadora y/o Tablet<br>
-                    <input type="checkbox" name="Registrar[p1][]" value="3"> Desde las computadoras escuela</div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-4 col-md-4">
-        <div class="form-group field-registrar-p2 required">
-            <label class="control-label" for="registrar-p2">¿Has desarrollado un proyecto participativo antes?</label>
-            <input type="hidden" name="Registrar[p2]" value="">
-                <div id="registrar-p2">
-                    <span class="modal-radio">
-                        <input type="radio" name="Registrar[p2]" value="1" "=""><span> Si</span>
-                    </span>
-                    <span class="modal-radio">
-                        <input type="radio" name="Registrar[p2]" value="0" "=""><span> No</span>
-                    </span>
-                </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-4 col-md-5">
-        <div class="form-group field-registrar-p3 required">
-            <label class="control-label" for="registrar-p3">¿De qué manera contribuyó el Proyecto participativo?</label>
-            <input type="hidden" name="Registrar[p3]" value="">
-                <div id="registrar-p3">
-                    <input type="checkbox" name="Registrar[p3][]" value="0"> Contribuyó para mejorar mi escuela a comunidad<br>
-                    <input type="checkbox" name="Registrar[p3][]" value="1"> Contribuyó para que mis ideas sean reconocidas<br>
-                    <input type="checkbox" name="Registrar[p3][]" value="2"> Contribuyó para aprender cosas nuevas<br>
-                    <input type="checkbox" name="Registrar[p3][]" value="3"> Contribuyó para para conocer mejor a mis compañeros<br>
-                    <input type="checkbox" name="Registrar[p3][]" value="4"> No se completó<br>
-                    <input type="checkbox" name="Registrar[p3][]" value="5"> No contribuyó</div>
-        </div>  
-    </div>
-    <div class="clearfix"></div>
-    
-    <div class="col-xs-12 col-sm-9 col-md-9">
-        <div class="form-group field-registrar-p4 required">
-            <label class="control-label" for="registrar-p4">¿Por qué quieres participar del concurso?</label>
-            <input type="hidden" name="Registrar[p4]" value="">
-                <div id="registrar-p4">
-                    <input type="checkbox" name="Registrar[p4][]" value="0"> Porque quiero mejorar algo en mi escuela<br>
-                    <input type="checkbox" name="Registrar[p4][]" value="1"> Porque quiero mejorar algo en mi comunidad<br>
-                    <input type="checkbox" name="Registrar[p4][]" value="2"> Porque quiero que mis ideas sean reconocidas<br>
-                    <input type="checkbox" name="Registrar[p4][]" value="3"> Porque quiero aprender algo de manera diferente<br>
-                    <input type="checkbox" name="Registrar[p4][]" value="4"> Porque quiero conocer experiencias de mi región y de otras regiones<br>
-                    <input type="checkbox" name="Registrar[p4][]" value="5"> Porque me interesa usar la tecnología en mis aprendizajes</div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-9 col-md-9">
-        <div class="form-group field-registrar-p5 required">
-            <label class="control-label" for="registrar-p5">¿Dónde planeas trabajar con tu equipo de trabajo?</label>
-            <input type="hidden" name="Registrar[p5]" value="">
-                <div id="registrar-p5">
-                    <input type="checkbox" name="Registrar[p5][]" value="0"> En el aula de clases<br>
-                    <input type="checkbox" name="Registrar[p5][]" value="1"> En tu casa
-                </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-9 col-md-9">
-        <div class="form-group field-registrar-p6 required">
-            <label class="control-label" for="registrar-p6">¿Cuándo vas a trabajar con tu equipo de trabajo?</label>
-            <input type="hidden" name="Registrar[p6]" value="">
-                <div id="registrar-p6">
-                    <input type="checkbox" name="Registrar[p6][]" value="0"> Durante clases<br>
-                    <input type="checkbox" name="Registrar[p6][]" value="1"> Horas de recreo<br>
-                    <input type="checkbox" name="Registrar[p6][]" value="2"> Después de la jornada escolar<br>
-                    <input type="checkbox" name="Registrar[p6][]" value="3"> Fines de semana
-                </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
     <div class="col-xs-12 col-md-6">
         <input type="submit" id="registrar" value="Registrar" class="btn btn-primary" >
         
@@ -564,7 +483,7 @@ use yii\widgets\Pjax;
             $('.field-registrar-grado').removeClass('has-error');
         }
         
-        
+        /*
         if (p1==0) {
             error=error+'Seleccione al menos 1 opción en la primera pregunta <br>';
             $('.field-registrar-p1').addClass('has-error');
@@ -625,7 +544,7 @@ use yii\widgets\Pjax;
             $('.field-registrar-p6').addClass('has-success');
             $('.field-registrar-p6').removeClass('has-error');
         }
-        
+        */
         if($('#registrar-password').val()!='' && $('#registrar-password').val().length<8)
         {
             error=error+'La contraseña debe contener mínimo 8 caracteres <br>';
@@ -664,6 +583,19 @@ use yii\widgets\Pjax;
                 },
             });
             return false;
+        }
+        else
+        {
+            $.notify({
+                message: 'Tus datos han sido registrados' 
+            },{
+                type: 'success',
+                z_index: 1000000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                },
+            });
         }
         return true;
     });
