@@ -421,5 +421,9 @@ foreach($objetivos as $objetivo){
 	    $('#proyecto-plan_presupuestal_precio_unitario_'+id).prop( "disabled", true );
 	    $('#proyecto-plan_presupuestal_precio_unitario1_'+id).val("");
 	}
+	else
+	{
+	    $('#proyecto-plan_presupuestal_precio_unitario_'+id).prop( "disabled", false );
+	}
     }
 </script>
