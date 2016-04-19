@@ -203,7 +203,30 @@ use yii\widgets\Pjax;
     }
         
     $("#registrar-foto").change(function(){
-        mostrarImagen(this);
+        var ext = $('#registrar-foto').val().split('.').pop().toLowerCase();
+        var error='';
+        if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+            error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
+        }
+        if (error!='') {
+            $.notify({
+                message: error
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+        }
+        else
+        {
+            mostrarImagen(this);
+        }
+        
+        
     });
     $('#registrar-fecha_nac').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
     $('#registrar-password').focusout(function() {
@@ -364,7 +387,12 @@ use yii\widgets\Pjax;
         var p4=$('input[name=\'Registrar[p4][]\']:checked').length;
         var p5=$('input[name=\'Registrar[p5][]\']:checked').length;
         var p6=$('input[name=\'Registrar[p6][]\']:checked').length;
+        var ext = $('#registrar-foto').val().split('.').pop().toLowerCase();
         
+            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+                error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
+            }
+
         if ($('#registrar-nombres').val()=='') {
             error=error+'Ingrese nombres <br>';
             $('.field-registrar-nombres').addClass('has-error');
