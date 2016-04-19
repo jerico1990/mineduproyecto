@@ -7,8 +7,6 @@
     vertical-align: middle;
 }
 
-padding-right: 5px;padding-top: 5px
-
 
 /*
 body {
@@ -101,3 +99,6 @@ section:nth-child(odd) a {
 .file-data {
     font-size: 14px;
 }*/
+/*.required input:required:valid,select:required:valid, textarea:required:valid { color: #28921f; }
+input:required:valid,select:required:valid, textarea:required:valid { border-color: #28921f; }
+input:focus:invalid,select:focus:invalid, textarea:focus:invalid { border-color: #a94442; }*/
