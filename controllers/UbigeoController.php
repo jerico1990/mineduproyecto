@@ -115,7 +115,7 @@ class UbigeoController extends Controller
     
     public function actionProvincias($departamento)
     {
-        
+        //var_dump($departamento);die;
         $countProvincias=Ubigeo::find()
                         ->select('province_id,province')
                         ->innerJoin('institucion i','i.ubigeo_id=ubigeo.district_id')
@@ -125,13 +125,13 @@ class UbigeoController extends Controller
                         ->where('department_id=:department_id',[':department_id'=>$departamento])->groupBy('province_id,province')->orderBy('province')->all();
         
         if($countProvincias>0){
-            echo "<option value>Provincia</option>";
+            echo "<option value></option>";
             foreach($provincias as $provincia){
                 echo "<option value='".$provincia->province_id."'>".$provincia->province."</option>";
             }
         }
         else{
-            echo "<option value>Provincia</option>";
+            echo "<option value></option>";
         }
     }
     
@@ -154,13 +154,13 @@ class UbigeoController extends Controller
                     ->all();
       
         if($countDistritos>0){
-            echo "<option value>Distrito</option>";
+            echo "<option value></option>";
             foreach($distritos as $distrito){
                 echo "<option value='".$distrito->district_id."'>".$distrito->district."</option>";
             }
         }
         else{
-            echo "<option value>Distrito</option>";
+            echo "<option value></option>";
         }
         
     }
@@ -180,13 +180,13 @@ class UbigeoController extends Controller
                     ->orderBy('denominacion asc')->all();
         
         if($countInstitucion>0){
-            echo "<option value>Institución</option>";
+            echo "<option value></option>";
             foreach($instituciones as $institucion){
                 echo "<option value='".$institucion->id."'>".$institucion->codigo_modular." - ".$institucion->denominacion."</option>";
             }
         }
         else{
-           echo "<option value>Institución</option>";
+           echo "<option value></option>";
         }
         
     }

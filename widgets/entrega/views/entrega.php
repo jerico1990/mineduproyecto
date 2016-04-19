@@ -14,9 +14,9 @@ use yii\web\JsExpression;
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<button class="btn" type="button" id="btnprimeraentrega" <?= (!$etapa1 || $equipo->etapa==1)?'disabled':'' ?>>Cerrar primera entrega</button>
+<button class="btn btn-raised btn-success" type="button" id="btnprimeraentrega" <?= (!$etapa1 || $equipo->etapa==1)?'disabled':'' ?>>Cerrar primera entrega</button>
 
-<button class="btn" type="button" id="btnsegundaentrega" <?= (!$etapa2 || $equipo->etapa==2)?'disabled':'' ?>>Cerrar segunda entrega</button>
+<button class="btn btn-raised btn-success" type="button" id="btnsegundaentrega" <?= (!$etapa2 || $equipo->etapa==2)?'disabled':'' ?>>Cerrar segunda entrega</button>
 
 
 <?php if($equipo->etapa==1 || $equipo->etapa==2){?>

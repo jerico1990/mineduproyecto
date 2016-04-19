@@ -14,127 +14,149 @@ use yii\web\JsExpression;
 ?>
 
 <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
-<h2>Registrar Proyecto</h2>
+<h1>Mi Proyecto</h1>
 <hr class="colorgraph">
 <div class="row">
     <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Datos generales</a></li>
-            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="true">Resultado</a></li>
-            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="true">Presupuesto</a></li>
-            <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Cronograma</a></li>
-            <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">Mi Video</a></li>
-            <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Reflexión</a></li>
+        <ul class="nav nav-tabs" style="background: white;">
+            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false" style="color: #333 !important">Datos generales</a></li>
+            <li class=""><a href="#tab_9" data-toggle="tab" aria-expanded="true" style="color: #333 !important">Objetivos y actividades</a></li>
+            <!--<li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="true" style="color: #333 !important">Resultado</a></li>-->
+            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="true" style="color: #333 !important">Presupuesto</a></li>
+            <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false" style="color: #333 !important">Cronograma</a></li>
+            <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false"  style="color: #333 !important">Mi Video</a></li>
+            <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false" style="color: #333 !important" >Reflexión</a></li>
             <?php if($etapa->etapa==2){ ?>
-            <li class=""><a href="#tab_7" data-toggle="tab" aria-expanded="false">Mi evaluación</a></li>
-            <li class=""><a href="#tab_8" data-toggle="tab" aria-expanded="false">Foro</a></li>
+            <li class=""><a href="#tab_7" data-toggle="tab" aria-expanded="false" style="color: #333 !important">Mi evaluación</a></li>
+            <li class=""><a href="#tab_8" data-toggle="tab" aria-expanded="false" style="color: #333 !important">Foro</a></li>
             <?php } ?>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-titulo required">
-                        <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título: *</label>
-                        <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" placeholder="Título" maxlength="10" title="Máximo 10 palabras" value="<?= $proyecto->titulo ?>" <?= $disabled ?> >
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-resumen required">
-                        <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Resumen: *</label>
-                        <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" placeholder="Resumen" title="Mínimo 100 palabras" <?= $disabled ?>><?= $proyecto->resumen ?></textarea>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-beneficiario required">
-                        <label class="control-label" for="proyecto-beneficiario">Beneficiario: *</label>
-                        <textarea id="proyecto-beneficiario" class="form-control" name="Proyecto[beneficiario]"  placeholder="Beneficiario" <?= $disabled ?>><?= $proyecto->beneficiario ?></textarea>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <h3>Objetivos:</h3>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-objetivo_general required">
-                        <label>General: </label> <span class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#objetivo_general"></span> <div style="display: inline" id="txt_objetivo_general" ><?= $proyecto->objetivo_general ?></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <h3>Especificos:</h3>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-objetivo_especifico_1 required">
-                        <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_1" data-toggle="modal" data-target="#objetivo_especifico_1"></span> <div style="display: inline" id="txt_objetivo_especifico_1"><?= $proyecto->objetivo_especifico_1 ?></div><br>
-                        <div id="txt_actividades_objetivo_especifico_1">
-                            <?php foreach($actividades as $actividad){ ?>
-                                <?php if($actividad->objetivo_especifico_id==$proyecto->objetivo_especifico_1_id){?>
-                                    <a href="../actividad/index?id=<?= $actividad->actividad_id ?>" target="_blank"><?= $actividad->descripcion ?></a>
-                                    <br>
-                                <?php } ?>
-                            <?php } ?>
+                <div class="col-xs-12 col-sm-3 col-md-3"></div>
+                <div class="col-xs-12 col-sm-6 col-md-6">    
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-titulo required">
+                            <label class="control-label" for="proyecto-titulo" title="Máximo 10 palabras">Título</label>
+                            <input type="text" id="proyecto-titulo" class="form-control" name="Proyecto[titulo]" maxlength="10" title="Máximo 10 palabras" value="<?= $proyecto->titulo ?>" <?= $disabled ?> required>
                         </div>
                     </div>
-                </div>
-                <div class="clearfix"></div>
-                 <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-objetivo_especifico_2 required">
-                        <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_2" data-toggle="modal" data-target="#objetivo_especifico_2"></span> <div style="display: inline" id="txt_objetivo_especifico_2"><?= $proyecto->objetivo_especifico_2 ?></div>
-                        <div id="txt_actividades_objetivo_especifico_1">
-                            <?php foreach($actividades as $actividad){ ?>
-                                <?php if($actividad->objetivo_especifico_id==$proyecto->objetivo_especifico_2_id){?>
-                                    <a href="../actividad/index?id=<?= $actividad->actividad_id ?>" target="_blank"><?= $actividad->descripcion ?></a>
-                                    <br>
-                                <?php } ?>
-                            <?php } ?>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-asunto required">
+                            <label class="control-label" for="proyecto-asunto" >Asunto público</label>
+                            <?= $equipo->asunto->descripcion_cabecera?>
                         </div>
                     </div>
-                </div>
-                <div class="clearfix"></div>
-                 <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-objetivo_especifico_3 required">
-                        <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_3" data-toggle="modal" data-target="#objetivo_especifico_3"></span> <div style="display: inline" id="txt_objetivo_especifico_3"><?= $proyecto->objetivo_especifico_3 ?></div>
-                        <div id="txt_actividades_objetivo_especifico_1">
-                            <?php foreach($actividades as $actividad){ ?>
-                                <?php if($actividad->objetivo_especifico_id==$proyecto->objetivo_especifico_3_id){?>
-                                    <a href="../actividad/index?id=<?= $actividad->actividad_id ?>" target="_blank"><?= $actividad->descripcion ?></a>
-                                    <br>
-                                <?php } ?>
-                            <?php } ?>
+                    <div class="clearfix"></div>    
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-resumen required">
+                            <label class="control-label" for="proyecto-resumen" title="Mínimo 100 palabras">Sumilla / Justificación</label>
+                            <textarea id="proyecto-resumen" class="form-control" name="Proyecto[resumen]" minlength="100" maxlength="2500" title="Mínimo 100 palabras" <?= $disabled ?> required ><?= $proyecto->resumen ?></textarea>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-beneficiario required">
+                            <label class="control-label" for="proyecto-beneficiario">Beneficiario</label>
+                            <textarea id="proyecto-beneficiario" class="form-control" name="Proyecto[beneficiario]"   <?= $disabled ?> required ><?= $proyecto->beneficiario ?></textarea>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
             </div><!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_2">
+            <div class="tab-pane" id="tab_9">
                 <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-8 col-md-8">
-                    <table class="table">
-                        <thead>
-                        <th>Actividad</th>
-                        <th>Resultado</th>
-                        </thead>
-                        <tbody>
-                    <?php $i=0;?>
-                    <?php foreach($actividades as $actividad){ ?>
-                        <tr>
-                            <td><?= $actividad->descripcion ?></td>
-                            <td>
-                                <div class="form-group field-proyecto-resultado_esperado_<?= $i ?> required">
-                                    <input type="hidden"  class="form-control" name="Proyecto[resultados_ids][]" value="<?= $actividad->actividad_id ?>" >
-                                    <input type="text" id="proyecto-resultado_esperado_<?= $i ?>" class="form-control" name="Proyecto[resultados_esperados][]" placeholder="Resultado #<?= $i ?>" value="<?= $actividad->resultado_esperado ?>" <?= $disabled ?> >
-                                </div>
-                            </td>
-                        </tr>
-                        
-                    <?php $i++; } ?>
-                        </tbody>
-                    </table>
+                <div class="col-xs-12 col-sm-3 col-md-3"></div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-objetivo_general required">
+                            <label class="control-label" for="proyecto-objetivo_general" title="Máximo 200 palabras">Objetivo general</label>
+                            <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="200"  title="Máximo 200 palabras" <?= $disabled ?>><?= $proyecto->objetivo_general ?></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <h4>Objetivos especificos:</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group field-proyecto-objetivo_especifico_1 required">
+                            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_1" data-toggle="modal" data-target="#objetivo_especifico_1"></span> <div style="display: inline" id="txt_objetivo_especifico_1"><?= $proyecto->objetivo_especifico_1 ?></div><br>
+                            <div id="txt_actividades_objetivo_especifico_1">
+                                <?php foreach($actividades as $actividad){ ?>
+                                    <?php if($actividad->objetivo_especifico_id==$proyecto->objetivo_especifico_1_id){?>
+                                        <a href="../actividad/index?id=<?= $actividad->actividad_id ?>" target="_blank"><?= $actividad->descripcion ?></a>
+                                        <br>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                     <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group field-proyecto-objetivo_especifico_2 required">
+                            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_2" data-toggle="modal" data-target="#objetivo_especifico_2"></span> <div style="display: inline" id="txt_objetivo_especifico_2"><?= $proyecto->objetivo_especifico_2 ?></div>
+                            <div id="txt_actividades_objetivo_especifico_1">
+                                <?php foreach($actividades as $actividad){ ?>
+                                    <?php if($actividad->objetivo_especifico_id==$proyecto->objetivo_especifico_2_id){?>
+                                        <a href="../actividad/index?id=<?= $actividad->actividad_id ?>" target="_blank"><?= $actividad->descripcion ?></a>
+                                        <br>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                     <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group field-proyecto-objetivo_especifico_3 required">
+                            <span class="glyphicon glyphicon-plus-sign field-proyecto-objetivo_especifico_3" data-toggle="modal" data-target="#objetivo_especifico_3"></span> <div style="display: inline" id="txt_objetivo_especifico_3"><?= $proyecto->objetivo_especifico_3 ?></div>
+                            <div id="txt_actividades_objetivo_especifico_1">
+                                <?php foreach($actividades as $actividad){ ?>
+                                    <?php if($actividad->objetivo_especifico_id==$proyecto->objetivo_especifico_3_id){?>
+                                        <a href="../actividad/index?id=<?= $actividad->actividad_id ?>" target="_blank"><?= $actividad->descripcion ?></a>
+                                        <br>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- /.tab-pane -->
+            
+            <div class="tab-pane" id="tab_2">
+                <div class="col-xs-12 col-sm-3 col-md-3"></div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <th>Actividad</th>
+                            <th>Resultado</th>
+                            </thead>
+                            <tbody>
+                            <?php $i=0;?>
+                            <?php foreach($actividades as $actividad){ ?>
+                                <tr>
+                                    <td style="vertical-align: middle"><?= $actividad->descripcion ?></td>
+                                    <td style="padding: 2px">
+                                        <div class="form-group field-proyecto-resultado_esperado_<?= $i ?> required" style="margin-top: 0px">
+                                            <input type="hidden"  class="form-control" name="Proyecto[resultados_ids][]" value="<?= $actividad->actividad_id ?>" >
+                                            <input type="text" id="proyecto-resultado_esperado_<?= $i ?>" class="form-control " name="Proyecto[resultados_esperados][]" placeholder="Resultado #<?= $i ?>" value="<?= $actividad->resultado_esperado ?>" <?= $disabled ?> >
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            <?php $i++; } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
             </div><!-- /.tab-pane -->
@@ -194,29 +216,35 @@ use yii\web\JsExpression;
                 <?php } ?>
             </div><!-- /.tab-pane -->
             <div class="tab-pane" id="tab_6">
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-reflexion required">
-                        <label class="control-label" for="proyecto-reflexion" >Reflexión: </label>
-                        <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  placeholder="Reflexión" <?= ($equipo->etapa==1  || $equipo->etapa==2)?'disabled':''; ?>><?= $proyecto->reflexion?></textarea>
+                <div class="clearfix"></div>
+                <div class="col-xs-12 col-sm-3 col-md-3"></div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group label-floating field-proyecto-reflexion required">
+                        <label class="control-label" for="proyecto-reflexion" >Reflexión</label>
+                        <textarea id="proyecto-reflexion" class="form-control" name="Proyecto[reflexion]"  <?= ($equipo->etapa==1  || $equipo->etapa==2)?'disabled':''; ?>><?= $proyecto->reflexion?></textarea>
                     </div>
                 </div>
                 <div class="clearfix"></div>
             </div><!-- /.tab-pane -->
+            <?php if($etapa->etapa==1 || $etapa->etapa==2 || $etapa->etapa==3){ ?>
+            
             <div class="tab-pane" id="tab_7">
                 <div class="clearfix"></div>
-                <?php if($equipo->etapa==1 || $equipo->etapa==2){ ?>
-                <div class="col-xs-12 col-sm-7 col-md-5">
-                    <div class="form-group field-proyecto-evaluacion required">
-                        <label class="control-label" for="proyecto-evaluacion" >Evaluación: </label>
-                        <textarea id="proyecto-evaluacion" class="form-control" name="Proyecto[evaluacion]"  placeholder="Evaluación" <?= ($equipo->etapa==2)?'disabled':''; ?>><?= $proyecto->evaluacion?></textarea>
+                <div class="col-xs-12 col-sm-3 col-md-3"></div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group label-floating field-proyecto-evaluacion required">
+                        <label class="control-label" for="proyecto-evaluacion" >Evaluación</label>
+                        <textarea id="proyecto-evaluacion" class="form-control" name="Proyecto[evaluacion]"  <?= ($equipo->etapa==2)?'disabled':''; ?>><?= $proyecto->evaluacion?></textarea>
                     </div>
                 </div>
-                <?php } ?>
                 <div class="clearfix"></div>
             </div><!-- /.tab-pane -->
+            <?php } ?>
+            <?php if($etapa->etapa==2 || $etapa->etapa==3){ ?>
             <div class="tab-pane" id="tab_8">
                 <?= \app\widgets\foro\ForoWidget::widget(['proyecto_id'=>$proyecto->id]); ?> 
             </div><!-- /.tab-pane -->
+            <?php }?>
         </div><!-- /.tab-content -->
     </div>
     
@@ -235,10 +263,10 @@ use yii\web\JsExpression;
                     <h4 class="modal-title" id="myModalLabel">Objetivo general</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group field-proyecto-objetivo_general required">
+                    <!--<div class="form-group field-proyecto-objetivo_general required">
                         <label class="control-label" for="proyecto-objetivo_general" title="Máximo 30 palabras">Descripción: *</label>
                         <textarea id="proyecto-objetivo_general" class="form-control" name="Proyecto[objetivo_general]"  maxlength="30" placeholder="Objetivo General" title="Máximo 30 palabras" <?= $disabled ?>><?= $proyecto->objetivo_general ?></textarea>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -257,19 +285,19 @@ use yii\web\JsExpression;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Objetivo especifico #1</h4>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    <div class="col-xs-12 col-sm-7 col-md-12">
-                        <div class="form-group field-proyecto-objetivo_especifico_1 required">
-                            <label class="control-label" for="proyecto-objetivo_especifico_1" title="Máximo 30 palabras">Descripción: *</label>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-objetivo_especifico_1 required">
+                            <label class="control-label" for="proyecto-objetivo_especifico_1" >Objetivo especifico #1</label>
                             <input type="hidden" name="Proyecto[objetivo_especifico_1_id]" value="<?= $proyecto->objetivo_especifico_1_id ?>" >
-                            <textarea id="proyecto-objetivo_especifico_1" class="form-control" name="Proyecto[objetivo_especifico_1]"   placeholder="Objetivo especifico 1" <?= $disabled ?>><?= $proyecto->objetivo_especifico_1 ?></textarea>
+                            <textarea id="proyecto-objetivo_especifico_1" class="form-control" name="Proyecto[objetivo_especifico_1]"    <?= $disabled ?>><?= $proyecto->objetivo_especifico_1 ?></textarea>
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-xs-12 col-sm-7 col-md-12">
-                        <table class="table table-bordered table-hover" id="tab_logic_1">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <table class="table table-striped table-hover" id="tab_logic_1">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -293,10 +321,9 @@ use yii\web\JsExpression;
                                         <td>
                                         <?= ($i+1) ?>
                                         </td>
-                                        <td>
-                                            <div class="form-group field-proyecto-actividad_objetivo1_<?= $i ?> required">
-                                                
-                                                <input type="text" id="proyecto-actividad_objetivo1_<?= $i ?>" class="form-control" name="Proyecto[actividades_1][]" placeholder="Actividad" value="<?= $actividad->descripcion ?>" <?= $disabled ?>/>
+                                        <td style="padding: 2px">
+                                            <div class="form-group field-proyecto-actividad_objetivo1_<?= $i ?> required" style="margin-top: 0px">
+                                                <input type="text" id="proyecto-actividad_objetivo1_<?= $i ?>" class="form-control" name="Proyecto[actividades_1][]"  value="<?= $actividad->descripcion ?>" <?= $disabled ?> placeholder="Actividad #1"/>
                                             </div>
                                         </td>
                                         <?php if($disabled==''){ ?>
@@ -316,10 +343,9 @@ use yii\web\JsExpression;
                                         <td>
                                             1
                                         </td>
-                                        <td>
-                                            <div class="form-group field-proyecto-actividad_objetivo1_0 required">
-                                                
-                                                <input type="text" id="proyecto-actividad_objetivo1_0" class="form-control" name="Proyecto[actividades_1][]" placeholder="Actividad" />
+                                        <td style="padding: 2px">
+                                            <div class="form-group field-proyecto-actividad_objetivo1_0 required" style="margin-top: 0px">
+                                                <input type="text" id="proyecto-actividad_objetivo1_0" class="form-control" name="Proyecto[actividades_1][]"  placeholder="Actividad #1"/>
                                             </div>
                                         </td>
                                         <td>
@@ -331,18 +357,17 @@ use yii\web\JsExpression;
                                 <tr id='addr_1_<?= $i ?>'></tr>
                             </tbody>
                         </table>
-                        <?php if($disabled==''){ ?>
-                        <div id="add_row_1" class="btn btn-default pull-left" value="1">Agregar</div>
-                        <?php }?>
+                        
                         <br>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <?php if($disabled==''){ ?>
-                    <button type="button" id="btn_objetivo_especifico_1" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                    <div id="add_row_1" class="btn btn-raised btn-success" value="1">Agregar</div>
+                    <button type="button" id="btn_objetivo_especifico_1" class="btn btn-raised btn-success" data-dismiss="modal">Guardar</button>
                     <?php }?>
+                    <button type="button" class="btn btn-raised btn-success" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -355,19 +380,19 @@ use yii\web\JsExpression;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Objetivo especifico #2</h4>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    <div class="col-xs-12 col-sm-7 col-md-12">
-                        <div class="form-group field-proyecto-objetivo_especifico_2 required">
-                            <label class="control-label" for="proyecto-objetivo_especifico_2" title="Máximo 30 palabras">Descripción: *</label>
+                    <div class="col-xs-12  col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-objetivo_especifico_2 required">
+                            <label class="control-label" for="proyecto-objetivo_especifico_2" >Objetivo especifico #2</label>
                             <input type="hidden" name="Proyecto[objetivo_especifico_2_id]" value="<?= $proyecto->objetivo_especifico_2_id ?>">
-                            <textarea id="proyecto-objetivo_especifico_2" class="form-control" name="Proyecto[objetivo_especifico_2]"  placeholder="Objetivo especifico 2" <?= $disabled ?>><?= $proyecto->objetivo_especifico_2 ?></textarea>
+                            <textarea id="proyecto-objetivo_especifico_2" class="form-control" name="Proyecto[objetivo_especifico_2]"  <?= $disabled ?>><?= $proyecto->objetivo_especifico_2 ?></textarea>
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-xs-12 col-sm-7 col-md-12">
-                        <table class="table table-bordered table-hover" id="tab_logic_2">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <table class="table table-striped table-hover" id="tab_logic_2">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -391,10 +416,9 @@ use yii\web\JsExpression;
                                         <td>
                                         <?= ($a+1) ?>
                                         </td>
-                                        <td>
-                                            <div class="form-group field-proyecto-actividad_objetivo2_<?= $a ?> required">
-                                                
-                                                <input type="text" id="proyecto-actividad_objetivo2_<?= $a ?>" class="form-control" name="Proyecto[actividades_2][]" placeholder="Actividad" value="<?= $actividad->descripcion ?>" <?= $disabled ?>/>
+                                        <td style="padding: 2px">
+                                            <div class="form-group label-floating field-proyecto-actividad_objetivo2_<?= $a ?> required" style="margin-top: 0px">
+                                                <input type="text" id="proyecto-actividad_objetivo2_<?= $a ?>" class="form-control" name="Proyecto[actividades_2][]"  value="<?= $actividad->descripcion ?>" <?= $disabled ?> placeholder="Actividad #1"/>
                                             </div>
                                         </td>
                                         <?php if($disabled==''){ ?>
@@ -413,9 +437,9 @@ use yii\web\JsExpression;
                                         <td>
                                             1
                                         </td>
-                                        <td>
-                                            <div class="form-group field-proyecto-actividad_objetivo2_0 required">
-                                                <input type="text" id="proyecto-actividad_objetivo2_0" class="form-control" name="Proyecto[actividades_2][]" placeholder="Actividad" />
+                                        <td style="padding: 2px">
+                                            <div class="form-group label-floating field-proyecto-actividad_objetivo2_0 required" style="margin-top: 0px">
+                                                <input type="text" id="proyecto-actividad_objetivo2_0" class="form-control" name="Proyecto[actividades_2][]"  placeholder="Actividad #1"/>
                                             </div>
                                         </td>
                                         <td>
@@ -426,18 +450,17 @@ use yii\web\JsExpression;
                                 <tr id='addr_2_<?= $a ?>'></tr>
                             </tbody>
                         </table>
-                        <?php if($disabled==''){ ?>
-                        <div id="add_row_2" class="btn btn-default pull-left" value="1">Agregar</div>
-                        <?php } ?>
+                        
                         <br>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <?php if($disabled==''){ ?>
-                    <button type="button" id="btn_objetivo_especifico_2" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                    <div id="add_row_2" class="btn btn-raised btn-success" value="1">Agregar</div>
+                    <button type="button" id="btn_objetivo_especifico_2" class="btn btn-raised btn-success" data-dismiss="modal">Guardar</button>
                     <?php } ?>
+                    <button type="button" class="btn btn-raised btn-success" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -451,19 +474,19 @@ use yii\web\JsExpression;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Objetivo especifico #3</h4>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    <div class="col-xs-12 col-sm-7 col-md-12">
-                        <div class="form-group field-proyecto-objetivo_especifico_3 required">
-                            <label class="control-label" for="proyecto-objetivo_especifico_3" title="Máximo 30 palabras">Descripción: *</label>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group label-floating field-proyecto-objetivo_especifico_3 required">
+                            <label class="control-label" for="proyecto-objetivo_especifico_3" >Objetivo especifico #3</label>
                             <input type="hidden" name="Proyecto[objetivo_especifico_3_id]" value="<?= $proyecto->objetivo_especifico_3_id ?>">
-                            <textarea id="proyecto-objetivo_especifico_3" class="form-control" name="Proyecto[objetivo_especifico_3]"  placeholder="Objetivo especifico 3" <?= $disabled ?>><?= $proyecto->objetivo_especifico_3 ?></textarea>
+                            <textarea id="proyecto-objetivo_especifico_3" class="form-control" name="Proyecto[objetivo_especifico_3]"  <?= $disabled ?>><?= $proyecto->objetivo_especifico_3 ?></textarea>
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-xs-12 col-sm-7 col-md-12">
-                        <table class="table table-bordered table-hover" id="tab_logic_3">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <table class="table table-striped table-hover" id="tab_logic_3">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -487,9 +510,9 @@ use yii\web\JsExpression;
                                         <td>
                                         <?= ($e+1) ?>
                                         </td>
-                                        <td>
-                                            <div class="form-group field-proyecto-actividad_objetivo3_<?= $e ?> required">
-                                                <input type="text" id="proyecto-actividad_objetivo3_<?= $e ?>" class="form-control" name="Proyecto[actividades_3][]" placeholder="Actividad" value="<?= $actividad->descripcion ?>" <?= $disabled ?>/>
+                                        <td style="padding: 2px">
+                                            <div class="form-group label-floating field-proyecto-actividad_objetivo3_<?= $e ?> required" style="margin-top: 0px">
+                                                <input type="text" id="proyecto-actividad_objetivo3_<?= $e ?>" class="form-control" name="Proyecto[actividades_3][]"  value="<?= $actividad->descripcion ?>" <?= $disabled ?> placeholder="Actividad #1"/>
                                             </div>
                                         </td>
                                         <?php if($disabled==''){ ?>
@@ -508,9 +531,9 @@ use yii\web\JsExpression;
                                         <td>
                                             1
                                         </td>
-                                        <td>
-                                            <div class="form-group field-proyecto-actividad_objetivo3_0 required">
-                                                <input type="text" id="proyecto-actividad_objetivo3_0" class="form-control" name="Proyecto[actividades_3][]" placeholder="Actividad" />
+                                        <td style="padding: 2px">
+                                            <div class="form-group label-floating field-proyecto-actividad_objetivo3_0 required" style="margin-top: 0px">
+                                                <input type="text" id="proyecto-actividad_objetivo3_0" class="form-control" name="Proyecto[actividades_3][]" placeholder="Actividad #1" />
                                             </div>
                                         </td>
                                         <td>
@@ -521,36 +544,35 @@ use yii\web\JsExpression;
                                 <tr id='addr_3_<?= $e ?>'></tr>
                             </tbody>
                         </table>
-                        <?php if($disabled==''){ ?>
-                        <div id="add_row_3" class="btn btn-default pull-left" value="1">Agregar</div>
-                        <?php }?>
+                        
                         <br>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <?php if($disabled==''){ ?>
-                    <button type="button" id="btn_objetivo_especifico_3" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                    <div id="add_row_3" class="btn btn-raised btn-success" value="1">Agregar</div>
+                    <button type="button" id="btn_objetivo_especifico_3" class="btn btn-raised btn-success" data-dismiss="modal">Guardar</button>
                     <?php }?>
+                    <button type="button" class="btn btn-raised btn-success" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal-footer">
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         
     <?php if($entrega!=1){ ?>    
         <?php if($disabled=='' && $equipo->etapa==0){ ?>
         <?= \app\widgets\entrega\EntregaWidget::widget(); ?>
-        <button type="submit" id="btnproyecto" class="btn btn-primary pull-right">Guardar</button>
+        <button type="submit" id="btnproyecto" class="btn btn-raised btn-success">Guardar</button>
         
         <?php } else if($disabled && $equipo->etapa==0){?>
-        <button type="button" id="btnproyectoreflexion" class="btn btn-primary pull-right">Guardar</button>
+        <button type="button" id="btnproyectoreflexion" class="btn btn-raised btn-success">Guardar</button>
         <?php } else if($equipo->etapa==1 && $integrante->rol==1){ ?>
         <?= \app\widgets\entrega\EntregaWidget::widget(); ?>
-        <button type="button" id="btnproyectoevaluacion" class="btn btn-primary pull-right">Guardar</button>
+        <button type="button" id="btnproyectoevaluacion" class="btn btn-raised btn-success">Guardar</button>
         <?php } else if($equipo->etapa==1 && $integrante->rol==2){ ?>
-        <button type="button" id="btnproyectoevaluacion" class="btn btn-primary pull-right">Guardar</button>
+        <button type="button" id="btnproyectoevaluacion" class="btn btn-raised btn-success">Guardar</button>
         <?php } ?>
     <?php } ?>
     </div>
@@ -691,7 +713,7 @@ use yii\web\JsExpression;
             $('.field-proyecto-actividad_objetivo1_'+(i-1)).addClass('has-success');
             $('.field-proyecto-actividad_objetivo1_'+(i-1)).removeClass('has-error');
             
-            $('#addr_1_'+i).html("<td>"+ (i+1) +"</td><td><div class='form-group field-proyecto-actividad_objetivo1_"+i+" required'><input id='proyecto-actividad_objetivo1_"+i+"' name='Proyecto[actividades_1][]' type='text' placeholder='Actividad' class='form-control'  /></div></td><td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
+            $('#addr_1_'+i).html("<td>"+ (i+1) +"</td><td style='padding: 2px'><div class='form-group field-proyecto-actividad_objetivo1_"+i+" required' style='margin-top: 0px'><input id='proyecto-actividad_objetivo1_"+i+"' name='Proyecto[actividades_1][]' type='text' class='form-control' placeholder='Actividad #"+(i+1)+"' /></div></td><td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
             $('#tab_logic_1').append('<tr id="addr_1_'+(i+1)+'"></tr>');
             i++;
         }
@@ -744,7 +766,7 @@ use yii\web\JsExpression;
             $('.field-proyecto-actividad_objetivo2_'+(a-1)).addClass('has-success');
             $('.field-proyecto-actividad_objetivo2_'+(a-1)).removeClass('has-error');
             
-            $('#addr_2_'+a).html("<td>"+ (a+1) +"</td><td><div class='form-group field-proyecto-actividad_objetivo2_"+a+" required'><input id='proyecto-actividad_objetivo2_"+a+"' name='Proyecto[actividades_2][]' type='text' placeholder='Actividad' class='form-control'  /></div></td><td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
+            $('#addr_2_'+a).html("<td>"+ (a+1) +"</td><td style='padding: 2px'><div class='form-group field-proyecto-actividad_objetivo2_"+a+" required' style='margin-top: 0px'><input id='proyecto-actividad_objetivo2_"+a+"' name='Proyecto[actividades_2][]' type='text' class='form-control'  placeholder='Actividad #"+(a+1)+"' /></div></td><td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
             $('#tab_logic_2').append('<tr id="addr_2_'+(a+1)+'"></tr>');
             a++;
         }
@@ -797,7 +819,7 @@ use yii\web\JsExpression;
             $('.field-proyecto-actividad_objetivo3_'+(e-1)).addClass('has-success');
             $('.field-proyecto-actividad_objetivo3_'+(e-1)).removeClass('has-error');
             
-            $('#addr_3_'+e).html("<td>"+ (e+1) +"</td><td><div class='form-group field-proyecto-actividad_objetivo3_"+e+" required'><input id='proyecto-actividad_objetivo3_"+e+"' name='Proyecto[actividades_3][]' type='text' placeholder='Actividad' class='form-control'  /></div></td><td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
+            $('#addr_3_'+e).html("<td>"+ (e+1) +"</td><td style='padding: 2px'><div class='form-group field-proyecto-actividad_objetivo3_"+e+" required' style='margin-top: 0px'><input id='proyecto-actividad_objetivo3_"+e+"' name='Proyecto[actividades_3][]' type='text' class='form-control'  placeholder='Actividad #"+(e+1)+"'/></div></td><td><span class='remCF glyphicon glyphicon-minus-sign'></span></td>");
             $('#tab_logic_3').append('<tr id="addr_3_'+(e+1)+'"></tr>');
             e++;
         }

@@ -7,6 +7,13 @@ use yii\web\JsExpression;
 use yii\widgets\Pjax;
 //var_dump($registrar->errors);
 ?>
+<style>
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+</style>
 <script src="../bootstrap-strength-meter-master/docs/js/jquery-2.1.1.min.js"></script>
 <script src="../bootstrap-strength-meter-master/docs/js/bootstrap-3.2.0.min.js"></script>
 <script src="../bootstrap-strength-meter-master/docs/js/prettify.js"></script>
@@ -14,93 +21,110 @@ use yii\widgets\Pjax;
 
 <script src="../bootstrap-strength-meter-master/password-score/password-score.js"></script>
 <script src="../bootstrap-strength-meter-master/password-score/password-score-options.js"></script>
-<?php $form = ActiveForm::begin(['options' => ['class' => 'formularios', ]]); ?>
+
+
+
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js"></script>
+		<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+		<script type="text/javascript" src="/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+                
+                
+<div class="col-xs-12 col-sm-3 col-md-3"></div>
+<div class="col-xs-12 col-sm-6 col-md-6">
+<?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 <h1 class="text-center">Formulario de Inscripción</h1>
 <hr class="colorgraph">
 <div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-8">
-        <div class="form-group field-registrar-nombres required">
-            <label class="control-label" for="registrar-nombres">Nombres: *</label>
-            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-nombres" class="form-control texto" name="Registrar[nombres]" placeholder="Nombres" required/>
+    <div class="col-xs-12 col-sm-8 col-md-8" style="padding-left:0px;padding-right:0px">
+    <div class="col-xs-12 col-sm-12 col-md-12" style="padding-right:0px">
+        <div class="form-group label-floating field-registrar-nombres required">
+            <label for="registrar-nombres" class="control-label">Nombres</label>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-nombres" class="form-control texto" name="Registrar[nombres]" required/>
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-4 col-md-4">
-        <div class="form-group field-registrar-apellido_paterno required">
-            <label class="control-label" for="registrar-apellido_paterno">Apellido paterno: *</label>
-            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_paterno" class="form-control texto" name="Registrar[apellido_paterno]" placeholder="Apellido paterno" required/>
+    <div class="col-xs-12 col-sm-6 col-md-6" style="padding-right:10px">
+        <div class="form-group label-floating field-registrar-apellido_paterno required">
+            <label class="control-label" for="registrar-apellido_paterno">Apellido paterno</label>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_paterno" class="form-control texto" name="Registrar[apellido_paterno]" required/>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-4 col-md-4">
-        <div class="form-group field-registrar-apellido_materno required">
-            <label class="control-label" for="registrar-apellido_materno">Apellido materno: *</label>
-            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_materno" class="form-control texto" name="Registrar[apellido_materno]" placeholder="Apellido materno" required/>
+    <div class="col-xs-12 col-sm-6 col-md-6" style="padding-right:0px">
+        <div class="form-group label-floating field-registrar-apellido_materno required">
+            <label class="control-label" for="registrar-apellido_materno">Apellido materno</label>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-apellido_materno" class="form-control texto" name="Registrar[apellido_materno]" required/>
         </div>
+    </div>
     </div>
     
+    <div class="col-xs-12 col-sm-4 col-md-4 text-center">
+        <div class="form-group label-floating field-registrar-foto required">
+            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" required/>
+            <img id="img_destino" class="" style="height: 140px;width: 140px" src="../foto_equipo/no_disponible.jpg">
+        </div>
+    </div>
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-5 col-md-4">
-        <div class="form-group field-registrar-sexo required">
-            <label class="control-label" for="registrar-sexo">Sexo: *</label>
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-sexo required">
+            <label class="control-label" for="registrar-sexo">Sexo</label>
             <select id="registrar-sexo" class="form-control" name="Registrar[sexo]" required/>
-                <option value="">Seleccionar sexo</option>
+                <option value=""></option>
                 <option value="F">Femenino</option>
                 <option value="M">Masculino</option>
             </select>
         </div>
     </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-registrar-dni required">
-            <label class="control-label" for="registrar-dni">DNI: *</label>
-            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-dni" class="form-control numerico" name="Registrar[dni]" maxlength="8" placeholder="DNI">
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-dni required">
+            <label class="control-label" for="registrar-dni">DNI</label>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-dni" class="form-control numerico" name="Registrar[dni]" maxlength="8">
         </div>
     </div>
-    <div class="col-xs-12 col-sm-5 col-md-4">
-        <div class="form-group field-registrar-fecha_nac required">
-            <label class="control-label" for="registrar-fecha_nac">Fecha de nacimiento: *</label>
-            <input type="date" onpaste="return false;" onCopy="return false" id="registrar-fecha_nac" class="form-control" name="Registrar[fecha_nac]" placeholder="Fecha de nacimiento">
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group  field-registrar-fecha_nac required form-control-wrapper">
+            <input type="text" id="registrar-fecha_nac" class="form-control label-floating" name="Registrar[fecha_nac]" placeholder="Fecha de nacimiento">
         </div>
     </div>
     
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-registrar-email required">
-            <label class="control-label" for="registrar-email">Correo electrónico: *</label>
-            <input type="email" onpaste="return false;" onCopy="return false" id="registrar-email" class="form-control" name="Registrar[email]" placeholder="Correo electrónico">
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        <div class="form-group label-floating field-registrar-email required">
+            <label class="control-label" for="registrar-email">Correo electrónico</label>
+            <input type="email" onpaste="return false;" onCopy="return false" id="registrar-email" class="form-control" name="Registrar[email]">
         </div>
     </div>
-    <div class="col-xs-12 col-sm-5 col-md-4">
-        <div class="form-group field-registrar-celular required">
-            <label class="control-label" for="registrar-celular">N°  celular: *</label>
-            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-celular" class="form-control numerico" name="Registrar[celular]" maxlength="9" placeholder="N°  celular">
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-celular required">
+            <label class="control-label" for="registrar-celular">N°  celular</label>
+            <input type="text" onpaste="return false;" onCopy="return false" id="registrar-celular" class="form-control numerico" name="Registrar[celular]" maxlength="9" >
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="form-group field-registrar-password required">
-            <label class="control-label" for="registrar-password">Contraseña: *</label>
-            <input type="password" onpaste="return false;" onCopy="return false" id="registrar-password" class="form-control" name="Registrar[password]" placeholder="Contraseña">
+    <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="form-group label-floating field-registrar-password required">
+            <label class="control-label" for="registrar-password">Contraseña</label>
+            <input type="password" onpaste="return false;" onCopy="return false" id="registrar-password" class="form-control" name="Registrar[password]">
         </div>      
     </div>
-    <div class="col-xs-12 col-sm-5 col-md-4">
-        <div class="form-group field-registrar-repassword required">
-            <label class="control-label" for="registrar-repassword">Repetir Contraseña: *</label>
-            <input type="password" onpaste="return false;" onCopy="return false" id="registrar-repassword" class="form-control" name="Registrar[repassword]" placeholder="Repetir contraseña">
+    <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="form-group label-floating field-registrar-repassword required">
+            <label class="control-label" for="registrar-repassword">Repetir Contraseña</label>
+            <input type="password" onpaste="return false;" onCopy="return false" id="registrar-repassword" class="form-control" name="Registrar[repassword]">
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-12 col-md-9" id="example-progress-bar-container"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12" id="example-progress-bar-container"></div>
     <div class="clearfix"></div>
 </div>
 <h1>Datos de la Institución Educativa</h1>
 <hr class="colorgraph">
 <div class="row">
-    <div class="col-xs-12 col-sm-4 col-md-3">
-        <div class="form-group field-registrar-departamento required">
-            <label class="control-label" for="registrar-departamento">Departamento: *</label>
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-departamento required">
+            <label class="control-label" for="registrar-departamento">Departamento</label>
             <select id="registrar-departamento" class="form-control" name="Registrar[departamento]" onchange='departamento($(this).val())'>
-            <option value="">Seleccionar departamento</option>
+            <option value=""></option>
             <?php foreach(Ubigeo::find()->select('department_id,department')->groupBy('department')->all() as $departamento){ ?>
             <option value="<?= $departamento->department_id ?>"><?= $departamento->department ?></option>
             <?php } ?>
@@ -108,37 +132,40 @@ use yii\widgets\Pjax;
         </div>
         
     </div>
-    <div class="col-xs-12 col-sm-4 col-md-3">
-        <div class="form-group field-registrar-provincia required">
-            <label class="control-label" for="registrar-provincia">Provincia: *</label>
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-provincia required">
+            <label class="control-label" for="registrar-provincia">Provincia</label>
             <select id="registrar-provincia" class="form-control" name="Registrar[provincia]" onchange='provincia($(this).val())'>
-            <option value="">Seleccionar provincia</option>
+            <option value=""></option>
             </select>
         </div>
     </div>
     
-    <div class="col-xs-12 col-sm-4 col-md-3">
-        <div class="form-group field-registrar-distrito required ">
-            <label class="control-label" for="registrar-distrito">Distrito: *</label>
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-distrito required ">
+            <label class="control-label" for="registrar-distrito">Distrito</label>
             <select id="registrar-distrito" class="form-control" name="Registrar[distrito]" onchange='distrito($(this).val())'>
-                <option value="">Distrito</option><option value="021802">ACOCHACA</option></select>
+                <option value=""></option>
+            </select>
         </div>
     </div>
     
     <div class="clearfix"></div>
     
-    <div class="col-xs-12 col-sm-4 col-md-3">
-        <div class="form-group field-registrar-institucion required">
-            <label class="control-label" for="registrar-institucion">Institución: *</label>
-            <select id="registrar-institucion" class="form-control" name="Registrar[institucion]"><option value="">Institución</option><option value="1027">0359570 - AGROPECUARIO YAUTAN</option></select>
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        <div class="form-group label-floating field-registrar-institucion required">
+            <label class="control-label" for="registrar-institucion">Institución</label>
+            <select id="registrar-institucion" class="form-control" name="Registrar[institucion]">
+                <option value=""></option>
+            </select>
         </div>
     </div>
     
-    <div class="col-xs-12 col-sm-4 col-md-3">
-        <div class="form-group field-registrar-grado required">
-            <label class="control-label" for="registrar-grado">Grado de estudios: *</label>
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="form-group label-floating field-registrar-grado required">
+            <label class="control-label" for="registrar-grado">Grado de estudios</label>
             <select id="registrar-grado" class="form-control" name="Registrar[grado]">
-                <option value="">Seleccionar grado</option>
+                <option value=""></option>
                 <option value="1">1er</option>
                 <option value="2">2do</option>
                 <option value="3">3ro</option>
@@ -149,24 +176,36 @@ use yii\widgets\Pjax;
     </div>
     <div class="clearfix"></div>
 </div>
-<div class="row">
-    <div class="col-xs-12 col-md-6">
-        <input type="submit" id="registrar" value="Registrar" class="btn btn-primary" >
-        
+<div class="row pull-right">
+    <div class="col-xs-12 col-md-12 pull-right">
+        <input type="submit" id="registrar" value="Registrar" class="btn btn-raised btn-success" >
     </div>
-    
     <div class="clearfix"></div>
 </div>
 <br>
 <div class="clearfix"></div>
 <?php ActiveForm::end(); ?>
-
+</div>
 <?php
     $validardni= Yii::$app->getUrlManager()->createUrl('registrar/validardni');
     $validaremail= Yii::$app->getUrlManager()->createUrl('registrar/validaremail');
 ?>
 
 <script>
+    function mostrarImagen(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img_destino').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+        
+    $("#registrar-foto").change(function(){
+        mostrarImagen(this);
+    });
+    $('#registrar-fecha_nac').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
     $('#registrar-password').focusout(function() {
         if($(this).val()!='')
         {
@@ -618,15 +657,15 @@ use yii\widgets\Pjax;
     
     function provincia(value) {
         $.post( "/mineduproyecto/web/ubigeo/distritos?provincia="+value, function( data ) {$( "#registrar-distrito" ).html( data );});
-        $("#registrar-distrito").find("option").remove().end().append("<option value>Distrito</option>").val("");
-        $("#registrar-institucion").find("option").remove().end().append("<option value>Institución</option>").val("");
+        $("#registrar-distrito").find("option").remove().end().append("<option value></option>").val("");
+        $("#registrar-institucion").find("option").remove().end().append("<option value></option>").val("");
     }
     
     function departamento(value) {
         $.post( "/mineduproyecto/web/ubigeo/provincias?departamento="+value, function( data ) {$( "#registrar-provincia" ).html( data );});
-        $("#registrar-provincia").find("option").remove().end().append("<option value>Provincia</option>").val("");
-        $("#registrar-distrito").find("option").remove().end().append("<option value>Distrito</option>").val("");
-        $("#registrar-institucion").find("option").remove().end().append("<option value>Institución</option>").val("");
+        $("#registrar-provincia").find("option").remove().end().append("<option value></option>").val("");
+        $("#registrar-distrito").find("option").remove().end().append("<option value></option>").val("");
+        $("#registrar-institucion").find("option").remove().end().append("<option value></option>").val("");
     }
     
     

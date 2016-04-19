@@ -18,7 +18,7 @@ foreach($objetivos as $objetivo){
 ?>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
-	<table class="table table-bordered table-hover" id="tab_cronograma">
+	<table class="table table-striped table-hover" id="tab_cronograma">
 	    <thead>
 		<th>Objetivo especifico</th>
 		<th>Actividad</th>
@@ -31,8 +31,8 @@ foreach($objetivos as $objetivo){
 		    <?php $cron=0; ?>
 		    <?php foreach($cronogramas as $cronograma){?>
 			<tr id='cronograma_<?= $cron ?>'>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_objetivo_<?= $cron ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_objetivo_<?= $cron ?> required" style="margin-top: 0px">
 				    <select id="proyecto-cronograma_objetivo_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_objetivos][]" onchange="actividad2($(this).val(),<?= $cron ?>)" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($objetivos as $objetivo){  ?>
@@ -41,8 +41,8 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_actividad_<?= $cron ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_actividad_<?= $cron ?> required" style="margin-top: 0px">
 				    <select id="proyecto-cronograma_actividad_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_actividades][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($actividades as $actividad){  ?>
@@ -51,8 +51,8 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_responsable_<?= $cron ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_responsable_<?= $cron ?> required" style="margin-top: 0px">
 				    
 				    <select id="proyecto-cronograma_responsable_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_responsables][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
@@ -66,18 +66,18 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_fecha_inicio_<?= $cron ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_fecha_inicio_<?= $cron ?> required" style="margin-top: 0px">
 				    <input type='date' id="proyecto-cronograma_fecha_inicio_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_fechas_inicios][]" placeholder="Fecha inicio" value="<?= date("Y-m-d",strtotime($cronograma->fecha_inicio));  ?>" <?= $disabled ?>/>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_fecha_fin_<?= $cron ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_fecha_fin_<?= $cron ?> required" style="margin-top: 0px">
 				    <input type='date' id="proyecto-cronograma_fecha_fin_<?= $cron ?>" class="form-control" name="Proyecto[cronogramas_fechas_fines][]" placeholder="Fecha fin" value="<?= date("Y-m-d",strtotime($cronograma->fecha_fin));  ?>" <?= $disabled ?>/>
 				</div>
 			    </td>
 			    <?php if($disabled==''){?>
-			    <td>
+			    <td style="padding: 2px">
 				<span class="remCF glyphicon glyphicon-minus-sign">
 				    <input type="hidden" name="Proyecto[cronogramas_ids][]" value="<?= $cronograma->id ?>"/>
 				</span>
@@ -88,8 +88,8 @@ foreach($objetivos as $objetivo){
 		    <?php } ?>
 		<?php } else {?>
 			<tr id='cronograma_0'>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_objetivo_0 ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_objetivo_0 ?> required" style="margin-top: 0px">
 				    <select id="proyecto-cronograma_objetivo_0" class="form-control" name="Proyecto[cronogramas_objetivos][]" onchange="actividad2($(this).val(),0)" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($objetivos as $objetivo){  ?>
@@ -98,15 +98,15 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_actividad_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_actividad_0 required" style="margin-top: 0px">
 				    <select id="proyecto-cronograma_actividad_0" class="form-control" name="Proyecto[cronogramas_actividades][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_responsable_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_responsable_0 required" style="margin-top: 0px">
 				    <select id="proyecto-cronograma_responsable_0" class="form-control" name="Proyecto[cronogramas_responsables][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($responsables as $responsable){ ?>
@@ -115,18 +115,18 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_fecha_inicio_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_fecha_inicio_0 required" style="margin-top: 0px">
 				    <input type='date' id="proyecto-cronograma_fecha_inicio_0" class="form-control" name="Proyecto[cronogramas_fechas_inicios][]" placeholder="Fecha inicio" <?= $disabled ?>/>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-cronograma_fecha_fin_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-cronograma_fecha_fin_0 required" style="margin-top: 0px">
 				    <input type='date' id="proyecto-cronograma_fecha_fin_0" class="form-control" name="Proyecto[cronogramas_fechas_fines][]" placeholder="Fecha fin" <?= $disabled ?>/>
 				</div>
 			    </td>
 			    <?php if($disabled==''){?>
-			    <td>
+			    <td style="padding: 2px">
 				<!--<span class="remCF glyphicon glyphicon-minus-sign"></span>-->
 			    </td>
 			    <?php } ?>
@@ -256,23 +256,23 @@ foreach($objetivos as $objetivo){
         {
 	   
 	    $('#cronograma_'+cron).html(
-		    "<td>"+
-			"<div class='form-group field-proyecto-cronograma_objetivo_"+cron+" required'>"+
+		    "<td style='padding: 2px'>"+
+			"<div class='form-group field-proyecto-cronograma_objetivo_"+cron+" required' style='margin-top: 0px'> "+
 			    "<select id='proyecto-cronograma_objetivo_"+cron+"' class='form-control' name='Proyecto[cronogramas_objetivos][]' onchange='actividad2($(this).val(),"+cron+")'>"+
 				"<option value=''>seleccionar</option>"+
 				opciones_objetivos+
 			    "</select>"+
 		       "</div>"+
 		    "</td>"+
-		    "<td>"+
-			"<div class='form-group field-proyecto-cronograma_actividad_"+cron+" required'>"+
+		    "<td style='padding: 2px'>"+
+			"<div class='form-group field-proyecto-cronograma_actividad_"+cron+" required' style='margin-top: 0px'>"+
 			    "<select id='proyecto-cronograma_actividad_"+cron+"' class='form-control' name='Proyecto[cronogramas_actividades][]'>"+
 				"<option value=''>seleccionar</option>"+
 			    "</select>"+
 		       "</div>"+
 		    "</td>"+
-		    "<td>"+
-			"<div class='form-group field-proyecto-cronograma_responsable_"+cron+" required'>"+
+		    "<td style='padding: 2px'>"+
+			"<div class='form-group field-proyecto-cronograma_responsable_"+cron+" required' style='margin-top: 0px'>"+
 			    "<select id='proyecto-cronograma_responsable_"+cron+"' class='form-control' name='Proyecto[cronogramas_responsables][]' >"+
 				"<option value>seleccionar</option>"+
 				<?php foreach($responsables as $responsable){ ?>
@@ -281,17 +281,17 @@ foreach($objetivos as $objetivo){
 			    "</select>"+
 			"</div>"+
 		    "</td>"+
-		   "<td>"+
-			"<div class='form-group field-proyecto-cronograma_fecha_inicio_"+cron+" required'>"+
+		   "<td style='padding: 2px'>"+
+			"<div class='form-group field-proyecto-cronograma_fecha_inicio_"+cron+" required' style='margin-top: 0px'>"+
 			    "<input type='date' id='proyecto-cronograma_fecha_inicio_"+cron+"' class='form-control' name='Proyecto[cronogramas_fechas_inicios][]' placeholder='Fecha inicio' />"+
 			"</div>"+
 		    "</td>"+
-		    "<td>"+
-			"<div class='form-group field-proyecto-cronograma_fecha_fin_"+cron+" required'>"+
+		    "<td style='padding: 2px'>"+
+			"<div class='form-group field-proyecto-cronograma_fecha_fin_"+cron+" required' style='margin-top: 0px'>"+
 			    "<input type='date' id='proyecto-cronograma_fecha_fin_"+cron+"' class='form-control' name='Proyecto[cronogramas_fechas_fines][]' placeholder='Fecha fin' />"+
 			"</div>"+
 		    "</td>"+
-		    "<td>"+
+		    "<td style='padding: 2px'>"+
 			"<span class='remCF glyphicon glyphicon-minus-sign'></span>"+
 		    "</td>");
 	    $('#tab_cronograma').append('<tr id="cronograma_'+(cron+1)+'"></tr>');

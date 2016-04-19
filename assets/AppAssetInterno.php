@@ -30,13 +30,7 @@ class AppAssetInterno extends AssetBundle
         //'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js',
         //'js/app.js',
         
-        'js/jquery.fullPage.js',
-        'js/jquery.slimscroll.min.js',
-        'js/jquery.hovercard.js',
         'js/bootstrap-notify.js',
-        'js/extensions.js',
-        '//code.jquery.com/ui/1.11.4/jquery-ui.js',
-        'js/typeahead.bundle.js'
         //'js/notify.js',
         //'js/notify.min.js'
         //'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
@@ -50,6 +44,6 @@ class AppAssetInterno extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        //'yii\bootstrap\BootstrapAsset',
     ];
 }

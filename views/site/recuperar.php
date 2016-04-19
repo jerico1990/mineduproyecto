@@ -18,20 +18,20 @@ use yii\web\JsExpression;
         margin-left: auto;
         margin-right: auto;">
     <div class="panel panel-default" >
-        <div class="panel-heading">Recuperar</div>
+        <div class="panel-heading">Recuperar contraseña</div>
         <div class="panel-body">
         <?php $form = ActiveForm::begin(); ?>
             
             <div class="col-lg-12 col-md-12 col-xs-12">
-                <div class="form-group field-loginform-username required">
-                    <label class="control-label" for="loginform-username">Correo electrónico: *</label>
-                    <input type="email" id="loginform-username" class="form-control" name="LoginForm[username]" placeholder="Correo electrónico">
+                <div class="form-group label-floating field-loginform-username required">
+                    <label class="control-label" for="loginform-username">Correo electrónico</label>
+                    <input type="email" id="loginform-username" class="form-control" name="LoginForm[username]">
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-lg-12 col-md-12 col-xs-12">
-                <div class="form-group">
-                   <button id="ingresar" type="submit" class="btn btn-success">Ingresar</button>
+                <div class="form-group pull-right">
+                   <button id="ingresar" type="submit" class="btn btn-raised btn-success">Ingresar</button>
                 </div>
             </div>
             <div class="clearfix"></div>

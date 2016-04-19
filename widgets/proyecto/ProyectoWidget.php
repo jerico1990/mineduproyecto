@@ -10,6 +10,7 @@ use app\models\Integrante;
 use app\models\Proyecto;
 use app\models\Reflexion;
 use app\models\Actividad;
+use app\models\Equipo;
 use app\models\ObjetivoEspecifico;
 class ProyectoWidget extends Widget
 {
@@ -23,9 +24,11 @@ class ProyectoWidget extends Widget
     public function run()
     {
         $proyecto = new Proyecto;
+        $usuario=Usuario::findOne(\Yii::$app->user->id);
+        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+        $equipo=Equipo::findOne($integrante->equipo_id);
         if ($proyecto->load(\Yii::$app->request->post()) && $proyecto->save()) {
-            $usuario=Usuario::findOne(\Yii::$app->user->id);
-            $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+            
             $reflexion = 'insert into reflexion (reflexion,proyecto_id,user_id)
                     select "" , '.$proyecto->id.' , usuario.id from integrante
                     inner join usuario on usuario.estudiante_id=integrante.estudiante_id
@@ -100,6 +103,6 @@ class ProyectoWidget extends Widget
             return \Yii::$app->getResponse()->refresh();
         }
         
-        return $this->render('proyecto',['proyecto'=>$proyecto]);
+        return $this->render('proyecto',['proyecto'=>$proyecto,'equipo'=>$equipo]);
     }
 }

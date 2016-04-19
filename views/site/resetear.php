@@ -25,29 +25,29 @@ use yii\web\JsExpression;
         margin-left: auto;
         margin-right: auto;">
     <div class="panel panel-default" >
-        <div class="panel-heading">Recuperar</div>
+        <div class="panel-heading">Nueva contraseña</div>
         <div class="panel-body">
         <?php $form = ActiveForm::begin(); ?>
             
             <div class="clearfix"></div>
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group field-loginform-password ">
-                    <label class="control-label" for="loginform-password">Contraseña: *</label>
-                    <input ng-model="loginform.password" type="password" onpaste="return false;" onCopy="return false" id="loginform-password" class="form-control" name="LoginForm[password]" placeholder="Contraseña">
+                <div class="form-group label-floating field-loginform-password ">
+                    <label class="control-label" for="loginform-password">Contraseña</label>
+                    <input ng-model="loginform.password" type="password" onpaste="return false;" onCopy="return false" id="loginform-password" class="form-control" name="LoginForm[password]">
                 </div>      
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group field-loginform-repassword ">
-                    <label class="control-label" for="loginform-repassword">Repetir Contraseña: *</label>
-                    <input ng-model="loginform.repassword" type="password" onpaste="return false;" onCopy="return false" id="loginform-repassword" class="form-control" name="LoginForm[repassword]" placeholder="Repetir contraseña" ng-focus="validarRecontrasena()">
+                <div class="form-group label-floating field-loginform-repassword ">
+                    <label class="control-label" for="loginform-repassword">Repetir Contraseña</label>
+                    <input ng-model="loginform.repassword" type="password" onpaste="return false;" onCopy="return false" id="loginform-repassword" class="form-control" name="LoginForm[repassword]"  ng-focus="validarRecontrasena()">
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-xs-12 col-sm-12 col-md-12" id="example-progress-bar-container"></div>
             <div class="clearfix"></div>
             <div class="col-lg-12 col-md-12 col-xs-12">
-                <div class="form-group">
-                   <button id="ingresar" type="submit" class="btn loginform-success">Ingresar</button>
+                <div class="form-group pull-right">
+                   <button id="ingresar" type="submit" class="btn btn-raised btn-success">Ingresar</button>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -60,6 +60,7 @@ use yii\web\JsExpression;
 $validaremail= Yii::$app->getUrlManager()->createUrl('registrar/validaremail');
 ?>
 <script>
+
     $("#ingresar").click(function(event){
         var error='';
         if ($("#loginform-password").val()=='') {
@@ -120,17 +121,16 @@ $validaremail= Yii::$app->getUrlManager()->createUrl('registrar/validaremail');
                     align: 'right'
                 },
             });
-            setTimeout( function () { 
-            $('#w0').submit();
-        }, 1000);
+            
         }
-        //return true;
+        return true;
     });
     
+    /*
     function submitForm() {
         document.getElementById("w0").submit()
     }
-    
+    */
     
     function validateEmail(sEmail) {
         var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;

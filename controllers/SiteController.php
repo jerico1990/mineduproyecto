@@ -138,7 +138,7 @@ class SiteController extends Controller
     
     public function actionRecuperar()
     {
-        $this->layout='minedu';
+        $this->layout='registrar';
         $usuario=new LoginForm;
         if($usuario->load(Yii::$app->request->post()))
         {
@@ -160,23 +160,22 @@ class SiteController extends Controller
            ->setTo($usuario->username)
            ->setSubject($subject)
            ->send();
-           
+           return $this->redirect(['site/login']);
         }
         return $this->render('recuperar',['usuario'=>$usuario]);
     }
     
     public function actionResetear($url)
     {
-        $this->layout='minedu';
+        $this->layout='registrar';
         $loginForm=new LoginForm;
         $usuario=Usuario::find()->where('verification_code=:verification_code',[':verification_code'=>$url])->one();
         if($usuario){
             if($loginForm->load(Yii::$app->request->post())){
                 $usuario->verification_code="";
-                ///var_dump($loginForm->password);die;
                 $usuario->password=$loginForm->password;
                 $usuario->update();
-                $this->refresh();
+                return $this->refresh();
             }
             return $this->render('resetear',['loginForm'=>$loginForm]);
         }

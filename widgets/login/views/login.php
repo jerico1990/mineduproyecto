@@ -10,35 +10,41 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use yii\web\JsExpression;
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <?php $form = ActiveForm::begin(); ?>
     
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <div class="form-group field-loginform-username required">
-            <label class="control-label" for="loginform-username">Correo electrónico: *</label>
-            <input type="email" id="loginform-username" class="form-control" name="LoginForm[username]" placeholder="Correo electrónico">
+        <div class="form-group label-floating field-loginform-username required">
+            <label class="control-label" for="loginform-username">Correo electrónico</label>
+            <input type="email" id="loginform-username" class="form-control" name="LoginForm[username]">
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <div class="form-group field-loginform-password required">
-            <label class="control-label" for="loginform-password">Contraseña: *</label>
-            <input type="password" id="loginform-password" class="form-control" name="LoginForm[password]" placeholder="Contraseña">
+        <div class="form-group label-floating field-loginform-password required">
+            <label class="control-label" for="loginform-password">Contraseña</label>
+            <input type="password" id="loginform-password" class="form-control" name="LoginForm[password]">
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <div class="form-group">
-           <button id="ingresar" type="submit" class="btn btn-success">Ingresar</button>
+        <div class="form-group text-center">
+           <button id="ingresar" type="submit" class="btn btn-raised btn-success">Ingresar</button>
+        </div>
+         <hr>
+    </div>
+    <div class="clearfix"></div>
+    <?php if($tipo==2 && $resultados){ ?>
+    <div class="col-lg-12 col-md-12 col-xs-12 text-center">
+        <u><?= Html::a('¿Olvido su contraseña?',['site/recuperar']);?></u>
+    </div>
+    
+    <div class="col-lg-12 col-md-12 col-xs-12 text-center">
+        <div class="form-group text-center">
+        <p>¿Aún no te has apuntado?</p>
+        <?= Html::a('Regístrate',['registrar/index'],['class'=>'btn btn-raised btn-success']);?>
         </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-xs-12">
-        <?php if($tipo==2 && $resultados){ ?>
-        <?= Html::a('Regístrese',['registrar/index'],['class'=>'pull-left']);?>
-        <?= Html::a('¿Olvido su contraseña?',['site/recuperar'],['class'=>'pull-right']);?>
-        
-        <?php } ?>
-    </div>
+    <?php } ?>
     <div class="clearfix"></div>
 <?php ActiveForm::end(); ?>
 

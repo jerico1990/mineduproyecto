@@ -13,14 +13,14 @@ use yii\web\JsExpression;
 <h1>Video</h1>
 <?php if($integrante->rol==1){?>
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
-        <input type="file" id="video-archivo" name="Video[archivo]" class="" accept="video/mp4"><br>
-        <input type="submit" id="btnvideo" value="Cargar video">
+        <input type="file" id="video-archivo" name="Video[archivo]" class="" accept="video/mp4" type="video/mp4"><br>
+        <!--<input type="submit" id="btnvideo" value="Cargar video">-->
     <?php ActiveForm::end(); ?>
-
+<!--
 <div class="progress">
     <div class="bar"></div >
     <div class="percent">0%</div >
-</div>
+</div>-->
 <?php }?>
 <video width="320" height="240" controls>
     <source src="<?= Yii::getAlias('@video').$video->ruta ?>" type="video/mp4">  

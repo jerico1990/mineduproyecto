@@ -52,7 +52,7 @@ class InscripcionController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout='equipo';
+        $this->layout='estandar';
         
         $equipo=new Equipo;
         $equipo->foto='no_disponible.jpg';
@@ -151,7 +151,7 @@ class InscripcionController extends Controller
     
     public function actionActualizar($id)
     {
-        $this->layout='equipo';
+        $this->layout='estandar';
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$id])->one();
         $equipo=Equipo::find()->where('id=:id',[':id'=>$integrante->equipo_id])->one();
         if(!$equipo->foto)
@@ -183,9 +183,10 @@ class InscripcionController extends Controller
         
         $invitacionContador=$invitacionContador+$integranteContador;
         if ($equipo->load(Yii::$app->request->post()) && $equipo->validate()) {
+            $equipo->foto_img = UploadedFile::getInstance($equipo, 'foto_img');
+            //var_dump($equipo->foto_img);die;
             if($equipo->foto_img)
             {
-                $equipo->foto_img = UploadedFile::getInstance($equipo, 'foto_img');
                 $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension; 
             }
             

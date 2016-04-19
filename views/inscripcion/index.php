@@ -14,38 +14,37 @@ if($equipo->id)
 ?>
 
 <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
-<h1>Creando mi equipo</h1>
+<h1>Mi equipo</h1>
 <hr class="colorgraph">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group field-equipo-descripcion_equipo required">
-                <label class="control-label" for="equipo-descripcion_equipo">Nombre de equipo: *</label>
-                <input value="<?= $equipo->descripcion_equipo?>" type="text" id="equipo-descripcion_equipo" class="form-control texto" name="Equipo[descripcion_equipo]" placeholder="Nombre de equipo">
+        <div class="row col-xs-12 col-sm-8 col-md-8">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group label-floating field-equipo-descripcion_equipo required">
+                    <label class="control-label" for="equipo-descripcion_equipo">Nombre de equipo</label>
+                    <input value="<?= $equipo->descripcion_equipo?>" type="text" id="equipo-descripcion_equipo" class="form-control texto" name="Equipo[descripcion_equipo]">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group label-floating field-equipo-descripcion required">
+                    <label class="control-label" for="equipo-descripcion">Danos una breve descripción de tu equipo</label>
+                    <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?></textarea>
+                </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group field-equipo-descripcion required">
-                <label class="control-label" for="equipo-descripcion">Danos una breve descripción de tu equipo: *</label>
-                <textarea  id="equipo-descripcion" class="form-control" name="Equipo[descripcion]"><?= $equipo->descripcion?></textarea>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-12 col-sm-7 col-md-5">
-            <div class="form-group field-equipo-foto_img required">
-                <label class="control-label" for="equipo-foto_img">Foto: *</label>
+        <div class="row col-xs-12 col-sm-4 col-md-4">
+            <div class="form-group label-floating field-equipo-foto_img required">
+                <label>Agrega una imagen para tu equipo</label>
                 <input type="file" id="equipo-foto_img" class="form-control file" name="Equipo[foto_img]">
+                <?= Html::img('../foto_equipo/'.$equipo->foto,['id'=>'img_destino','class'=>'img-responsive logo', 'alt'=>'Responsive image','style'=>"height: 158px;width: 158px"]) ?>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-7 col-md-5">
-            <?= Html::img('../foto_equipo/'.$equipo->foto,['class'=>'img-responsive logo', 'alt'=>'Responsive image']) ?>
         </div>
         <div class="clearfix"></div>
         <div class="col-xs-12 col-sm-7 col-md-5">
-            <div class="form-group field-equipo-asunto_id required">
-                <label class="control-label" for="equipo-asunto_id">Asunto público: *</label>
+            <div class="form-group label-floating field-equipo-asunto_id required">
+                <label class="control-label" for="equipo-asunto_id">Selecciona el Asunto de Público sobre el que trabajará tu equipo</label>
                 <select id="equipo-asunto_id" class="form-control" name="Equipo[asunto_id]">
-                    <option value="">Seleccionar asunto</option>
+                    <option value=""></option>
                     <?php
                         $resultados=Resultados::find()->where('region_id=:region_id',['region_id'=>$institucion->department_id])->all();
                         foreach($resultados as $resultado)
@@ -67,29 +66,26 @@ if($equipo->id)
         
         <div class="clearfix"></div>
         <div class="col-xs-12 col-sm-12 col-md-12">
-        <p>Invita a tus compañeros de tu Institución Educativa para que sean parte de tu equipo</p>
+        <p>Selecciona a los miembros de tu equipo.</p>
         </div>
         <div class="clearfix"></div>
     
         <div class="col-xs-12 col-sm-12 col-md-12">
             
-            <div class="table-responsive">
-                <table class="table ">
+                <table class="table table-striped table-hover">
                     <tbody>
                         <tr>
-                            <th></th>
-                            <th>N°</th>
-                            <th>Participante</th>
+                            <th class="text-center"></th>
+                            <th>Apellidos y Nombre</th>
                             <th>Grado</th>
                         </tr>
-                        
                             <?php
                                 $i=1;
                                 foreach($estudiantes as $estudiante)
                                 {
                                     echo "<tr>
-                                            <td><input name='Equipo[invitaciones][]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id,$equipoid,$(this))'></td>
-                                            <td><span id='snum'>$i</span></td>
+                                            <td class='text-center'><div class='checkbox'><label><input name='Equipo[invitaciones][]' type='checkbox' value='$estudiante->id' onclick='validar($estudiante->id,$equipoid,$(this))'><span class='checkbox-material'></span></label></div></td>
+                                            
                                             <td>$estudiante->nombres $estudiante->apellido_paterno $estudiante->apellido_materno</td>
                                             <td>$estudiante->grado</td>
                                     </tr>";
@@ -103,12 +99,11 @@ if($equipo->id)
                        
                     </tbody>
                 </table>
-            </div>
            
         </div>
         <div class="clearfix"></div>
         <div class="modal-footer">
-           <button type="submit" id="btnequipo" class="btn btn-primary">Guardar</button>
+           <button type="submit" id="btnequipo" class="btn btn-raised btn-success"><?= $equipo->isNewRecord ? Yii::t('app', 'Crear equipo') : Yii::t('app', 'Modificar equipo') ?></button>
         </div>
     <?php ActiveForm::end(); ?>
 </div> 
@@ -132,6 +127,20 @@ if($equipo->id)
 ?>
 
 <script>
+    function mostrarImagen(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img_destino').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+        
+    $("#equipo-foto_img").change(function(){
+        mostrarImagen(this);
+    });
+    
     var contador=<?= $invitacionContador ?>;
     console.log(contador);
     var equipo=<?= $invitacionContador ?>;

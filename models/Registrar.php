@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use yii\web\UploadedFile;
 /**
  * ContactForm is the model behind the contact form.
  */
@@ -33,6 +33,7 @@ class Registrar extends Model
     public $nombres;
     public $apellido_paterno;
     public $apellido_materno;
+    public $foto;
     /**
      * @return array the validation rules.
      */
@@ -50,6 +51,7 @@ class Registrar extends Model
             [['fecha_nac','p1','p2','p3','p4','p5','p6'],'safe'],
             [['email'],'email'],
             ['repassword','compare','compareAttribute'=>'password'],
+            [['foto'],'file'],
             //['email', 'email'],
             // verifyCode needs to be entered correctly
             //['verifyCode', 'captcha'],

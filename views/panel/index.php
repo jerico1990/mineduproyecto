@@ -29,45 +29,78 @@ if($integrante)
 $btninscribir=$integrante
 ?>
 
-
 <?php if(!$integrante) { ?>
-
-        
-    <h1>Mis invitaciones</h1>
-    <table class="table">
-        <thead>
-            <th>Equipo</th>
-            <th>Coordinador</th>
-            <th>Institución Educativa</th>
-            <th></th>
-            <th></th>
-        </thead>
-        <tbody>
-        <?php
-        foreach($invitaciones as $invitacion)
-        {
-            echo "<tr>
-                    <td>$invitacion->descripcion_equipo</td>
-                    <td>$invitacion->nombres_apellidos</td>
-                    <td>$invitacion->denominacion</td>
-                    <td class='text-center'><div style='color:green;font-size:24px;cursor:pointer'  class='fa  fa-check-circle-o fa-6' onclick='unirme($invitacion->id)'></div></td>
-                    <td class='text-center'><div style='color:red;font-size:24px;cursor:pointer'  class='fa fa-times-circle-o fa-6' onclick='rechazar($invitacion->id)'></div></td>
-                    </tr>";
-        }
-        ?>
-        </tbody>
-    </table>
+    <h1>Mi equipo</h1>
+    <?php if(!$invitaciones){ ?>
+    <p class="text-center">No tienes invitaciones activas de otros equipos,</p>
+    <p class="text-center">te invitamos a ser el coordinador de un equipo.</p>
+    <?php } else { ?>
+    <p class="text-center">Haz recibido invitaciones para ser parte de otros equipos,</p>
+    <p class="text-center">revisalas y confirma tu participacion</p>
+    <div class="col-xs-12 col-md-3"></div>
+    <div class="col-xs-12 col-md-6">
+        <table class="table table-striped table-hover">
+            <thead>
+                <th>Equipo</th>
+                <th>Coordinador</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+            <?php
+            foreach($invitaciones as $invitacion)
+            {
+                echo "<tr>
+                        <td>$invitacion->descripcion_equipo</td>
+                        <td><div class='row-picture'>
+                    <img class='circle' src='../../web/foto_personal/".$invitacion->avatar."' alt='icon' style='height: 30px;width: 30px'>
+                    ".$invitacion->nombres." ".$invitacion->apellido_paterno."".$invitacion->apellido_materno."
+                  </div> </td>
+                        <td class='text-center'><div style='color:green;font-size:24px;cursor:pointer'  class='fa  fa-check-circle-o fa-6' onclick='unirme($invitacion->id)'></div></td>
+                        <td class='text-center'><div style='color:red;font-size:24px;cursor:pointer'  class='fa fa-times-circle-o fa-6' onclick='rechazar($invitacion->id)'></div></td>
+                        </tr>";
+            }
+            ?>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <p class="text-center">Si no te gusta ninguno de los equipos, puedes crear tu propio equipo</p>
+    
+    <?php } ?>
+    
+    
+    
 <?php } ?>
 
 <?php if($integrante){ ?>
 <h1>Mi equipo</h1>
-<h4><label>Nombre:</label> <?= $equipo->descripcion_equipo ?> </h4>
-<table class="table ">
+<div class="col-xs-12 col-sm-3 col-md-3"></div>
+<div class="col-xs-12 col-sm-4 col-md-4">
+    <h4><label>Nombre de tu equipo:</label>  </h4>
+    <h3><?= $equipo->descripcion_equipo ?></h3>
+    <h4><label>Descripción de tu equipo:</label>  </h4>
+    <p class="text-justify"><?= $equipo->descripcion ?></p>
+    <h4><label>Asunto público:</label>  </h4>
+    <p class="text-justify"><?= $equipo->asunto->descripcion_cabecera ?></p>
+</div>
+<div class="col-xs-12 col-sm-2 col-md-2">
+    <?= Html::img('../foto_equipo/'.$equipo->foto,['id'=>'img_destino','class'=>'img-responsive logo', 'alt'=>'Responsive image','style'=>"height: 158px;width: 158px"]) ?>
+</div>
+<div class="clearfix"></div>
+<div class="col-xs-12 col-sm-3 col-md-3"></div>
+<div class="col-xs-12 col-sm-6 col-md-6">
+<label>Los miembros de mi equipo:</label>
+<?php //if($equipo->estado==0){ ?>
+<table class="table table-striped table-hover ">
     <thead>
         <th>Nombres y Apellidos</th>
         <th>Estado</th>
         <?php if($equipo->estado==0){ ?>
-        <th class='text-center'>Acción</th>
+        <th class='text-center'></th>
         <?php } ?>
     </thead>
     <tbody>
@@ -136,23 +169,34 @@ $btninscribir=$integrante
 ?>
     </tbody>
 </table>
-
+<?php /*} elseif($equipo->estado==1) {?>
+    <?php
+    $i=1;
+        foreach($equipoeinvitaciones as $equipoeinvitacion)
+        {
+            
+            $i++;
+        }
+    ?>
+<?php }*/ ?>
+</div>
+<div class="clearfix"></div>
 <?php } ?>
 <?php if(!$equipo->descripcion_equipo){?>
-<p>Si aun no tienes equipo, puedes crear tu propio equipo</p>
 <?php }?>
 
-<div class="text-right">
+<div class="text-center">
 <?php
 if(!$integrante)
 {
-echo Html::a('Crear equipo',['inscripcion/index'],['class'=>'btn btn-primary']);
+    echo "<br>";
+echo Html::a('Crea tu equipo',['inscripcion/index'],['class'=>'btn btn-raised btn-success']);
 }
 if( $integrante && $integrante->rol==1 && $integrante->estado==1)
 {
-echo Html::a('Actualizar equipo',['inscripcion/actualizar','id'=>$estudiante->id],['class'=>'btn btn-primary']);
-echo " <button class='btn' onclick='dejarequipo(".$estudiante->id.")'>Cancelar equipo</button>";
-echo " <button class='btn' onclick='finalizarequipo(".$integrante->equipo_id.")'>Finalizar equipo</button>";
+echo Html::a('Actualizar equipo',['inscripcion/actualizar','id'=>$estudiante->id],['class'=>'btn btn-raised btn-success']);
+echo " <button class='btn btn-raised btn-success' onclick='dejarequipo(".$estudiante->id.")'>Cancelar equipo</button>";
+echo " <button class='btn btn-raised btn-success' onclick='finalizarequipo(".$integrante->equipo_id.")'>Finalizar equipo</button>";
 }
 ?>
 </div>

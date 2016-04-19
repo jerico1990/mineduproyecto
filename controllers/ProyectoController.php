@@ -57,7 +57,7 @@ class ProyectoController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout='equipo';
+        $this->layout='estandar';
         $proyecto=Proyecto::find()->where('user_id=:user_id',[':user_id'=>\Yii::$app->user->id])->one();
         if($proyecto)
         {
@@ -146,7 +146,7 @@ class ProyectoController extends Controller
     
     public function actionActualizar()
     {
-        $this->layout='equipo';
+        $this->layout='estandar';
         $actualizar=Proyecto::find()->where('user_id=:user_id',[':user_id'=>\Yii::$app->user->id])->one();
         
         return $this->render('actualizar');

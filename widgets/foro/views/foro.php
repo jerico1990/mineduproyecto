@@ -7,8 +7,6 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Foro */
 
 $this->title = $model->titulo;
-$this->params['breadcrumbs'][] = ['label' => 'Foros', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 $usuario=$model->usuario;
 $posts = $model->posts;
 ?>

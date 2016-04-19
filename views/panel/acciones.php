@@ -21,15 +21,15 @@ if($votacionpublica || $etapa->etapa!=3)
         <div class="panel-heading">Acciones</div>
         <div class="panel-body text-center">
             <div class="clearfix"></div>
-            <button class="btn btn-success" id="cerrarvoto" <?= $resultados?'disabled':'' ?>>cerrar votación</button>
+            <button class="btn btn-raised btn-success" id="cerrarvoto" <?= $resultados?'disabled':'' ?>>cerrar votación</button>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrar1entrega" <?= ($etapa->etapa!=1 || !$resultados)?'disabled':'' ?> >cerrar 1era entrega</button>
+            <button class="btn btn-raised btn-success" id="cerrar1entrega" <?= ($etapa->etapa!=1 || !$resultados)?'disabled':'' ?> >cerrar 1era entrega</button>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrar2entrega" <?= ($etapa->etapa!=2)?'disabled':'' ?> >cerrar 2da entrega</button>
+            <button class="btn btn-raised btn-success" id="cerrar2entrega" <?= ($etapa->etapa!=2)?'disabled':'' ?> >cerrar 2da entrega</button>
             <div class="clearfix"></div><p></p>
-            <?= Html::a('Votación interna',['votacioninterna'],['class'=>'btn btn-success','disabled'=>$disabled]); ?>
+            <?= Html::a('Votación interna',['votacioninterna'],['class'=>'btn btn-raised btn-success','disabled'=>$disabled]); ?>
             <div class="clearfix"></div><p></p>
-            <button class="btn  btn-success" id="cerrarvotacioninterna" <?= ($votacionpublica || $etapa->etapa!=3)?'disabled':'' ?> >cerrar votación interna</button>
+            <button class="btn btn-raised btn-success" id="cerrarvotacioninterna" <?= ($votacionpublica || $etapa->etapa!=3)?'disabled':'' ?> >cerrar votación interna</button>
         </div>
     </div>
 </div>

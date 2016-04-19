@@ -133,13 +133,13 @@ class ActualizarProyectoWidget extends Widget
                 $countActividades3=count(array_filter($proyecto->actividades_3));
             }
             
-            if(!$proyecto->planes_presupuestales_precios_unitarios)
+            if(!$proyecto->planes_presupuestales_cantidades)
             {
-                $countPlanesPresupuestalesPreciosUnitarios=0;
+                $countPlanesPresupuestalesCantidades=0;
             }
             else
             {
-                $countPlanesPresupuestalesPreciosUnitarios=count(array_filter($proyecto->planes_presupuestales_precios_unitarios));
+                $countPlanesPresupuestalesCantidades=count(array_filter($proyecto->planes_presupuestales_cantidades));
             }
             
             if(!$proyecto->cronogramas_fechas_inicios)
@@ -260,7 +260,7 @@ class ActualizarProyectoWidget extends Widget
             }
             
             /*Plan presupuestal*/
-            for($i=0;$i<$countPlanesPresupuestalesPreciosUnitarios;$i++)
+            for($i=0;$i<$countPlanesPresupuestalesCantidades;$i++)
             {
                 //var_dump($countPlanesPresupuestalesPreciosUnitarios);die;
                 if(isset($proyecto->planes_presupuestal_ids[$i]))
@@ -269,13 +269,26 @@ class ActualizarProyectoWidget extends Widget
                     $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades[$i];
                     $planpresupuestal->recurso=$proyecto->planes_presupuestales_recursos[$i];
                     $planpresupuestal->como_conseguirlo=$proyecto->planes_presupuestales_comos_conseguirlos[$i];
-                    $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
+                    if(isset($proyecto->planes_presupuestales_precios_unitarios[$i]))
+                    {
+                        $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
+                    }
+                    else
+                    {
+                        $planpresupuestal->precio_unitario="";
+                    }
+                    
                     $planpresupuestal->cantidad=$proyecto->planes_presupuestales_cantidades[$i];
                     $planpresupuestal->subtotal=$proyecto->planes_presupuestales_subtotales[$i];
                     $planpresupuestal->update();
                 }
                 else
                 {
+                    $precio=1;
+                    if($proyecto->planes_presupuestales_precios_unitarios[$i]!="")
+                    {
+                        $precio=$proyecto->planes_presupuestales_precios_unitarios[$i];
+                    }
                     
                     $planpresupuestal=new PlanPresupuestal;
                     $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades[$i];
@@ -283,7 +296,9 @@ class ActualizarProyectoWidget extends Widget
                     $planpresupuestal->como_conseguirlo=$proyecto->planes_presupuestales_comos_conseguirlos[$i];
                     $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
                     $planpresupuestal->cantidad=$proyecto->planes_presupuestales_cantidades[$i];
-                    $planpresupuestal->subtotal=$proyecto->planes_presupuestales_subtotales[$i];
+                    $planpresupuestal->subtotal=$precio*$proyecto->planes_presupuestales_cantidades[$i];
+                    
+                    //$proyecto->planes_presupuestales_subtotales[$i];
                     $planpresupuestal->estado=1;
                     $planpresupuestal->save();
                 }
@@ -342,10 +357,15 @@ class ActualizarProyectoWidget extends Widget
                 $video->archivo->saveAs('video_carga/' . $videoup->id . '.' . $video->archivo->extension);
                 //unlink($videoup->archivo->tempName);
             }
-            $model=Foro::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
-            $newComentario->load(Yii::$app->request->post());
-            $newComentario->foro_id = $model->id;
-            $newComentario->save();
+            
+            $foro=Foro::find()->where('proyecto_id=:proyecto_id',[':proyecto_id'=>$proyecto->id])->one();
+            if($foro)
+            {
+                $newComentario->load(Yii::$app->request->post());
+                $newComentario->foro_id = $foro->id;
+                $newComentario->save();
+            }
+            
                 
             return \Yii::$app->getResponse()->refresh();
         }

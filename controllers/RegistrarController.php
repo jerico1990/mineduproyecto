@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * ParticipanteController implements the CRUD actions for Participante model.
@@ -52,7 +53,7 @@ class RegistrarController extends Controller
         $registrar= new Registrar;
         
         if ($registrar->load(Yii::$app->request->post()) && $registrar->validate()) {
-            
+            $registrar->foto = UploadedFile::getInstance($registrar, 'foto');
             //var_dump($registrar->p1);die;
             $estudiante =new Estudiante;
             //$estudiante->nombres_apellidos=$registrar->nombres_apellidos;
@@ -92,7 +93,7 @@ class RegistrarController extends Controller
            ->setSubject($subject)
            ->send();
         
-            $encuesta=new Encuesta;
+            /*$encuesta=new Encuesta;
             $encuesta->estudiante_id=$estudiante->id;
             if(isset($registrar->p1[0]))
             {
@@ -194,7 +195,16 @@ class RegistrarController extends Controller
                 $encuesta->p6_4=$registrar->p6[3];
             }
             
-            $encuesta->save();
+            $encuesta->save();*/
+            
+            if($registrar->foto)
+            {
+                $registrar->foto->saveAs('foto_personal/' . $usuario->id . '.' . $registrar->foto->extension);
+                $usuario->avatar=$usuario->id. '.' . $registrar->foto->extension;
+            }
+            
+            $usuario->update();
+            
             //Yii::$app->session->setFlash('registrar');
             
             //return $this->refresh();

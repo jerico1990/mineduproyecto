@@ -26,6 +26,10 @@ class Invitacion extends \yii\db\ActiveRecord
     public $descripcion_equipo;
     public $nombres_apellidos;
     public $denominacion;
+    public $nombres;
+    public $apellido_paterno;
+    public $apellido_materno;
+    public $avatar;
     public static function tableName()
     {
         return 'invitacion';

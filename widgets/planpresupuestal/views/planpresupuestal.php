@@ -18,7 +18,7 @@ foreach($objetivos as $objetivo){
 ?>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12">
-	<table class="table table-bordered table-hover" id="tab_plan_presupuestal">
+	<table class="table table-striped table-hover" id="tab_plan_presupuestal">
 	    <thead>
 		<th>Objetivo especifico</th>
 		<th>Actividad</th>
@@ -33,8 +33,8 @@ foreach($objetivos as $objetivo){
 		    <?php $plan=0; ?>
 		    <?php foreach($planespresupuestales as $planpresupuestal){?>
 			<tr id='plan_presupuestal_<?= $plan ?>'>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_objetivo_<?= $plan ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_objetivo_<?= $plan ?> required" style="margin-top: 0px">
 				    <select id="proyecto-plan_presupuestal_objetivo_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_objetivos][]" onchange="actividad($(this).val(),<?= $plan ?>)" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($objetivos as $objetivo){  ?>
@@ -43,8 +43,8 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_actividad_<?= $plan ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_actividad_<?= $plan ?> required" style="margin-top: 0px">
 				    <select id="proyecto-plan_presupuestal_actividad_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_actividades][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?php foreach($actividades as $actividad){  ?>
@@ -53,8 +53,8 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_recurso_<?= $plan ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_recurso_<?= $plan ?> required" style="margin-top: 0px">
 				    <select id="proyecto-plan_presupuestal_recurso_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_recursos][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<option value=1 <?= ($planpresupuestal->recurso == 1) ? 'selected' : ''; ?> >Material</option>
@@ -62,9 +62,9 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_como_conseguirlo_<?= $plan ?> required">
-				    <select id="proyecto-plan_presupuestal_como_conseguirlo_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_comos_conseguirlos][]" <?= $disabled ?>>
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_como_conseguirlo_<?= $plan ?> required" style="margin-top: 0px">
+				    <select onchange="ComoConseguirlo($(this).val(),<?= $plan ?>)" id="proyecto-plan_presupuestal_como_conseguirlo_<?= $plan ?>" class="form-control" name="Proyecto[planes_presupuestales_comos_conseguirlos][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<option value=1 <?= ($planpresupuestal->como_conseguirlo == 1) ? 'selected' : ''; ?>>Pedir</option>
 					<option value=2 <?= ($planpresupuestal->como_conseguirlo == 2) ? 'selected' : ''; ?>>Crear</option>
@@ -72,24 +72,27 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_precio_unitario_<?= $plan ?> required">
-				    <input id="proyecto-plan_presupuestal_precio_unitario_<?= $plan ?>" onfocusout="Subtotal1(<?= $plan ?>,1)" class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" placeholder="Precio unitario" value="<?= $planpresupuestal->precio_unitario ?>" <?= $disabled ?>/>
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_precio_unitario_<?= $plan ?> required" style="margin-top: 0px">
+				    <input id="proyecto-plan_presupuestal_precio_unitario_<?= $plan ?>" onfocusout="Subtotal1(<?= $plan ?>,1)" class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" placeholder="Precio unitario" value="<?= ($planpresupuestal->precio_unitario==0)?'':$planpresupuestal->precio_unitario ?>" <?= ($planpresupuestal->como_conseguirlo == 1 || $planpresupuestal->como_conseguirlo == 2) ? 'disabled' : ''; ?>  <?= $disabled ?>/>
+				    <?php  if($planpresupuestal->como_conseguirlo == 1 || $planpresupuestal->como_conseguirlo == 2) {?>
+					<input type="hidden"  class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" placeholder="Precio unitario" value="0"   />
+				    <?php } ?>																																																																					    
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_cantidad_<?= $plan ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_cantidad_<?= $plan ?> required" style="margin-top: 0px">
 				    <input id="proyecto-plan_presupuestal_cantidad_<?= $plan ?>" onfocusout="Subtotal2(<?= $plan ?>,2)" class="form-control numerico" name="Proyecto[planes_presupuestales_cantidades][]" placeholder="Cantidad" value="<?= $planpresupuestal->cantidad ?>" <?= $disabled ?>/>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_subtotal_<?= $plan ?> required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_subtotal_<?= $plan ?> required" style="margin-top: 0px">
 				    <input id="proyecto-plan_presupuestal_subtotal1_<?= $plan ?>" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales1][]" placeholder="Subtotal" value="<?= $planpresupuestal->subtotal ?>" disabled />
 				    <input type="hidden" id="proyecto-plan_presupuestal_subtotal_<?= $plan ?>" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal" value="<?= $planpresupuestal->subtotal ?>" />
 				</div>
 			    </td>
 			    <?php if($disabled==''){?>
-			    <td>
+			    <td style="padding: 2px">
 				<span class="remCF glyphicon glyphicon-minus-sign">
 				    <input class="id" type="hidden" name="Proyecto[planes_presupuestal_ids][]" value="<?= $planpresupuestal->id ?>" />
 				</span>
@@ -100,23 +103,23 @@ foreach($objetivos as $objetivo){
 		    <?php } ?>
 		<?php } else {?>
 			<tr id='plan_presupuestal_0'>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_objetivo_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_objetivo_0 required" style="margin-top: 0px">
 				    <select id="proyecto-plan_presupuestal_objetivo_0" class="form-control" name="Proyecto[planes_presupuestales_objetivos][]" onchange="actividad($(this).val(),0)" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<?= $opciones_objetivos ?>
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_actividad_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_actividad_0 required" style="margin-top: 0px">
 				    <select id="proyecto-plan_presupuestal_actividad_0" class="form-control" name="Proyecto[planes_presupuestales_actividades][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_recurso_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_recurso_0 required" style="margin-top: 0px">
 				    <select id="proyecto-plan_presupuestal_recurso_0" class="form-control" name="Proyecto[planes_presupuestales_recursos][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<option value=1>Material</option>
@@ -124,9 +127,9 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_como_conseguirlo_0 required">
-				    <select id="proyecto-plan_presupuestal_como_conseguirlo_0" class="form-control" name="Proyecto[planes_presupuestales_comos_conseguirlos][]" <?= $disabled ?>>
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_como_conseguirlo_0 required" style="margin-top: 0px">
+				    <select onchange="ComoConseguirlo($(this).val(),0)" id="proyecto-plan_presupuestal_como_conseguirlo_0" class="form-control" name="Proyecto[planes_presupuestales_comos_conseguirlos][]" <?= $disabled ?>>
 					<option value>seleccionar</option>
 					<option value=1>Pedir</option>
 					<option value=2>Crear</option>
@@ -134,24 +137,25 @@ foreach($objetivos as $objetivo){
 				    </select>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_precio_unitario_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_precio_unitario_0 required" style="margin-top: 0px">
 				    <input id="proyecto-plan_presupuestal_precio_unitario_0" onfocusout="Subtotal1(0,1)" class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" placeholder="Precio unitario" <?= $disabled ?>/>
+				    <input type="hidden" id="proyecto-plan_presupuestal_precio_unitario1_0"  class="form-control numerico" name="Proyecto[planes_presupuestales_precios_unitarios][]" />
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_cantidad_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_cantidad_0 required" style="margin-top: 0px">
 				    <input id="proyecto-plan_presupuestal_cantidad_0" onfocusout="Subtotal2(0,2)" class="form-control numerico" name="Proyecto[planes_presupuestales_cantidades][]" placeholder="Cantidad" <?= $disabled ?>/>
 				</div>
 			    </td>
-			    <td>
-				<div class="form-group field-proyecto-plan_presupuestal_subtotal_0 required">
+			    <td style="padding: 2px">
+				<div class="form-group field-proyecto-plan_presupuestal_subtotal_0 required" style="margin-top: 0px">
 				    <input id="proyecto-plan_presupuestal_subtotal1_0" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales1][]" placeholder="Subtotal" disabled/>
 				    <input type="hidden" id="proyecto-plan_presupuestal_subtotal_0" class="form-control numerico" name="Proyecto[planes_presupuestales_subtotales][]" placeholder="Subtotal"  />
 				</div>
 			    </td>
 			    <?php if($disabled==''){?>
-			    <td>
+			    <td style="padding: 2px">
 				<!--<span class="remCF glyphicon glyphicon-minus-sign"></span>-->
 			    </td>
 			    <?php } ?>
@@ -255,7 +259,7 @@ foreach($objetivos as $objetivo){
                 $('.field-proyecto-plan_presupuestal_como_conseguirlo_'+i).removeClass('has-error');
             }
 	    
-	    if($('#proyecto-plan_presupuestal_precio_unitario_'+i).val()=='')
+	    if($('#proyecto-plan_presupuestal_como_conseguirlo_'+i).val()==3 && $('#proyecto-plan_presupuestal_precio_unitario_'+i).val()=='')
             {
                 error=error+'ingrese el '+i+' precio unitario <br>';
                 $('.field-proyecto-plan_presupuestal_precio_unitario_'+i).addClass('has-error');
@@ -304,23 +308,23 @@ foreach($objetivos as $objetivo){
         else
         {
 	    $('#plan_presupuestal_'+plan).html(
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_objetivo_"+plan+" required'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_objetivo_"+plan+" required' style='margin-top: 0px'>"+
 				    "<select id='proyecto-plan_presupuestal_objetivo_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_objetivos][]' onchange='actividad($(this).val(),"+plan+")'>"+
 					"<option value=''>seleccionar</option>"+
 					opciones_objetivos+
 				    "</select>"+
 			       "</div>"+
 			    "</td>"+
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_actividad_"+plan+" required'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_actividad_"+plan+" required' style='margin-top: 0px'>"+
 				    "<select id='proyecto-plan_presupuestal_actividad_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_actividades][]'>"+
 					"<option value=''>seleccionar</option>"+
 				    "</select>"+
 			       "</div>"+
 			    "</td>"+
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_recurso_"+plan+" required'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_recurso_"+plan+" required' style='margin-top: 0px'>"+
 				    "<select id='proyecto-plan_presupuestal_recurso_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_recursos][]'>"+
 					"<option value=''>seleccionar</option>"+
 					"<option value='1'>Material</option>"+
@@ -328,9 +332,9 @@ foreach($objetivos as $objetivo){
 				    "</select>"+
 			       "</div>"+
 			    "</td>"+
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_como_conseguirlo_"+plan+" required'>"+
-				    "<select id='proyecto-plan_presupuestal_como_conseguirlo_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_comos_conseguirlos][]'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_como_conseguirlo_"+plan+" required' style='margin-top: 0px'>"+
+				    "<select onchange='ComoConseguirlo($(this).val(),"+plan+")' id='proyecto-plan_presupuestal_como_conseguirlo_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_comos_conseguirlos][]'>"+
 					"<option value=''>seleccionar</option>"+
 					"<option value='1'>Pedir</option>"+
 					"<option value='2'>Crear</option>"+
@@ -338,23 +342,24 @@ foreach($objetivos as $objetivo){
 				    "</select>"+
 				"</div>"+
 			    "</td>"+
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_precio_unitario_"+plan+" required'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_precio_unitario_"+plan+" required' style='margin-top: 0px'>"+
 				    "<input id='proyecto-plan_presupuestal_precio_unitario_"+plan+"' onfocusout='Subtotal1("+plan+",1)' class='form-control' name='Proyecto[planes_presupuestales_precios_unitarios][]' placeholder='Precio unitario'>"+
+				    "<input type='hidden' id='proyecto-plan_presupuestal_precio_unitario1_"+plan+"'  class='form-control numerico' name='Proyecto[planes_presupuestales_precios_unitarios][]' />"+
 				"</div>"+
 			    "</td>"+
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_cantidad_"+plan+" required'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_cantidad_"+plan+" required' style='margin-top: 0px'>"+
 				    "<input id='proyecto-plan_presupuestal_cantidad_"+plan+"' onfocusout='Subtotal2("+plan+",2)' class='form-control' name='Proyecto[planes_presupuestales_cantidades][]' placeholder='Cantidad'>"+
 				"</div>"+
 			    "</td>"+
-			    "<td>"+
-				"<div class='form-group field-proyecto-plan_presupuestal_subtotal_"+plan+" required'>"+
+			    "<td style='padding: 2px'>"+
+				"<div class='form-group field-proyecto-plan_presupuestal_subtotal_"+plan+" required' style='margin-top: 0px'>"+
 				    "<input id='proyecto-plan_presupuestal_subtotal1_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_subtotales1][]' placeholder='Subtotal' disabled>"+
 				    "<input type='hidden' id='proyecto-plan_presupuestal_subtotal_"+plan+"' class='form-control' name='Proyecto[planes_presupuestales_subtotales][]' placeholder='Subtotal'>"+
 				"</div>"+
 			    "</td>"+
-			    "<td>"+
+			    "<td style='padding: 2px'>"+
 				"<span class='remCF glyphicon glyphicon-minus-sign'></span>"+
 			    "</td>");
 	    $('#tab_plan_presupuestal').append('<tr id="plan_presupuestal_'+(plan+1)+'"></tr>');
@@ -407,5 +412,14 @@ foreach($objetivos as $objetivo){
 	var subtotal=x*y;
 	$('#proyecto-plan_presupuestal_subtotal_'+id).val(subtotal);
 	$('#proyecto-plan_presupuestal_subtotal1_'+id).val(subtotal);
+    }
+    
+    function ComoConseguirlo(value,id) {
+	if (value==1 || value==2)
+	{
+	    $('#proyecto-plan_presupuestal_precio_unitario_'+id).val("");
+	    $('#proyecto-plan_presupuestal_precio_unitario_'+id).prop( "disabled", true );
+	    $('#proyecto-plan_presupuestal_precio_unitario1_'+id).val("");
+	}
     }
 </script>

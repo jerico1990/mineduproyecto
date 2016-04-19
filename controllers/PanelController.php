@@ -62,7 +62,7 @@ class PanelController extends Controller
      */
     public function actionIdeasAccion()
     {
-        $this->layout='equipo';
+        $this->layout='estandar';
         if(\Yii::$app->user->can('administrador'))
         {
             return $this->redirect(['acciones']);
@@ -72,7 +72,7 @@ class PanelController extends Controller
     }
     public function actionIndex()
     {
-        $this->layout='equipo';
+        $this->layout='estandar';
         if(\Yii::$app->user->can('administrador'))
         {
             return $this->redirect(['acciones']);
@@ -92,9 +92,10 @@ class PanelController extends Controller
         }
         
         $invitaciones=Invitacion::find()
-                        ->select('invitacion.id,equipo.descripcion_equipo,lider.nombres,lider.apellido_paterno,lider.apellido_materno,lider.nombres_apellidos,institucion.denominacion')
+                        ->select('usuario.avatar,invitacion.id,equipo.descripcion_equipo,lider.nombres,lider.apellido_paterno,lider.apellido_materno,lider.nombres_apellidos,institucion.denominacion')
                         ->innerJoin('equipo','equipo.id=invitacion.equipo_id')
                         ->innerJoin('estudiante lider','invitacion.estudiante_id=lider.id')
+                        ->innerJoin('usuario','usuario.estudiante_id=lider.id')
                         ->innerJoin('institucion','institucion.id=lider.institucion_id')
                         ->where('invitacion.estudiante_invitado_id=:invitado and invitacion.estado=1',
                                 [':invitado'=>$usuario->estudiante_id])
