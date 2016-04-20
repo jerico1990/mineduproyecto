@@ -228,7 +228,7 @@ use yii\widgets\Pjax;
         }
         else
         {
-            mostrarImagen(this);
+            mostrarImagen(elemento);
             return true;
         }
     }
