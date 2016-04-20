@@ -235,7 +235,7 @@ use yii\widgets\Pjax;
             reader.readAsDataURL(input.files[0]);
         }
     }
-    /*
+    
     $("#registrar-foto").change(function(){
         var ext = $('#registrar-foto').val().split('.').pop().toLowerCase();
         var error='';
@@ -266,7 +266,7 @@ use yii\widgets\Pjax;
         
     });
     
-    */
+    
     $('#registrar-fecha_nac').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
     $('#registrar-password').focusout(function() {
         if($(this).val()!='')
