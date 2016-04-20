@@ -220,6 +220,7 @@ use yii\widgets\Pjax;
                         align: 'right'
                 },
             });
+            $('#registrar-foto').val('');
             return false;
         }
         else

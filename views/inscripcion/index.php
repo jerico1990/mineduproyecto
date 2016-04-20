@@ -155,6 +155,7 @@ if($equipo->id)
                         align: 'right'
                 },
             });
+            $('#equipo-foto_img').val('');
             return false;
         }
         else
