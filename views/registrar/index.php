@@ -228,7 +228,7 @@ use yii\widgets\Pjax;
         }
         else
         {
-            mostrarImagen(elemento);
+            mostrarImagen($('#registrar-foto'));
             return true;
         }
     }

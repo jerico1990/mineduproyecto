@@ -163,7 +163,7 @@ if($equipo->id)
         }
         else
         {
-            mostrarImagen(elemento);
+            mostrarImagen($('#equipo-foto_img'));
             return true;
         }
     }
