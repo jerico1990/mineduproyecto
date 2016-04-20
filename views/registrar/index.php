@@ -60,7 +60,7 @@ use yii\widgets\Pjax;
     
     <div class="col-xs-12 col-sm-4 col-md-4 text-center">
         <div class="form-group label-floating field-registrar-foto required">
-            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" onchange="Imagen($(this))" required/>
+            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" onchange="Imagen(this)" required/>
             <img id="img_destino" class="" style="height: 140px;width: 140px" src="../foto_equipo/no_disponible.jpg">
         </div>
     </div>
@@ -228,7 +228,7 @@ use yii\widgets\Pjax;
         }
         else
         {
-            mostrarImagen($('#registrar-foto'));
+            mostrarImagen(elemento);
             return true;
         }
     }
