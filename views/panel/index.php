@@ -37,7 +37,7 @@ $btninscribir=$integrante
 ?>
 
 <?php if(!$integrante) { ?>
-    <h1>Mi equipo</h1>
+    <h1><b>Mi equipo</b></h1>
     <?php if(!$invitaciones){ ?>
     <p class="text-center">No tienes invitaciones activas de otros equipos,</p>
     <p class="text-center">te invitamos a ser el coordinador de un equipo.</p>
@@ -84,7 +84,7 @@ $btninscribir=$integrante
 <?php } ?>
 
 <?php if($integrante){ ?>
-<h1>Mi equipo</h1>
+<h1><b>Mi equipo</b></h1>
 <div class="col-xs-12 col-sm-3 col-md-3"></div>
 <div class="col-xs-12 col-sm-4 col-md-4">
     <h4 style="padding-bottom: 5px"><label>Nombre de tu equipo:</label> </h4>
