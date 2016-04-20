@@ -266,7 +266,7 @@ use yii\widgets\Pjax;
     });
     
     
-    $('#registrar-fecha_nac').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+    $('#registrar-fecha_nac').bootstrapMaterialDatePicker({ weekStart : 0, time: false ,format : 'DD/MM/YYYY' });
     $('#registrar-password').focusout(function() {
         if($(this).val()!='')
         {

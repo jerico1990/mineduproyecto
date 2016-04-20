@@ -127,8 +127,8 @@ $foros=Foro::find()->orderBy('id DESC')->all();
             </div>
             <div class="pull-left info">
               <p style="font-size: 9px"><?= $usuario->estudiante->nombres." ".$usuario->estudiante->apellido_paterno." ".$usuario->estudiante->apellido_materno ?></p>
-
-              <a href="#"><i class="fa fa-circle text-success"></i> En linea</a>
+                <?= Html::a('Cerrar sesión',['login/logout'],[]);?>
+              <!--<a href="#"><i class="fa fa-circle text-success"></i> En linea</a>-->
             </div>
           </div>
           <!-- /.search form -->
