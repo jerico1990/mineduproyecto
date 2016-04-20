@@ -220,10 +220,12 @@ use yii\widgets\Pjax;
                         align: 'right'
                 },
             });
+            return false;
         }
         else
         {
             mostrarImagen(this);
+            return true;
         }
         
         

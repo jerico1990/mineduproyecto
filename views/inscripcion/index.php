@@ -155,11 +155,14 @@ if($equipo->id)
                         align: 'right'
                 },
             });
+            return false;
         }
         else
         {
             mostrarImagen(this);
+            return true;
         }
+        
     });
     
     var contador=<?= $invitacionContador ?>;
