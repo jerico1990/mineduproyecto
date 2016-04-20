@@ -68,7 +68,7 @@ class PanelController extends Controller
             return $this->redirect(['acciones']);
         }
         
-        $this->layout='equipo';
+        //$this->layout='equipo';
         $etapa=Etapa::find()->where('estado=1')->one();
         $usuario=Usuario::find()->where('id=:id',[':id'=>\Yii::$app->user->id])->one();
         $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
