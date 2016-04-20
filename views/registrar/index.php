@@ -60,7 +60,7 @@ use yii\widgets\Pjax;
     
     <div class="col-xs-12 col-sm-4 col-md-4 text-center">
         <div class="form-group label-floating field-registrar-foto required">
-            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" onchange="Imagen(this)" required/>
+            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" onchange="Imagen($(this))" required/>
             <img id="img_destino" class="" style="height: 140px;width: 140px" src="../foto_equipo/no_disponible.jpg">
         </div>
     </div>
@@ -192,15 +192,7 @@ use yii\widgets\Pjax;
 ?>
 
 <script>
-    function mostrarImagen(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#img_destino').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    
     
     function Imagen(elemento) {
         var ext = elemento.val().split('.').pop().toLowerCase();
@@ -230,6 +222,17 @@ use yii\widgets\Pjax;
         {
             mostrarImagen(elemento);
             return true;
+        }
+    }
+    
+    function mostrarImagen(input) {
+        console.log(input);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img_destino').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
         }
     }
     /*
