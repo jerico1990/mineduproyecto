@@ -144,7 +144,7 @@ if($equipo->id)
             error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
         }
         if (error!='') {
-            $.notify({
+            /*$.notify({
                 message: error
             },{
                 // settings
@@ -154,7 +154,7 @@ if($equipo->id)
                         from: 'bottom',
                         align: 'right'
                 },
-            });
+            });*/
             //fileupload = $('#equipo-foto_img');  
             //fileupload.replaceWith($fileupload.clone(true));
             elemento.replaceWith(elemento.val('').clone(true));
@@ -167,7 +167,7 @@ if($equipo->id)
             return true;
         }
     }
-    /*
+    
     $("#equipo-foto_img").change(function(){
         var ext = $('#equipo-foto_img').val().split('.').pop().toLowerCase();
         var error='';
@@ -198,7 +198,7 @@ if($equipo->id)
             return true;
         }
         
-    });*/
+    });
     
     var contador=<?= $invitacionContador ?>;
     console.log(contador);
