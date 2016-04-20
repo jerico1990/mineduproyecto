@@ -28,6 +28,7 @@ if($integrante)
                 inner join estudiante on invitacion.estudiante_invitado_id=estudiante.id
                 where invitacion.equipo_id=".$integrante->equipo_id." and invitacion.estado=1
                 ) AA
+                ORDER BY AA.ROL ASC
                 
                ");
     $equipoeinvitaciones = $command->queryAll();
