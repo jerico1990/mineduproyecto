@@ -155,9 +155,9 @@ if($equipo->id)
                         align: 'right'
                 },
             });
-            fileupload = $('#equipo-foto_img');  
-            fileupload.replaceWith($fileupload.clone(true));
-
+            //fileupload = $('#equipo-foto_img');  
+            //fileupload.replaceWith($fileupload.clone(true));
+            $('#equipo-foto_img').replaceWith($('#equipo-foto_img').val('').clone(true));
             //$('#equipo-foto_img').val('');
             return false;
         }
