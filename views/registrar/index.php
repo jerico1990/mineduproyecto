@@ -60,7 +60,7 @@ use yii\widgets\Pjax;
     
     <div class="col-xs-12 col-sm-4 col-md-4 text-center">
         <div class="form-group label-floating field-registrar-foto required">
-            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" required/>
+            <input type="file" id="registrar-foto" class="form-control img-responsive" name="Registrar[foto]" onchange="Imagen($(this))" required/>
             <img id="img_destino" class="" style="height: 140px;width: 140px" src="../foto_equipo/no_disponible.jpg">
         </div>
     </div>
@@ -201,7 +201,38 @@ use yii\widgets\Pjax;
             reader.readAsDataURL(input.files[0]);
         }
     }
-        
+    
+    function Imagen(elemento) {
+        var ext = elemento.val().split('.').pop().toLowerCase();
+        var error='';
+        if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+            error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
+        }
+        if (error!='') {
+            $.notify({
+                message: error
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+            //fileupload = $('#equipo-foto_img');  
+            //fileupload.replaceWith($fileupload.clone(true));
+            elemento.replaceWith(elemento.val('').clone(true));
+            //$('#equipo-foto_img').val('');
+            return false;
+        }
+        else
+        {
+            mostrarImagen(this);
+            return true;
+        }
+    }
+    /*
     $("#registrar-foto").change(function(){
         var ext = $('#registrar-foto').val().split('.').pop().toLowerCase();
         var error='';
@@ -231,6 +262,8 @@ use yii\widgets\Pjax;
         
         
     });
+    
+    */
     $('#registrar-fecha_nac').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
     $('#registrar-password').focusout(function() {
         if($(this).val()!='')

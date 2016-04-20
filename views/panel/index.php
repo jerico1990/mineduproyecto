@@ -14,6 +14,10 @@ if($integrante)
                 
     $connection = \Yii::$app->db;
     $command=$connection->createCommand("
+                SELECT AA.tipo,AA.equipo_id,AA.id,AA.nombres_apellidos,AA.nombres,AA.apellido_paterno,AA.apellido_materno,
+                AA.estudiante_id,AA.rol,AA.estado
+                FROM
+                (
                 select 1 tipo,integrante.equipo_id,integrante.id,estudiante.nombres_apellidos,estudiante.nombres,estudiante.apellido_paterno,estudiante.apellido_materno,
                 integrante.estudiante_id,integrante.rol,integrante.estado from integrante
                 inner join estudiante on integrante.estudiante_id=estudiante.id
@@ -23,6 +27,8 @@ if($integrante)
                 estudiante.id,0,6 from invitacion
                 inner join estudiante on invitacion.estudiante_invitado_id=estudiante.id
                 where invitacion.equipo_id=".$integrante->equipo_id." and invitacion.estado=1
+                ) AA
+                
                ");
     $equipoeinvitaciones = $command->queryAll();
 }
