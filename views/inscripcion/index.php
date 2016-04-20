@@ -138,7 +138,28 @@ if($equipo->id)
     }
         
     $("#equipo-foto_img").change(function(){
-        mostrarImagen(this);
+        var ext = $('#equipo-foto_img').val().split('.').pop().toLowerCase();
+        var error='';
+        if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+            error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
+        }
+        if (error!='') {
+            $.notify({
+                message: error
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+        }
+        else
+        {
+            mostrarImagen(this);
+        }
     });
     
     var contador=<?= $invitacionContador ?>;
