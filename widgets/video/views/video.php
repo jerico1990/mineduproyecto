@@ -13,7 +13,7 @@ use yii\web\JsExpression;
 <h1>Video</h1>
 <?php if($integrante->rol==1){?>
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
-        <input type="file" id="video-archivo" name="Video[archivo]" class="" accept="video/mp4" type="video/mp4"><br>
+        <input type="file" id="video-archivo" name="Video[archivo]" class="" onchange="Video($(this))"><br>
         <!--<input type="submit" id="btnvideo" value="Cargar video">-->
     <?php ActiveForm::end(); ?>
 <!--
@@ -32,6 +32,37 @@ use yii\web\JsExpression;
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
+    function Video(elemento) {
+        var ext = elemento.val().split('.').pop().toLowerCase();
+        var error='';
+        if($.inArray(ext, ['mp4','avi','mpeg','flv']) == -1) {
+            error=error+'Solo se permite subir archivos con extensiones .mp4,.avi,.mpeg,.flv';
+        }
+        if (error!='') {
+            $.notify({
+                message: error
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+            //fileupload = $('#equipo-foto_img');  
+            //fileupload.replaceWith($fileupload.clone(true));
+            elemento.replaceWith(elemento.val('').clone(true));
+            //$('#equipo-foto_img').val('');
+            return false;
+        }
+        else
+        {
+            mostrarImagen(this);
+            return true;
+        }
+    }
+    
 (function() {
     
     var bar = $('.bar');
