@@ -202,6 +202,10 @@ class RegistrarController extends Controller
                 $registrar->foto->saveAs('foto_personal/' . $usuario->id . '.' . $registrar->foto->extension);
                 $usuario->avatar=$usuario->id. '.' . $registrar->foto->extension;
             }
+            else
+            {
+                $usuario->avatar="no_disponible.jpg";
+            }
             
             $usuario->update();
             

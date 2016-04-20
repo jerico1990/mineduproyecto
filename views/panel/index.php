@@ -87,12 +87,12 @@ $btninscribir=$integrante
 <h1>Mi equipo</h1>
 <div class="col-xs-12 col-sm-3 col-md-3"></div>
 <div class="col-xs-12 col-sm-4 col-md-4">
-    <h4><label>Nombre de tu equipo:</label>  </h4>
-    <h3><?= $equipo->descripcion_equipo ?></h3>
-    <h4><label>Descripción de tu equipo:</label>  </h4>
-    <p class="text-justify"><?= $equipo->descripcion ?></p>
-    <h4><label>Asunto público:</label>  </h4>
-    <p class="text-justify"><?= $equipo->asunto->descripcion_cabecera ?></p>
+    <h4 style="padding-bottom: 5px"><label>Nombre de tu equipo:</label> </h4>
+    <p class="text-justify" style="font-size: 20px;padding-bottom: 5px"><?= $equipo->descripcion_equipo ?></p>
+    <h4 style="padding-bottom: 5px"><label>Descripción de tu equipo:</label>  </h4>
+    <p class="text-justify" style="padding-bottom: 5px"><?= $equipo->descripcion ?></p>
+    <h4 style="padding-bottom: 5px"><label>Asunto público:</label>  </h4>
+    <p class="text-justify" style="padding-bottom: 5px"><?= $equipo->asunto->descripcion_cabecera ?></p>
 </div>
 <div class="col-xs-12 col-sm-2 col-md-2">
     <?= Html::img('../foto_equipo/'.$equipo->foto,['id'=>'img_destino','class'=>'img-responsive logo', 'alt'=>'Responsive image','style'=>"height: 158px;width: 158px"]) ?>
@@ -100,7 +100,7 @@ $btninscribir=$integrante
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-3 col-md-3"></div>
 <div class="col-xs-12 col-sm-6 col-md-6">
-<label>Los miembros de mi equipo:</label>
+<label style="padding-bottom: 5px">Los miembros de mi equipo:</label>
 <?php //if($equipo->estado==0){ ?>
 <table class="table table-striped table-hover ">
     <thead>

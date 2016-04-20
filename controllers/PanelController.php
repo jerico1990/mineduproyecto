@@ -68,7 +68,19 @@ class PanelController extends Controller
             return $this->redirect(['acciones']);
         }
         
-        return $this->render('ideas-accion');
+        $this->layout='equipo';
+        $etapa=Etapa::find()->where('estado=1')->one();
+        $usuario=Usuario::find()->where('id=:id',[':id'=>\Yii::$app->user->id])->one();
+        $integrante=Integrante::find()->where('estudiante_id=:estudiante_id',[':estudiante_id'=>$usuario->estudiante_id])->one();
+        $equipo=Equipo::find()->where('id=:id',[':id'=>$integrante->equipo_id])->one();
+        $integrantes=Integrante::find()
+                            ->select('usuario.id user_id,estudiante.id,estudiante.nombres,estudiante.apellido_paterno,estudiante.apellido_materno')
+                            ->innerJoin('estudiante','estudiante.id=integrante.estudiante_id')
+                            ->innerJoin('usuario','usuario.estudiante_id=estudiante.id')
+                            ->where('equipo_id=:equipo_id',[':equipo_id'=>$equipo->id])
+                            ->all();
+        
+        return $this->render('ideas-accion',['equipo'=>$equipo,'integrantes'=>$integrantes,'etapa'=>$etapa]);
     }
     public function actionIndex()
     {

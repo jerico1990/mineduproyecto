@@ -89,7 +89,10 @@ class InscripcionController extends Controller
             {
                 $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension;
             }
-            
+            else
+            {
+                $equipo->foto="no_disponible.jpg";
+            }
             $equipo->update();
             $lider=new Integrante;
             $lider->equipo_id=$equipo->id;
@@ -188,6 +191,10 @@ class InscripcionController extends Controller
             if($equipo->foto_img)
             {
                 $equipo->foto=$equipo->id. '.' . $equipo->foto_img->extension; 
+            }
+            else
+            {
+                $equipo->foto="no_disponible.jpg"; 
             }
             
             

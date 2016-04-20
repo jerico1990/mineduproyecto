@@ -32,11 +32,11 @@ if($equipo->id)
                 </div>
             </div>
         </div>
-        <div class="row col-xs-12 col-sm-4 col-md-4">
-            <div class="form-group label-floating field-equipo-foto_img required">
+        <div class="row col-xs-12 col-sm-4 col-md-4 text-center">
+            <div class="form-group label-floating field-equipo-foto_img required text-center">
                 <label>Agrega una imagen para tu equipo</label>
                 <input type="file" id="equipo-foto_img" class="form-control file" name="Equipo[foto_img]" onchange="Imagen($(this))">
-                <?= Html::img('../foto_equipo/'.$equipo->foto,['id'=>'img_destino','class'=>'img-responsive logo', 'alt'=>'Responsive image','style'=>"height: 158px;width: 158px"]) ?>
+                <?= Html::img('../foto_equipo/'.$equipo->foto,['id'=>'img_destino','class'=>'text-center', 'alt'=>'Responsive image','style'=>"height: 120px;width: 120px;align:center"]) ?>
             </div>
         </div>
         <div class="clearfix"></div>

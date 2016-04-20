@@ -111,10 +111,13 @@ $foros=Foro::find()->orderBy('id DESC')->all();
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">Menú</li>
+            <?php if($integrante){ ?>
             <li><?= Html::a('<i class="fa fa-book"></i> Ideas en acción',['panel/ideas-accion'],[]);?></li>
+            <?php } ?>
+            
             <li><?= Html::a('<i class="fa fa-book"></i> Mi equipo',['panel/index'],[]);?></li>
             <?php if($integrante){ ?>
-            <li><?= Html::a('<i class="fa fa-book"></i> Ruta',['ruta/index'],[]);?></li>
+            <!--<li><?= Html::a('<i class="fa fa-book"></i> Ruta',['ruta/index'],[]);?></li>-->
             <?php } ?>
             <?php if ($integrante && $equipo){ ?>
             <li class="treeview">
