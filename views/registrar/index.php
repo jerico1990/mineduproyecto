@@ -201,7 +201,7 @@ use yii\widgets\Pjax;
             error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
         }
         if (error!='') {
-            $.notify({
+            /*$.notify({
                 message: error
             },{
                 // settings
@@ -211,7 +211,7 @@ use yii\widgets\Pjax;
                         from: 'bottom',
                         align: 'right'
                 },
-            });
+            });*/
             //fileupload = $('#equipo-foto_img');  
             //fileupload.replaceWith($fileupload.clone(true));
             elemento.replaceWith(elemento.val('').clone(true));
