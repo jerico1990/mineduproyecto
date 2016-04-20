@@ -35,7 +35,7 @@ if($equipo->id)
         <div class="row col-xs-12 col-sm-4 col-md-4">
             <div class="form-group label-floating field-equipo-foto_img required">
                 <label>Agrega una imagen para tu equipo</label>
-                <input type="file" id="equipo-foto_img" class="form-control file" name="Equipo[foto_img]">
+                <input type="file" id="equipo-foto_img" class="form-control file" name="Equipo[foto_img]" onchange="Imagen($(this))">
                 <?= Html::img('../foto_equipo/'.$equipo->foto,['id'=>'img_destino','class'=>'img-responsive logo', 'alt'=>'Responsive image','style'=>"height: 158px;width: 158px"]) ?>
             </div>
         </div>
@@ -136,7 +136,38 @@ if($equipo->id)
             reader.readAsDataURL(input.files[0]);
         }
     }
-        
+    
+    function Imagen(elemento) {
+        var ext = elemento.val().split('.').pop().toLowerCase();
+        var error='';
+        if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+            error=error+'Solo se permite subir archivos con extensiones .gif,.png,.jpg,.jpeg';
+        }
+        if (error!='') {
+            $.notify({
+                message: error
+            },{
+                // settings
+                type: 'danger',
+                z_index: 1000000,
+                placement: {
+                        from: 'bottom',
+                        align: 'right'
+                },
+            });
+            //fileupload = $('#equipo-foto_img');  
+            //fileupload.replaceWith($fileupload.clone(true));
+            elemento.replaceWith(elemento.val('').clone(true));
+            //$('#equipo-foto_img').val('');
+            return false;
+        }
+        else
+        {
+            mostrarImagen(this);
+            return true;
+        }
+    }
+    /*
     $("#equipo-foto_img").change(function(){
         var ext = $('#equipo-foto_img').val().split('.').pop().toLowerCase();
         var error='';
@@ -167,7 +198,7 @@ if($equipo->id)
             return true;
         }
         
-    });
+    });*/
     
     var contador=<?= $invitacionContador ?>;
     console.log(contador);
