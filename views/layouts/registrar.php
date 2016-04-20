@@ -31,14 +31,14 @@ AppAssetInterno::register($this);
     <link href="http://t00rk.github.io/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
   
   <!-- Bootstrap Material Design -->
-  <link href="/bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
-  <link href="/bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
+  <link href="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
+  <link href="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
 
   <!-- Dropdown.js -->
   <link href="http://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">
 
   <!-- Page style -->
-  <link href="/bootstrap-material-design-master/index.css" rel="stylesheet">
+  <link href="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-material-design-master/index.css" rel="stylesheet">
 
   <!-- jQuery -->
   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -145,8 +145,8 @@ AppAssetInterno::register($this);
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <!-- Material Design for Bootstrap -->
-<script src="/bootstrap-material-design-master/dist/js/material.js"></script>
-<script src="/bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-material-design-master/dist/js/material.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-material-design-master/dist/js/ripples.min.js"></script>
 <script>
   $.material.init();
 </script>

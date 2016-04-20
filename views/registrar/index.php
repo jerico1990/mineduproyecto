@@ -14,20 +14,20 @@ use yii\widgets\Pjax;
     display: block;
 }
 </style>
-<script src="../bootstrap-strength-meter-master/docs/js/jquery-2.1.1.min.js"></script>
-<script src="../bootstrap-strength-meter-master/docs/js/bootstrap-3.2.0.min.js"></script>
-<script src="../bootstrap-strength-meter-master/docs/js/prettify.js"></script>
-<script src="../bootstrap-strength-meter-master/dist/js/bootstrap-strength-meter.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-strength-meter-master/docs/js/jquery-2.1.1.min.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-strength-meter-master/docs/js/bootstrap-3.2.0.min.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-strength-meter-master/docs/js/prettify.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-strength-meter-master/dist/js/bootstrap-strength-meter.js"></script>
 
-<script src="../bootstrap-strength-meter-master/password-score/password-score.js"></script>
-<script src="../bootstrap-strength-meter-master/password-score/password-score-options.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-strength-meter-master/password-score/password-score.js"></script>
+<script src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-strength-meter-master/password-score/password-score-options.js"></script>
 
 
 
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js"></script>
 		<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-		<script type="text/javascript" src="/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+		<script type="text/javascript" src="<?= \Yii::$app->request->BaseUrl ?>/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
                 
                 
 <div class="col-xs-12 col-sm-3 col-md-3"></div>
