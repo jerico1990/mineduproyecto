@@ -689,7 +689,7 @@ use yii\widgets\Pjax;
             });
             return false;
         }
-        else
+        /*else
         {
             $.notify({
                 message: 'Tus datos han sido registrados' 
@@ -701,7 +701,7 @@ use yii\widgets\Pjax;
                     align: 'right'
                 },
             });
-        }
+        }*/
         return true;
     });
     

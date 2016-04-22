@@ -55,6 +55,10 @@ class Proyecto extends \yii\db\ActiveRecord
     public $planes_presupuestales_cantidades;
     public $planes_presupuestales_subtotales;
     public $planes_presupuestal_ids;
+    public $planes_presupuestales_recursos_descripciones;
+    public $planes_presupuestales_unidades;
+    public $planes_presupuestales_dirigidos;
+    
     
     /*cronograma*/
     public $cronogramas_objetivos;
@@ -85,7 +89,8 @@ class Proyecto extends \yii\db\ActiveRecord
                 'cronogramas_fechas_fines','cronogramas_ids','resultados_ids','resultados_esperados',
                 'planes_presupuestales_objetivos','planes_presupuestales_actividades','planes_presupuestales_recursos',
                 'planes_presupuestales_comos_conseguirlos','planes_presupuestales_precios_unitarios',
-                'planes_presupuestales_cantidades','planes_presupuestales_subtotales','planes_presupuestal_ids'],'safe'],
+                'planes_presupuestales_cantidades','planes_presupuestales_subtotales','planes_presupuestal_ids',
+                'planes_presupuestales_dirigidos','planes_presupuestales_unidades','planes_presupuestales_recursos_descripciones'],'safe'],
             [['id','actividades_1','actividades_2','actividades_3','actividades_ids_1','actividades_ids_2','actividades_ids_3'],'safe'],
             [['user_id','asunto_id','objetivo_especifico_1_id','objetivo_especifico_2_id','objetivo_especifico_3_id','equipo_id','region_id'], 'integer'],
             [['titulo'], 'string', 'max' => 200],

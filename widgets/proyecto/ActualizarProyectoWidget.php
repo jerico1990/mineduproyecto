@@ -266,39 +266,41 @@ class ActualizarProyectoWidget extends Widget
                 if(isset($proyecto->planes_presupuestal_ids[$i]))
                 {
                     $planpresupuestal=PlanPresupuestal::find()->where('id=:id',[':id'=>$proyecto->planes_presupuestal_ids[$i]])->one();
-                    $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades[$i];
-                    $planpresupuestal->recurso=$proyecto->planes_presupuestales_recursos[$i];
+                    $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades;
+                    $planpresupuestal->recurso_descripcion=$proyecto->planes_presupuestales_recursos_descripciones[$i];
+                    $planpresupuestal->unidad=$proyecto->planes_presupuestales_unidades[$i];
+                    $planpresupuestal->dirigido=$proyecto->planes_presupuestales_dirigidos[$i];
                     $planpresupuestal->como_conseguirlo=$proyecto->planes_presupuestales_comos_conseguirlos[$i];
-                    if(isset($proyecto->planes_presupuestales_precios_unitarios[$i]))
+                    /*if(isset($proyecto->planes_presupuestales_precios_unitarios[$i]))
                     {
                         $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
                     }
                     else
                     {
                         $planpresupuestal->precio_unitario="";
-                    }
-                    
+                    }*/
+                    $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
                     $planpresupuestal->cantidad=$proyecto->planes_presupuestales_cantidades[$i];
                     $planpresupuestal->subtotal=$proyecto->planes_presupuestales_subtotales[$i];
                     $planpresupuestal->update();
                 }
                 else
                 {
-                    $precio=1;
+                    /*$precio=1;
                     if($proyecto->planes_presupuestales_precios_unitarios[$i]!="")
                     {
                         $precio=$proyecto->planes_presupuestales_precios_unitarios[$i];
                     }
-                    
+                    */
                     $planpresupuestal=new PlanPresupuestal;
-                    $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades[$i];
-                    $planpresupuestal->recurso=$proyecto->planes_presupuestales_recursos[$i];
+                    $planpresupuestal->actividad_id=$proyecto->planes_presupuestales_actividades;
+                    $planpresupuestal->recurso_descripcion=$proyecto->planes_presupuestales_recursos_descripciones[$i];
+                    $planpresupuestal->unidad=$proyecto->planes_presupuestales_unidades[$i];
+                    $planpresupuestal->dirigido=$proyecto->planes_presupuestales_dirigidos[$i];
                     $planpresupuestal->como_conseguirlo=$proyecto->planes_presupuestales_comos_conseguirlos[$i];
                     $planpresupuestal->precio_unitario=$proyecto->planes_presupuestales_precios_unitarios[$i];
                     $planpresupuestal->cantidad=$proyecto->planes_presupuestales_cantidades[$i];
-                    $planpresupuestal->subtotal=$precio*$proyecto->planes_presupuestales_cantidades[$i];
-                    
-                    //$proyecto->planes_presupuestales_subtotales[$i];
+                    $planpresupuestal->subtotal=$proyecto->planes_presupuestales_subtotales[$i];
                     $planpresupuestal->estado=1;
                     $planpresupuestal->save();
                 }

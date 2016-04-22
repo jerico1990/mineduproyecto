@@ -149,4 +149,28 @@ class PlanPresupuestalController extends Controller
         }
     }
     
+    
+    public function actionCargatablapresupuesto($valor)
+    {
+        $dataTabla=[];
+        $planespresupuestales=PlanPresupuestal::find()
+                                ->where('actividad_id=:actividad_id and estado=1',[':actividad_id'=>$valor])
+                                ->all();
+        
+        $countplanespresupuestales=PlanPresupuestal::find()
+                                ->where('actividad_id=:actividad_id and estado=1',[':actividad_id'=>$valor])
+                                ->count();
+        //$count=[1=>3];
+        //$i=0;
+        array_push($dataTabla,$countplanespresupuestales);
+        foreach($planespresupuestales as $planpresupuestal)
+        {
+            array_push($dataTabla,$planpresupuestal->attributes);
+            ////array_push($dataTabla,['contador'=>$i]);
+            //$i++;
+            //var_dump($planpresupuestal->attributes);
+        }
+        //array_push($dataTabla,["contador"=>$countplanespresupuestales]);
+        echo json_encode($dataTabla,JSON_UNESCAPED_UNICODE); 
+    }
 }

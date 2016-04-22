@@ -14,7 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
-
+use kartik\growl\Growl;
 /**
  * ParticipanteController implements the CRUD actions for Participante model.
  */
@@ -208,9 +208,11 @@ class RegistrarController extends Controller
             }
             
             $usuario->update();
+            Yii::$app->session->setFlash('registrar');
             
-            //Yii::$app->session->setFlash('registrar');
             
+            
+            //return $this->refresh();
             //return $this->refresh();
             return $this->redirect(['site/login']);
         }

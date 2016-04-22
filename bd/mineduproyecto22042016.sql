@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 31-03-2016 a las 15:11:45
--- Versión del servidor: 5.5.37-0ubuntu0.14.04.1
--- Versión de PHP: 5.5.9-1ubuntu4.7
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 22-04-2016 a las 10:04:09
+-- Versión del servidor: 5.6.24
+-- Versión de PHP: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,14 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `actividad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `objetivo_especifico_id` int(11) DEFAULT NULL,
   `descripcion` varchar(150) DEFAULT NULL,
-  `resultado_esperado` varchar(15) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `objetivo_especifico_id` (`objetivo_especifico_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+  `resultado_esperado` varchar(150) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -48,9 +46,7 @@ CREATE TABLE IF NOT EXISTS `actividad_copia` (
   `descripcion` varchar(150) DEFAULT NULL,
   `resultado_esperado` varchar(15) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
-  `etapa` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`,`etapa`),
-  KEY `objetivo_especifico_id` (`objetivo_especifico_id`)
+  `etapa` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -65,8 +61,7 @@ CREATE TABLE IF NOT EXISTS `asunto` (
   `estado` int(11) DEFAULT NULL,
   `padre_id` int(11) DEFAULT NULL,
   `descripcion_larga` varchar(1000) DEFAULT NULL,
-  `descripcion_corta` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `descripcion_corta` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -117,9 +112,7 @@ INSERT INTO `asunto` (`id`, `descripcion_cabecera`, `estado`, `padre_id`, `descr
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_spanish2_ci NOT NULL,
   `user_id` int(11) NOT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`item_name`,`user_id`),
-  KEY `Fkusuario` (`user_id`)
+  `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -142,9 +135,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   `rule_name` varchar(64) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `data` text COLLATE utf8_spanish2_ci,
   `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`name`),
-  KEY `type` (`type`)
+  `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -165,9 +156,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 
 CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_spanish2_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`parent`,`child`),
-  KEY `child` (`child`)
+  `child` varchar(64) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -180,8 +169,7 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
   `name` varchar(64) COLLATE utf8_spanish2_ci NOT NULL,
   `data` text COLLATE utf8_spanish2_ci,
   `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`name`)
+  `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -191,16 +179,14 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 --
 
 CREATE TABLE IF NOT EXISTS `cronograma` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `actividad_id` int(11) DEFAULT NULL,
   `fecha_inicio` datetime DEFAULT NULL,
   `fecha_fin` datetime DEFAULT NULL,
   `duracion` int(11) DEFAULT NULL,
   `responsable_id` int(11) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `actividad_id` (`actividad_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -216,9 +202,7 @@ CREATE TABLE IF NOT EXISTS `cronograma_copia` (
   `duracion` int(11) DEFAULT NULL,
   `responsable_id` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
-  `etapa` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`,`etapa`),
-  KEY `actividad_id` (`actividad_id`)
+  `etapa` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -228,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `cronograma_copia` (
 --
 
 CREATE TABLE IF NOT EXISTS `encuesta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `estudiante_id` int(11) DEFAULT NULL,
   `p1_1` varchar(250) DEFAULT NULL COMMENT '¿De qué manera planeas acceder a la plataforma?',
   `p1_2` varchar(250) DEFAULT NULL COMMENT '¿De qué manera planeas acceder a la plataforma?',
@@ -252,10 +236,8 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
   `p6_1` varchar(250) DEFAULT NULL COMMENT '¿Cuándo vas a trabajar con tu equipo de trabajo?',
   `p6_2` varchar(250) DEFAULT NULL COMMENT '¿Cuándo vas a trabajar con tu equipo de trabajo?',
   `p6_3` varchar(250) DEFAULT NULL COMMENT '¿Cuándo vas a trabajar con tu equipo de trabajo?',
-  `p6_4` varchar(250) DEFAULT NULL COMMENT '¿Cuándo vas a trabajar con tu equipo de trabajo?',
-  PRIMARY KEY (`id`),
-  KEY `Fkencuesta_estudiante` (`estudiante_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+  `p6_4` varchar(250) DEFAULT NULL COMMENT '¿Cuándo vas a trabajar con tu equipo de trabajo?'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -264,16 +246,15 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
 --
 
 CREATE TABLE IF NOT EXISTS `equipo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `asunto_id` int(11) NOT NULL,
   `descripcion_equipo` varchar(250) DEFAULT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
   `fecha_registro` datetime DEFAULT NULL,
   `etapa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Fkasuntoa` (`asunto_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+  `foto` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -282,20 +263,19 @@ CREATE TABLE IF NOT EXISTS `equipo` (
 --
 
 CREATE TABLE IF NOT EXISTS `estudiante` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `institucion_id` int(11) DEFAULT NULL,
+  `nombres` varchar(250) DEFAULT NULL,
+  `apellido_paterno` varchar(250) DEFAULT NULL,
+  `apellido_materno` varchar(250) DEFAULT NULL,
   `nombres_apellidos` varchar(250) DEFAULT NULL,
   `sexo` varchar(10) DEFAULT NULL,
   `dni` varchar(8) DEFAULT NULL,
   `fecha_nac` datetime DEFAULT NULL,
   `email` varchar(150) NOT NULL DEFAULT '',
   `celular` varchar(9) DEFAULT NULL,
-  `grado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`) USING BTREE,
-  UNIQUE KEY `dni` (`dni`),
-  KEY `Fkinstitucion` (`institucion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+  `grado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -304,11 +284,10 @@ CREATE TABLE IF NOT EXISTS `estudiante` (
 --
 
 CREATE TABLE IF NOT EXISTS `etapa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `etapa` int(11) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `etapa`
@@ -324,12 +303,84 @@ INSERT INTO `etapa` (`id`, `etapa`, `estado`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `evaluacion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `evaluacion` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
+  `evaluacion` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro`
+--
+
+CREATE TABLE IF NOT EXISTS `foro` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(250) DEFAULT NULL,
+  `descripcion` varchar(1500) DEFAULT NULL,
+  `proyecto_id` int(11) DEFAULT NULL,
+  `asunto_id` int(11) DEFAULT NULL,
+  `creado_at` int(11) DEFAULT NULL,
+  `actualizado_at` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `post_count` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `foro`
+--
+
+INSERT INTO `foro` (`id`, `titulo`, `descripcion`, `proyecto_id`, `asunto_id`, `creado_at`, `actualizado_at`, `user_id`, `post_count`) VALUES
+(1, 'Asunto Público', '', NULL, NULL, 1460153182, 1460153263, 1, 0),
+(2, 'Asunto Privado', '', NULL, NULL, 1460153182, 1460153263, 1, 0),
+(3, 'No somos rebeldes, somos adolescentes', 'Existen ciertos mitos sobre cómo somos nosotros. Dicen que somos de tal modo y que actuamos de tal forma; como si todos fuéramos iguales, como si nos hubieran sacado de un solo molde. Creemos que ya es hora de romper esas falsas creencias y hablar de lo que realmente significa ser adolescente. ', NULL, 1, NULL, NULL, 1, 0),
+(4, 'Mujeres y varones sin etiquetas', 'La sociedad quiere imponer ciertos comportamientos, capacidades y atributos a los varones y mujeres. Si salimos de esa dirección se nos trata perjudicialmente distinto. Si un varón es muy sensible o si una mujer es hábil con las herramientas parece que todos se les vienen encima. ¿Pero acaso debemos actuar como nos imponen que actuemos?', NULL, 2, NULL, NULL, 1, 0),
+(5, 'Soy cultura viva, respétame', 'En nuestro territorio existen diversas culturas autóctonas. Cuando pertenecemos a alguna de ellas o cuando nos involucramos con sus problemas, descubrimos que no siempre reciben el respeto que merecen, a veces se les da un trato diferenciado o excluyente, como si las miraran por encima del hombro, y eso impide que hagan valer sus derechos en el campo político, económico, social y cultural. ', NULL, 3, NULL, NULL, 1, 0),
+(6, 'No me llamo ni pituco, ni piraña, ni cholo, ni gringo', 'Algunos lo llaman clasismo o diferencia de clases. Básicamente nos clasifican de acuerdo a nuestros ingresos, la ocupación de nuestra familia, el nivel de estudio que tenemos y  si  podemos o no podemos comprar ciertas cosas. Esto lo hacen sin preocuparse por las distintas realidades que viven nuestras familias. Luego se da un trato desigual entre los más y menos favorecidos.', NULL, 4, NULL, NULL, 1, 0),
+(7, '¡Las dificultades no son impedimentos! ', 'Que algunas personas tengan dificultades físicas, mentales, intelectuales o sensoriales a largo plazo, no significa que no pueden tener una vida plena. ¿Quién de nosotros no quiere una vida plena? ¿Acaso no es nuestro derecho? Sin embargo, la sociedad crea barreras que impiden  que estas personas gocen, como cualquier ciudadano, de los espacios y actividades de la vida social.', NULL, 5, NULL, NULL, 1, 0),
+(8, 'Tenemos el derecho de ser mejores', 'Una serie de circunstancias adversas pueden llevar a que tomemos malas decisiones, como cometer un acto infractor que nos pone en problemas con la ley.  En esas circunstancias pareciera que de golpe se derrumban nuestros sueños. Pero no debe ser así, no nos deben poner la cruz, es nuestro derecho recibir ayuda para reinsertarnos en la sociedad y desarrollarnos como ciudadanos.', NULL, 6, NULL, NULL, 1, 0),
+(9, 'Sin vicios ni drogas', 'Nos resulta fácil pegarnos a algo, en ocasiones a cosas buenas, como la música, el deporte, etc.; pero en otras nos pegamos a cosas que o bien son malas de plano, como el alcohol u otras drogas o bien se vuelven malas cuando abusamos de ellas, como los videojuegos o el internet. Entonces las cosas resultan mal, nos volvemos en contra de nosotros mismos y de los que amamos.', NULL, 7, NULL, NULL, 1, 0),
+(10, '¿Trabajar o no trabajar? ', '¿Cuándo podemos comenzar a trabajar? ¿Cuál es la diferencia entre trabajar en la casa y trabajar fuera? ¿Es bueno que contemos con nuestro propio dinero? ¿Qué nos protege del trabajo forzoso y la explotación? Seguramente muchos expertos quieren dar respuesta, nosotros también; pero además queremos dialogar para ver lo bueno y lo malo del trabajo y cómo marchan las cosas.', NULL, 8, NULL, NULL, 1, 0),
+(11, '¡Termine el cole!... ¿y ahora?', '¿Qué es lo que nos espera después de la escuela? ¿Acaso las mejores  oportunidades están ahí esperándonos o será que deberemos trazarnos un camino por nosotros mismos? ¿Tendremos las mismas oportunidades que todos? Sabemos que por lo general nos esperan dos cosas: trabajo o estudio; pero  ¿qué significa cada una de estos destinos?    ', NULL, 9, NULL, NULL, 1, 0),
+(12, 'Hablemos de sexo sin paltas ni roche', 'Los adolescentes hace tiempo que hablamos de sexo entre nosotros, pero no siempre sabemos si lo que escuchamos o hacemos es lo adecuado. De hecho que a veces tenemos dudas, y otras veces nos arriesgamos. Pero queremos conversar porque deseamos vivir nuestra sexualidad plenamente. Algunos adultos están dispuestos a hablar, pero otros más parece que quieren tapar ese tema.', NULL, 10, NULL, NULL, 1, 0),
+(13, 'Ser mamá y papá sin terminar el cole aún', 'Dicen que no debería suceder, pero sucede, incluso les pudo pasar a nuestros padres. A veces, los adolescentes nos convertimos en papá y mamá a pesar de los riesgos. Entonces todos, como si creyeran que controlamos el tiempo, nos hablan de lo que callaron. Mejor conversemos desde un inicio sobre lo que implica ser padres adolescentes, los peligros, las responsabilidades, las emociones, etc.', NULL, 11, NULL, NULL, 1, 0),
+(14, 'Nativos de la tecnología', 'Cuando los jóvenes tenemos acceso al internet y a la tecnología es como si se integraran a nuestro cuerpo; por eso nos llaman nativos tecnológicos, el internet y la tecnología son como nuestros otros mundos y los exploramos. Claro que hay cosas peligrosas, terrenos complicados; de hecho que a veces necesitamos a alguien que nos acompañe o a quien pedir consejo.', NULL, 12, NULL, NULL, 1, 0),
+(15, 'Tarjeta roja al bullying ', 'En la escuela pueden haber momento tranquilos, pero a veces la cosa anda fea. No falta alguien que se pone violento: habla como gritando, dice cosas hirientes, incluso hasta golpea a alguien (y mira que no siempre somos los alumnos). Entonces o bien enfrentamos el problema o bien las cosas se ponen peor. ¿Pero cómo hacemos eso?', NULL, 13, NULL, NULL, 1, 0),
+(16, 'Participa, actúa y cambia tu escuela', 'Algunas escuelas parecen hechas para otros, pero no debe ser así. Nosotros tenemos derecho a tener una escuela diseñada a nuestra medida, que de verdad tome en cuenta lo que somos y pensamos; nada de escucharnos solo para cumplir. Por eso es importante organizarnos y  participar en nuestra educación. ¿Quién más que nosotros podría saber qué queremos y qué necesitamos? ', NULL, 14, NULL, NULL, 1, 0),
+(17, 'Participa, actúa y juégatela por tu comunidad', 'Nosotros los estudiantes somos los actores principales de la comunidad educativa, pero no los únicos. Los docentes, el director, el personal de la escuela, padres de familia, instituciones de la comunidad son también actores que participan en el mejoramiento de la escuela, ya sea en proyectos particulares o en la construcción de una educación integral que venza el espacio físico del colegio.', NULL, 15, NULL, NULL, 1, 0),
+(18, 'Construimos nuestras normas en la escuela', 'Para que las cosas marchen bien en nuestra escuela, tenemos que discutir y elaborar algunas normas y acuerdos. No se trata de que nos los impongan, se trata de construirlos en conjunto porque de otro modo no los sentiremos nuestros y no nos comprometeremos con ellos. Por eso nuestra disposición en seguirlas depende de cómo fueron construidas.', NULL, 16, NULL, NULL, 1, 0),
+(19, 'Con- VIVE y haz tuya la escuela', 'Hay ciertos temas que los estudiantes los aprendemos viviéndolos directamente, como la convivencia. Con tanto tiempo que pasamos en la escuela es normal que surjan distintos situaciones que debemos manejar adecuadamente para sentirnos a gusto. Puede resultar difícil, pero vale la pena trabajar para lograr un lugar donde todos podamos dialogar, respetarnos y sentirnos bien.', NULL, 17, NULL, NULL, 1, 0),
+(20, '¡Somos comunidad, somos solución!', 'Por supuesto que nos preocupa nuestra comunidad. Como no hacerlo si somos parte de ella, ¿acaso a nosotros no nos afectan sus problemas? Pues claro que sí.  Es más, tenemos algunas ideas para resolverlos y otras para mejorar la comunidad. Solo hay que encontrar la forma y oportunidad para llevarlas a la realidad; las ganas ya las tenemos.', NULL, 18, NULL, NULL, 1, 0),
+(21, 'Aprendizajes para la vida', '¿Qué tal si comienzan por preguntarnos qué es lo que queremos y necesitamos aprender? Quizás así lleguemos a un acuerdo. Como ustedes dicen “vivimos tiempos distintos”, y aunque nosotros debemos ceder en algunos puntos porque su experiencia es mayor y sabemos que quieren nuestro bien, también ustedes deben escucharnos y adaptarse a nosotros, a nuestro tiempo y a nuestras prioridades.', NULL, 19, NULL, NULL, 1, 0),
+(22, 'Con Secundaria completa sí la hacemos', 'Para algunos de nosotros resulta un reto terminar la escuela. Existen circunstancias diversas en nuestra comunidad, en nuestra familia o en la propia escuela que nos empujan hacia afuera. Cuando vemos a un compañero que se retira sentimos que esa pérdida es de todos, nos preguntamos ¿qué será de él? ¿Qué es lo que va mal en nuestra comunidad escolar?', NULL, 20, NULL, NULL, 1, 0),
+(23, 'Nuestros derechos se respetan', 'Los niños, niñas y adolescentes tenemos un conjunto de derechos que nadie puede pasar por encima o al menos eso es lo que dice la ley. Pero la realidad es otra, nosotros seguimos siendo uno de los sectores más vulnerables de la población. Para evitar que esto pase debemos conocer nuestros derechos y buscar formas para asegurar que se respeten.', NULL, 21, NULL, NULL, 1, 0),
+(24, '¡Yo decido! Mi cuerpo, mis derechos ', 'Nuestro cuerpo es nuestro territorio individual, por eso las decisiones que tengan que ver con él solo pueden ser tomadas por nosotros mismos. Una serie de derechos nos protegen en materia de nuestra sexualidad y reproducción, nadie más que nosotros manda ahí. Lamentablemente, algunos sectores de la sociedad creen que las costumbres están por encima de los derechos.', NULL, 22, NULL, NULL, 1, 0),
+(25, 'Ciudadanos en acción', 'La mayoría de personas parecen que fueran ciudadanos en modo “apagado”. Son pocos los que  buscan el bien común y se comprometen con lo público participando en el fortalecimiento de las instituciones de la democracia. Pocos están dispuestos a enfrentar una sociedad autoritaria, discriminadora, desigual, etc. No obstante, es necesario que nos activemos e involucremos para lograr una sociedad más justa y humana. ', NULL, 23, NULL, NULL, 1, 0),
+(26, 'Dale calidad a tu vida', 'Muchas personas piensan que la calidad de vida se relaciona con sus ingresos y  la tranquilidad social, otras piensan que se trata del acceso a  bienes y servicios que el Estado debe asegurar; incluso hay quienes creen que depende del bienestar mental y emocional. Cada quien parece tener un concepto distinto, ¿guardarán estos alguna relación?', NULL, 24, NULL, NULL, 1, 0),
+(27, 'Túmbate a la corrupción', 'Pareciera que la gente ya se ha acostumbrado a la corrupción, incluso algunos la aceptan como normal y no la combaten. ¡Qué contradictorio con lo que nos quieren inculcar! Será acaso que la corrupción ha aprendido a camuflar lo que produce: obras públicas mal hechas, malos conductores con licencia, delincuentes impunes,  pérdida del dinero público, etc.', NULL, 25, NULL, NULL, 1, 0),
+(28, 'Sismos, huaycos, heladas, inundaciones… ¿Estás preparado? ', 'En nuestro país se dan varios fenómenos naturales, tales como sismos, inundaciones, heladas, huaicos, etc. Por lo que resulta importante prever y considerar los peligros a los que se enfrenta la población para tomar decisiones y actuar antes de que ocurran los desastres. Para esto, también  se necesita la organización de distintos actores y acciones.', NULL, 26, NULL, NULL, 1, 0),
+(29, 'Camina seguro, camina sin miedos… ¿es posible?', 'Pasear sin preocupación y temor por los lugares públicos debería ser algo común; sin embargo actualmente las medidas para evitar los delitos y asegurar el bienestar de los ciudadanos no han dado frutos. Pero las acciones de seguridad ciudadana no solo las debe llevar a cabo el Estado, sino que deben colaborar también otras organizaciones y nosotros, la ciudadanía.', NULL, 27, NULL, NULL, 1, 0),
+(30, 'Para tus hijos, y los hijos de tus hijos', 'Sabemos que detrás de nosotros vienen nuevas generaciones que también necesitarán satisfacer sus necesidades, por eso resulta importante procurar que la naturaleza pueda renovarse y revierta los efectos de nuestras actividades de manera simultánea. Además, para lograr la prosperidad de las generaciones futuras, debemos asegurar la calidad de vida de todas las personas y su bienestar social.', NULL, 28, NULL, NULL, 1, 0),
+(31, 'No se compra, no se vende', 'Las personas no somos objetos a los que se les puede comprar, vender o usar. Sin embargo, algunos piensan que pueden hacer eso, y violando los derechos fundamentales de las personas comercian con ellas como si fueran mercancía. Muchas veces las víctimas facilitan su propia desgracia al caer en engaños, creer en falsas promesas y no conocer sus derechos.', NULL, 29, NULL, NULL, 1, 0),
+(32, 'Somos país, somos culturas. ', 'Cuando hablamos con personas que provienen de un lugar distinto al nuestro, nos llevamos sorpresas, descubrimos que tienen costumbres distintas, incluso algunos hablan otro idioma. Entonces, comprendemos que vamos a tener opiniones diferentes en algunas cosas, ya que las contemplamos de modo distinto, según nuestra cultura. ¿Será posible una convivencia armónica entre personas provenientes de distintas culturas?', NULL, 30, NULL, NULL, 1, 0),
+(33, 'Gobiernos descentralizados en la lupa', 'Mi familia dice que hace algunos años en el Perú no se hacía nada si el gobierno central no lo ordenaba. Si se necesitaba algo o había un problema, se tenía que esperar que el gobierno central lo resolviera. Eso sí que era centralismo. Por suerte, ahora hay gobiernos locales  que toman decisiones y acciones en nuestra región, descentralización lo llaman. ¿Estos gobiernos locales estarán haciendo bien su trabajo? ¿Nos está favoreciendo su gestión?', NULL, 31, NULL, NULL, 1, 0),
+(34, 'Peatones y conductores en rutas seguras', 'Cuando nos topamos con una autopista que suele ser descrita como peligrosa, entendemos lo importante que resulta conocer y aprender de educación vial. Las pistas y vías públicas son parte de nuestra cotidianeidad, no pueden convertirse en un lugar al que temer. Por ello, debemos conocer sus peligros y aprehender las medidas para prevenir accidentes.', NULL, 32, NULL, NULL, 1, 0),
+(35, 'Deja de gritar, educa sin violencia', 'A veces los lugares en los que deberíamos sentirnos más seguros, resultan peligrosos. Nuestros hogares tendrían que ser un refugio de tranquilidad y amor, pero en algunos casos la violencia es la que se impone entre los miembros de la familia; gritos, hostigamiento, intimidación, incluso golpes destruyen la armonía, el respeto y la dignidad.', NULL, 33, NULL, NULL, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_comentario`
+--
+
+CREATE TABLE IF NOT EXISTS `foro_comentario` (
+  `id` int(11) NOT NULL,
+  `contenido` varchar(1500) DEFAULT NULL,
+  `foro_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `creado_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -338,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `evaluacion` (
 --
 
 CREATE TABLE IF NOT EXISTS `institucion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `denominacion` varchar(250) CHARACTER SET utf8 DEFAULT NULL,
   `ruc` varchar(12) CHARACTER SET utf8 DEFAULT NULL,
   `telefono` varchar(25) CHARACTER SET utf8 DEFAULT NULL,
@@ -349,14 +400,8 @@ CREATE TABLE IF NOT EXISTS `institucion` (
   `unidad_gestion_educativa_local_id` int(11) DEFAULT NULL,
   `tipo_institucion` int(11) DEFAULT NULL,
   `ruta_escale` varchar(500) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `jec` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_institucion_ubigeo` (`unidad_gestion_educativa_local_id`),
-  KEY `unidad_gestion_educativa_local_id` (`unidad_gestion_educativa_local_id`),
-  KEY `ubigeo_id` (`ubigeo_id`),
-  KEY `tipo_institucion` (`tipo_institucion`),
-  KEY `tipo_institucion_2` (`tipo_institucion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1607 ;
+  `jec` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1607 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `institucion`
@@ -673,9 +718,9 @@ INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`,
 (308, 'MANUEL GONZALES PRADA', NULL, NULL, NULL, '030703', '1331339', 1, 57, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1331339&anexo=0', 2015),
 (309, 'VICTOR RAUL HAYA DE LA TORRE', NULL, NULL, NULL, '030702', '1205996', 1, 57, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1205996&anexo=0', 2015),
 (310, 'RICARDO PALMA', NULL, NULL, NULL, '030705', '1206119', 1, 57, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1206119&anexo=0', 2015),
-(311, 'JOSE ANTONIO ENCINAS', NULL, NULL, NULL, '030405', '0645564', 1, 58, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0645564&anexo=0', 2015);
+(311, 'JOSE ANTONIO ENCINAS', NULL, NULL, NULL, '030405', '0645564', 1, 58, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0645564&anexo=0', 2015),
+(312, 'MICAELA BASTIDAS', NULL, NULL, NULL, '030601', '0620799', 1, 58, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0620799&anexo=0', 2015);
 INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
-(312, 'MICAELA BASTIDAS', NULL, NULL, NULL, '030601', '0620799', 1, 58, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0620799&anexo=0', 2015),
 (313, 'TUPAC AMARU II', NULL, NULL, NULL, '030605', '0645507', 1, 53, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0645507&anexo=0', 2015),
 (314, 'JOSE MARIA ARGUEDAS', NULL, NULL, NULL, '051004', '0581678', 1, 180, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0581678&anexo=0', 2015),
 (315, 'MARIANO MELGAR', NULL, NULL, NULL, '051001', '0362715', 1, 180, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0362715&anexo=0', 2015),
@@ -985,9 +1030,9 @@ INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`,
 (620, '81028 JUAN ALVARADO', NULL, NULL, NULL, '120401', '1166529', 1, 47, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1166529&anexo=0', 2015),
 (621, 'SANTA TERESA DE LA INMACULADA', NULL, NULL, NULL, '120501', '0395301', 1, 48, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0395301&anexo=0', 2015),
 (622, 'ANTONIO RAIMONDI', NULL, NULL, NULL, '120506', '0395418', 1, 48, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0395418&anexo=0', 2015),
-(623, 'JOSE ANDRES RAZURI', NULL, NULL, NULL, '120501', '0395293', 1, 48, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0395293&anexo=0', 2015);
+(623, 'JOSE ANDRES RAZURI', NULL, NULL, NULL, '120501', '0395293', 1, 48, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0395293&anexo=0', 2015),
+(624, 'JESUS NAZARENO', NULL, NULL, NULL, '120803', '0395194', 1, 44, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0395194&anexo=0', 2015);
 INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
-(624, 'JESUS NAZARENO', NULL, NULL, NULL, '120803', '0395194', 1, 44, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0395194&anexo=0', 2015),
 (625, 'CESAR A. VALLEJO MENDOZA', NULL, NULL, NULL, '120804', '0578088', 1, 44, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0578088&anexo=0', 2015),
 (626, 'SAN MARTIN DE PORRES', NULL, NULL, NULL, '120110', '0394288', 1, 40, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0394288&anexo=0', 2015),
 (627, '80825 VIRGEN DEL CARMEN', NULL, NULL, NULL, '120109', '0544759', 1, 40, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0544759&anexo=0', 2015),
@@ -1299,9 +1344,9 @@ INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`,
 (933, '20850 MARISCAL CACERES', NULL, NULL, NULL, '020323', '0577270', 1, 101, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0577270&anexo=0', 2015),
 (934, 'JOSE CARLOS MARIATEGUI', NULL, NULL, NULL, '020325', '1101849', 1, 101, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1101849&anexo=0', 2015),
 (935, '32226 RAUL CORDOVA ALVARADO', NULL, NULL, NULL, '020325', '1431790', 1, 101, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1431790&anexo=0', 2015),
-(936, 'JOSE MARIA ARGUEDAS', NULL, NULL, NULL, '020406', '0495606', 1, 102, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0495606&anexo=0', 2015);
+(936, 'JOSE MARIA ARGUEDAS', NULL, NULL, NULL, '020406', '0495606', 1, 102, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0495606&anexo=0', 2015),
+(937, 'PEDRO PABLO ATUSPARIA', NULL, NULL, NULL, '020406', '0665919', 1, 102, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0665919&anexo=0', 2015);
 INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
-(937, 'PEDRO PABLO ATUSPARIA', NULL, NULL, NULL, '020406', '0665919', 1, 102, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0665919&anexo=0', 2015),
 (938, '86280 RICARDO PALMA', NULL, NULL, NULL, '020402', '0906685', 1, 102, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0906685&anexo=0', 2015),
 (939, 'SANTIAGO ANTUNEZ DE MAYOLO', NULL, NULL, NULL, '020411', '0597922', 1, 102, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0597922&anexo=0', 2015),
 (940, '86031 NUESTRA SEÃ‘ORA DE LA ASUNCION', NULL, NULL, NULL, '020102', '0577395', 1, 104, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0577395&anexo=0', 2015),
@@ -1585,10 +1630,10 @@ INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`,
 (1218, 'PICHIGUA', NULL, NULL, 'CALLE MELGAR S/N', '070806', '0579441', 1, 31, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0579441&anexo=0', 2016),
 (1219, 'GRAL JUAN VELASCO ALVARADO', NULL, NULL, 'JIRON CUSCO S/N', '070808', '0617837', 1, 31, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0617837&anexo=0', 2016),
 (1220, '51027 JUAN DE LA CRUZ MONTES SALAS', NULL, NULL, 'JIRON INDEPENDENCIA S/N', '070901', '1394121', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1394121&anexo=0', 2016),
-(1221, 'JAVIER PEREZ DE CUELLAR', NULL, NULL, 'KEPASHIATO S/N', '070902', '0932822', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0932822&anexo=0', 2016);
-INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
+(1221, 'JAVIER PEREZ DE CUELLAR', NULL, NULL, 'KEPASHIATO S/N', '070902', '0932822', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0932822&anexo=0', 2016),
 (1222, 'JOSE MARIA ARGUEDAS', NULL, NULL, 'AVENIDA JOSE MARIA ARGUEDAS S/N', '070902', '0236398', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0236398&anexo=0', 2016),
-(1223, 'JOSE PIO AZA', NULL, NULL, 'KORIBENI', '070902', '0713826', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0713826&anexo=0', 2016),
+(1223, 'JOSE PIO AZA', NULL, NULL, 'KORIBENI', '070902', '0713826', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0713826&anexo=0', 2016);
+INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
 (1224, 'JOSE CARLOS MARIATEGUI', NULL, NULL, 'AVENIDA JOSE CARLOS MARIATEGUI S/N', '070903', '0236380', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0236380&anexo=0', 2016),
 (1225, 'MICAELA BASTIDAS', NULL, NULL, 'AVENIDA REVOLUCION S/N', '070904', '0236372', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0236372&anexo=0', 2016),
 (1226, 'SEÃ‘OR DE LOS MILAGROS', NULL, NULL, 'SANTA MARIA - MARANURA S/N', '070904', '0489153', 1, 32, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0489153&anexo=0', 2016),
@@ -1867,10 +1912,10 @@ INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`,
 (1501, 'JOSE CARLOS MARIATEGUI', NULL, NULL, 'JUZGARA', '190301', '0915215', 1, 3, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0915215&anexo=0', 2016),
 (1502, '14458 SAN ANTONIO DE PADUA', NULL, NULL, 'SAN ANTONIO', '190306', '0915249', 1, 3, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0915249&anexo=0', 2016),
 (1503, '14578', NULL, NULL, 'SANTA TERESA', '190303', '1275510', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1275510&anexo=0', 2016),
-(1504, '14580 HORACIO ZEVALLOS GAMEZ', NULL, NULL, 'HINTON', '190303', '1095629', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1095629&anexo=0', 2016);
-INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
+(1504, '14580 HORACIO ZEVALLOS GAMEZ', NULL, NULL, 'HINTON', '190303', '1095629', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1095629&anexo=0', 2016),
 (1505, 'FRAY MARTIN DE PORRES', NULL, NULL, 'AVENIDA SAN FRANCISCO DE ASIS 108', '190303', '1228048', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=1228048&anexo=0', 2016),
-(1506, 'MANUEL ANTONIO MESONES MURO', NULL, NULL, 'CARRETERA LIMON DE PORCUYA KM. 38', '190303', '0002212', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0002212&anexo=0', 2016),
+(1506, 'MANUEL ANTONIO MESONES MURO', NULL, NULL, 'CARRETERA LIMON DE PORCUYA KM. 38', '190303', '0002212', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0002212&anexo=0', 2016);
+INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`, `ubigeo_id`, `codigo_modular`, `estado`, `unidad_gestion_educativa_local_id`, `tipo_institucion`, `ruta_escale`, `jec`) VALUES
 (1507, 'NUESTRA SEÃ‘ORA DEL CARMEN', NULL, NULL, 'RODEOPAMPA', '190303', '0674440', 1, 7, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0674440&anexo=0', 2016),
 (1508, 'SAN JUAN BAUTISTA', NULL, NULL, 'AVENIDA SANTUARIO S/N', '190305', '0571042', 1, 3, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0571042&anexo=0', 2016),
 (1509, 'MIGUEL GRAU', NULL, NULL, 'LA ENCANTADA', '190401', '0674515', 1, 2, NULL, 'http://escale.minedu.gob.pe/PadronWeb/info/ce?cod_mod=0674515&anexo=0', 2016),
@@ -1978,15 +2023,12 @@ INSERT INTO `institucion` (`id`, `denominacion`, `ruc`, `telefono`, `direccion`,
 --
 
 CREATE TABLE IF NOT EXISTS `integrante` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `equipo_id` int(11) DEFAULT NULL,
   `estudiante_id` int(11) DEFAULT NULL,
   `rol` int(11) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Fkequipo` (`equipo_id`),
-  KEY `Fkintegrante_estudiante` (`estudiante_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1995,18 +2037,15 @@ CREATE TABLE IF NOT EXISTS `integrante` (
 --
 
 CREATE TABLE IF NOT EXISTS `invitacion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `equipo_id` int(11) DEFAULT NULL,
   `estudiante_id` int(11) DEFAULT NULL,
   `estudiante_invitado_id` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
   `fecha_invitacion` datetime DEFAULT NULL,
   `fecha_aceptacion` datetime DEFAULT NULL,
-  `fecha_rechazo` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Fkestudiante_lider` (`estudiante_id`),
-  KEY `Fkestudiante_invitado` (`estudiante_invitado_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+  `fecha_rechazo` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2015,12 +2054,10 @@ CREATE TABLE IF NOT EXISTS `invitacion` (
 --
 
 CREATE TABLE IF NOT EXISTS `objetivo_especifico` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
-  `descripcion` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `proyecto_id` (`proyecto_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+  `descripcion` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2032,9 +2069,7 @@ CREATE TABLE IF NOT EXISTS `objetivo_especifico_copia` (
   `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
   `descripcion` varchar(250) DEFAULT NULL,
-  `etapa` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`,`etapa`),
-  KEY `proyecto_id` (`proyecto_id`)
+  `etapa` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -2044,18 +2079,18 @@ CREATE TABLE IF NOT EXISTS `objetivo_especifico_copia` (
 --
 
 CREATE TABLE IF NOT EXISTS `plan_presupuestal` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `actividad_id` int(11) NOT NULL,
+  `dirigido` varchar(250) DEFAULT NULL,
   `recurso` int(11) DEFAULT NULL,
+  `recurso_descripcion` varchar(250) DEFAULT NULL,
+  `unidad` varchar(250) DEFAULT NULL,
   `como_conseguirlo` int(11) DEFAULT NULL,
   `precio_unitario` double(11,2) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `subtotal` double(11,2) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `actividad_int` (`como_conseguirlo`),
-  KEY `actividad_id` (`actividad_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2072,257 +2107,8 @@ CREATE TABLE IF NOT EXISTS `plan_presupuestal_copia` (
   `cantidad` int(11) DEFAULT NULL,
   `subtotal` double(11,2) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
-  `etapa` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`,`etapa`),
-  KEY `actividad_int` (`como_conseguirlo`),
-  KEY `actividad_id` (`actividad_id`)
+  `etapa` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_forum`
---
-
-CREATE TABLE IF NOT EXISTS `pre_forum` (
-  `id` int(12) NOT NULL AUTO_INCREMENT,
-  `forum_name` char(32) NOT NULL,
-  `forum_desc` text NOT NULL,
-  `forum_url` char(32) NOT NULL,
-  `user_id` int(12) NOT NULL,
-  `created_at` int(10) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `forum_icon` char(26) NOT NULL,
-  `proyecto_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
-
---
--- Volcado de datos para la tabla `pre_forum`
---
-
-INSERT INTO `pre_forum` (`id`, `forum_name`, `forum_desc`, `forum_url`, `user_id`, `created_at`, `status`, `forum_icon`, `proyecto_id`) VALUES
-(1, 'Asuntos Públicos', 'foro de prueba', '1', 1, 0, 1, '', NULL),
-(2, 'Asuntos Privados', 'foro de prueba', '2', 1, 1456178687, 1, 'default/11.png', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_forum_board`
---
-
-CREATE TABLE IF NOT EXISTS `pre_forum_board` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) NOT NULL DEFAULT '0',
-  `name` char(32) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  `columns` tinyint(4) NOT NULL DEFAULT '1',
-  `updated_at` int(10) DEFAULT NULL,
-  `updated_by` int(11) NOT NULL,
-  `forum_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `forum_id` (`forum_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
-
---
--- Volcado de datos para la tabla `pre_forum_board`
---
-
-INSERT INTO `pre_forum_board` (`id`, `parent_id`, `name`, `description`, `columns`, `updated_at`, `updated_by`, `forum_id`, `user_id`) VALUES
-(1, 1, 'Asuntos Públicos', 'basico', 1, 1459452678, 45, 1, 1),
-(2, 1, 'Asuntos Privados', 'Prueba', 1, 1459452674, 45, 2, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_forum_broadcast`
---
-
-CREATE TABLE IF NOT EXISTS `pre_forum_broadcast` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) NOT NULL,
-  `content` text NOT NULL,
-  `forum_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `thread_id` int(11) NOT NULL,
-  `created_at` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `forum_id` (`forum_id`),
-  KEY `thread_id` (`thread_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_forum_follow`
---
-
-CREATE TABLE IF NOT EXISTS `pre_forum_follow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `forum_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `forum_id` (`forum_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_forum_post`
---
-
-CREATE TABLE IF NOT EXISTS `pre_forum_post` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `content` text NOT NULL,
-  `thread_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `thread_id` (`thread_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_forum_thread`
---
-
-CREATE TABLE IF NOT EXISTS `pre_forum_thread` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` int(10) NOT NULL,
-  `updated_at` int(10) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `board_id` int(11) NOT NULL,
-  `post_count` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `board_id` (`board_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_home_feed`
---
-
-CREATE TABLE IF NOT EXISTS `pre_home_feed` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` char(50) NOT NULL,
-  `content` text NOT NULL,
-  `template` text NOT NULL,
-  `comment_count` int(11) NOT NULL,
-  `repost_count` int(11) NOT NULL,
-  `feed_data` text NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_home_post`
---
-
-CREATE TABLE IF NOT EXISTS `pre_home_post` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) NOT NULL,
-  `content` text NOT NULL,
-  `tags` text NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` int(11) NOT NULL,
-  `updated_at` int(11) NOT NULL,
-  `status` char(10) NOT NULL,
-  `explore_status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_user_data`
---
-
-CREATE TABLE IF NOT EXISTS `pre_user_data` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_count` int(11) NOT NULL,
-  `feed_count` int(11) NOT NULL,
-  `following_count` int(11) NOT NULL,
-  `follower_count` int(11) NOT NULL,
-  `unread_notice_count` int(11) NOT NULL,
-  `unread_message_count` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_user_follow`
---
-
-CREATE TABLE IF NOT EXISTS `pre_user_follow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `people_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `people_id` (`people_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_user_notice`
---
-
-CREATE TABLE IF NOT EXISTS `pre_user_notice` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(50) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `content` text NOT NULL,
-  `from_user_id` int(11) NOT NULL,
-  `to_user_id` int(11) NOT NULL,
-  `source_url` varchar(255) NOT NULL COMMENT '来源链接，序列化数组',
-  `created_at` int(10) NOT NULL,
-  `is_read` tinyint(2) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type` (`type`),
-  KEY `from_user_id` (`from_user_id`),
-  KEY `to_user_id` (`to_user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息提示通知' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pre_user_notice_type`
---
-
-CREATE TABLE IF NOT EXISTS `pre_user_notice_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(50) NOT NULL,
-  `type_title` varchar(255) NOT NULL,
-  `type_content` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
--- Volcado de datos para la tabla `pre_user_notice_type`
---
-
-INSERT INTO `pre_user_notice_type` (`id`, `type`, `type_title`, `type_content`) VALUES
-(1, 'MENTION_ME', 'mentioned you', 'Your colleagues {name} just mentioned you in the following content: {content}.<a href="{url}" target="_blank">Go to the website>></a>'),
-(2, 'NEW_COMMENT', 'comment you {title}', 'You received a new comment {content}. <a href="{url}" target="_blank">Go to the website>></a>.'),
-(3, 'NEW_MESSAGE', 'You received a new message', 'You received a new private message.{content}.<a href="{url}" target="_blank">Go to the website>></a>');
 
 -- --------------------------------------------------------
 
@@ -2331,8 +2117,8 @@ INSERT INTO `pre_user_notice_type` (`id`, `type`, `type_title`, `type_content`) 
 --
 
 CREATE TABLE IF NOT EXISTS `proyecto` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(20) DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `titulo` varchar(200) DEFAULT NULL,
   `resumen` varchar(2500) DEFAULT NULL,
   `objetivo_general` varchar(300) DEFAULT NULL,
   `beneficiario` varchar(2500) DEFAULT NULL,
@@ -2341,9 +2127,9 @@ CREATE TABLE IF NOT EXISTS `proyecto` (
   `equipo_id` int(11) DEFAULT NULL,
   `etapa` int(11) DEFAULT NULL,
   `region_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+  `valor_porcentual_administrador` int(11) DEFAULT NULL,
+  `resultado` double(11,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2360,9 +2146,7 @@ CREATE TABLE IF NOT EXISTS `proyecto_copia` (
   `user_id` int(11) DEFAULT NULL,
   `asunto_id` int(11) DEFAULT NULL,
   `equipo_id` int(11) DEFAULT NULL,
-  `etapa` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`,`etapa`),
-  KEY `user_id` (`user_id`)
+  `etapa` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -2372,12 +2156,11 @@ CREATE TABLE IF NOT EXISTS `proyecto_copia` (
 --
 
 CREATE TABLE IF NOT EXISTS `reflexion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `reflexion` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+  `reflexion` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2386,12 +2169,11 @@ CREATE TABLE IF NOT EXISTS `reflexion` (
 --
 
 CREATE TABLE IF NOT EXISTS `resultados` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `asunto_id` int(11) DEFAULT NULL,
   `region_id` int(11) DEFAULT NULL,
-  `cantidad` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  `cantidad` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2408,10 +2190,7 @@ CREATE TABLE IF NOT EXISTS `ubigeo` (
   `province` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `district` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `latitude` float DEFAULT NULL,
-  `longitud` float DEFAULT NULL,
-  PRIMARY KEY (`district_id`,`department_id`),
-  KEY `department_id` (`department_id`),
-  KEY `district_id` (`district_id`)
+  `longitud` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -4267,25 +4046,22 @@ INSERT INTO `ubigeo` (`id`, `department_id`, `province_id`, `district_id`, `depa
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `username` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `password` varchar(100) CHARACTER SET utf8 NOT NULL,
   `status` int(11) NOT NULL,
   `auth` int(11) DEFAULT NULL,
   `verification_code` varchar(250) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `estudiante_id` int(11) DEFAULT NULL,
-  `avatar` char(24) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `Uniquesusername` (`username`),
-  KEY `Fkusuario_estudiante` (`estudiante_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=49 ;
+  `avatar` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `username`, `password`, `status`, `auth`, `verification_code`, `estudiante_id`, `avatar`) VALUES
-(1, 'administrador@gmail.com', '123456', 1, NULL, NULL, NULL, NULL);
+(1, 'administrador@gmail.com', '123456', 1, NULL, NULL, NULL, 'no_disponible.jpg');
 
 -- --------------------------------------------------------
 
@@ -4294,12 +4070,11 @@ INSERT INTO `usuario` (`id`, `username`, `password`, `status`, `auth`, `verifica
 --
 
 CREATE TABLE IF NOT EXISTS `video` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
   `ruta` varchar(150) DEFAULT NULL,
-  `etapa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+  `etapa` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4308,12 +4083,24 @@ CREATE TABLE IF NOT EXISTS `video` (
 --
 
 CREATE TABLE IF NOT EXISTS `video_copia` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
   `ruta` varchar(150) DEFAULT NULL,
-  `etapa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+  `etapa` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `votacion_final`
+--
+
+CREATE TABLE IF NOT EXISTS `votacion_final` (
+  `id` int(11) NOT NULL,
+  `dni` varchar(8) DEFAULT NULL,
+  `proyecto_id` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4322,12 +4109,26 @@ CREATE TABLE IF NOT EXISTS `video_copia` (
 --
 
 CREATE TABLE IF NOT EXISTS `votacion_interna` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
   `region_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+  `estado` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `votacion_publica`
+--
+
+CREATE TABLE IF NOT EXISTS `votacion_publica` (
+  `id` int(11) NOT NULL,
+  `proyecto_id` int(11) DEFAULT NULL,
+  `region_id` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `fecha_registro` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4340,11 +4141,342 @@ CREATE TABLE IF NOT EXISTS `voto` (
   `region_id` varchar(2) NOT NULL DEFAULT '',
   `participante_id` varchar(8) NOT NULL DEFAULT '0',
   `fecha_registro` datetime DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`asunto_id`,`region_id`,`participante_id`),
-  KEY `Fkparticipante` (`participante_id`) USING BTREE
+  `estado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+  ADD PRIMARY KEY (`id`), ADD KEY `objetivo_especifico_id` (`objetivo_especifico_id`);
+
+--
+-- Indices de la tabla `actividad_copia`
+--
+ALTER TABLE `actividad_copia`
+  ADD PRIMARY KEY (`id`,`etapa`), ADD KEY `objetivo_especifico_id` (`objetivo_especifico_id`);
+
+--
+-- Indices de la tabla `asunto`
+--
+ALTER TABLE `asunto`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD PRIMARY KEY (`item_name`,`user_id`), ADD KEY `Fkusuario` (`user_id`);
+
+--
+-- Indices de la tabla `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD PRIMARY KEY (`name`), ADD KEY `type` (`type`);
+
+--
+-- Indices de la tabla `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD PRIMARY KEY (`parent`,`child`), ADD KEY `child` (`child`);
+
+--
+-- Indices de la tabla `auth_rule`
+--
+ALTER TABLE `auth_rule`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- Indices de la tabla `cronograma`
+--
+ALTER TABLE `cronograma`
+  ADD PRIMARY KEY (`id`), ADD KEY `actividad_id` (`actividad_id`);
+
+--
+-- Indices de la tabla `cronograma_copia`
+--
+ALTER TABLE `cronograma_copia`
+  ADD PRIMARY KEY (`id`,`etapa`), ADD KEY `actividad_id` (`actividad_id`);
+
+--
+-- Indices de la tabla `encuesta`
+--
+ALTER TABLE `encuesta`
+  ADD PRIMARY KEY (`id`), ADD KEY `Fkencuesta_estudiante` (`estudiante_id`);
+
+--
+-- Indices de la tabla `equipo`
+--
+ALTER TABLE `equipo`
+  ADD PRIMARY KEY (`id`), ADD KEY `Fkasuntoa` (`asunto_id`);
+
+--
+-- Indices de la tabla `estudiante`
+--
+ALTER TABLE `estudiante`
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `email` (`email`) USING BTREE, ADD UNIQUE KEY `dni` (`dni`), ADD KEY `Fkinstitucion` (`institucion_id`);
+
+--
+-- Indices de la tabla `etapa`
+--
+ALTER TABLE `etapa`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `evaluacion`
+--
+ALTER TABLE `evaluacion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `foro`
+--
+ALTER TABLE `foro`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `foro_comentario`
+--
+ALTER TABLE `foro_comentario`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  ADD PRIMARY KEY (`id`), ADD KEY `FK_institucion_ubigeo` (`unidad_gestion_educativa_local_id`), ADD KEY `unidad_gestion_educativa_local_id` (`unidad_gestion_educativa_local_id`), ADD KEY `ubigeo_id` (`ubigeo_id`), ADD KEY `tipo_institucion` (`tipo_institucion`), ADD KEY `tipo_institucion_2` (`tipo_institucion`);
+
+--
+-- Indices de la tabla `integrante`
+--
+ALTER TABLE `integrante`
+  ADD PRIMARY KEY (`id`), ADD KEY `Fkequipo` (`equipo_id`), ADD KEY `Fkintegrante_estudiante` (`estudiante_id`);
+
+--
+-- Indices de la tabla `invitacion`
+--
+ALTER TABLE `invitacion`
+  ADD PRIMARY KEY (`id`), ADD KEY `Fkestudiante_lider` (`estudiante_id`), ADD KEY `Fkestudiante_invitado` (`estudiante_invitado_id`);
+
+--
+-- Indices de la tabla `objetivo_especifico`
+--
+ALTER TABLE `objetivo_especifico`
+  ADD PRIMARY KEY (`id`), ADD KEY `proyecto_id` (`proyecto_id`);
+
+--
+-- Indices de la tabla `objetivo_especifico_copia`
+--
+ALTER TABLE `objetivo_especifico_copia`
+  ADD PRIMARY KEY (`id`,`etapa`), ADD KEY `proyecto_id` (`proyecto_id`);
+
+--
+-- Indices de la tabla `plan_presupuestal`
+--
+ALTER TABLE `plan_presupuestal`
+  ADD PRIMARY KEY (`id`), ADD KEY `actividad_int` (`como_conseguirlo`), ADD KEY `actividad_id` (`actividad_id`);
+
+--
+-- Indices de la tabla `plan_presupuestal_copia`
+--
+ALTER TABLE `plan_presupuestal_copia`
+  ADD PRIMARY KEY (`id`,`etapa`), ADD KEY `actividad_int` (`como_conseguirlo`), ADD KEY `actividad_id` (`actividad_id`);
+
+--
+-- Indices de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+  ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`);
+
+--
+-- Indices de la tabla `proyecto_copia`
+--
+ALTER TABLE `proyecto_copia`
+  ADD PRIMARY KEY (`id`,`etapa`), ADD KEY `user_id` (`user_id`);
+
+--
+-- Indices de la tabla `reflexion`
+--
+ALTER TABLE `reflexion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `resultados`
+--
+ALTER TABLE `resultados`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `ubigeo`
+--
+ALTER TABLE `ubigeo`
+  ADD PRIMARY KEY (`district_id`,`department_id`), ADD KEY `department_id` (`department_id`), ADD KEY `district_id` (`district_id`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `Uniquesusername` (`username`), ADD KEY `Fkusuario_estudiante` (`estudiante_id`);
+
+--
+-- Indices de la tabla `video`
+--
+ALTER TABLE `video`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `video_copia`
+--
+ALTER TABLE `video_copia`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `votacion_final`
+--
+ALTER TABLE `votacion_final`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `votacion_interna`
+--
+ALTER TABLE `votacion_interna`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `votacion_publica`
+--
+ALTER TABLE `votacion_publica`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `voto`
+--
+ALTER TABLE `voto`
+  ADD PRIMARY KEY (`asunto_id`,`region_id`,`participante_id`), ADD KEY `Fkparticipante` (`participante_id`) USING BTREE;
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `cronograma`
+--
+ALTER TABLE `cronograma`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `encuesta`
+--
+ALTER TABLE `encuesta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `equipo`
+--
+ALTER TABLE `equipo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `estudiante`
+--
+ALTER TABLE `estudiante`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `etapa`
+--
+ALTER TABLE `etapa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `evaluacion`
+--
+ALTER TABLE `evaluacion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `foro`
+--
+ALTER TABLE `foro`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+--
+-- AUTO_INCREMENT de la tabla `foro_comentario`
+--
+ALTER TABLE `foro_comentario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1607;
+--
+-- AUTO_INCREMENT de la tabla `integrante`
+--
+ALTER TABLE `integrante`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `invitacion`
+--
+ALTER TABLE `invitacion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `objetivo_especifico`
+--
+ALTER TABLE `objetivo_especifico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `plan_presupuestal`
+--
+ALTER TABLE `plan_presupuestal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `reflexion`
+--
+ALTER TABLE `reflexion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `resultados`
+--
+ALTER TABLE `resultados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `video`
+--
+ALTER TABLE `video`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `video_copia`
+--
+ALTER TABLE `video_copia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=217;
+--
+-- AUTO_INCREMENT de la tabla `votacion_final`
+--
+ALTER TABLE `votacion_final`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `votacion_interna`
+--
+ALTER TABLE `votacion_interna`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `votacion_publica`
+--
+ALTER TABLE `votacion_publica`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --
@@ -4353,166 +4485,100 @@ CREATE TABLE IF NOT EXISTS `voto` (
 -- Filtros para la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  ADD CONSTRAINT `actividad_ibfk_1` FOREIGN KEY (`objetivo_especifico_id`) REFERENCES `objetivo_especifico` (`id`);
+ADD CONSTRAINT `actividad_ibfk_1` FOREIGN KEY (`objetivo_especifico_id`) REFERENCES `objetivo_especifico` (`id`);
 
 --
 -- Filtros para la tabla `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
-  ADD CONSTRAINT `Fkauthitem` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`),
-  ADD CONSTRAINT `Fkusuario` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
+ADD CONSTRAINT `Fkauthitem` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`),
+ADD CONSTRAINT `Fkusuario` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `auth_item_child`
 --
 ALTER TABLE `auth_item_child`
-  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cronograma`
 --
 ALTER TABLE `cronograma`
-  ADD CONSTRAINT `cronograma_ibfk_1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`);
+ADD CONSTRAINT `cronograma_ibfk_1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`);
 
 --
 -- Filtros para la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
-  ADD CONSTRAINT `Fkencuesta_estudiante` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
+ADD CONSTRAINT `Fkencuesta_estudiante` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
 
 --
 -- Filtros para la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  ADD CONSTRAINT `Fkasuntoa` FOREIGN KEY (`asunto_id`) REFERENCES `asunto` (`id`);
+ADD CONSTRAINT `Fkasuntoa` FOREIGN KEY (`asunto_id`) REFERENCES `asunto` (`id`);
 
 --
 -- Filtros para la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  ADD CONSTRAINT `Fkinstitucion` FOREIGN KEY (`institucion_id`) REFERENCES `institucion` (`id`);
+ADD CONSTRAINT `Fkinstitucion` FOREIGN KEY (`institucion_id`) REFERENCES `institucion` (`id`);
 
 --
 -- Filtros para la tabla `institucion`
 --
 ALTER TABLE `institucion`
-  ADD CONSTRAINT `Fkubigeo` FOREIGN KEY (`ubigeo_id`) REFERENCES `ubigeo` (`district_id`);
+ADD CONSTRAINT `Fkubigeo` FOREIGN KEY (`ubigeo_id`) REFERENCES `ubigeo` (`district_id`);
 
 --
 -- Filtros para la tabla `integrante`
 --
 ALTER TABLE `integrante`
-  ADD CONSTRAINT `Fkequipo` FOREIGN KEY (`equipo_id`) REFERENCES `equipo` (`id`),
-  ADD CONSTRAINT `Fkintegrante_estudiante` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
+ADD CONSTRAINT `Fkintegrante_estudiante` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
 
 --
 -- Filtros para la tabla `invitacion`
 --
 ALTER TABLE `invitacion`
-  ADD CONSTRAINT `Fkestudiante_invitado` FOREIGN KEY (`estudiante_invitado_id`) REFERENCES `estudiante` (`id`),
-  ADD CONSTRAINT `Fkestudiante_lider` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
+ADD CONSTRAINT `Fkestudiante_invitado` FOREIGN KEY (`estudiante_invitado_id`) REFERENCES `estudiante` (`id`),
+ADD CONSTRAINT `Fkestudiante_lider` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
 
 --
 -- Filtros para la tabla `objetivo_especifico`
 --
 ALTER TABLE `objetivo_especifico`
-  ADD CONSTRAINT `objetivo_especifico_ibfk_1` FOREIGN KEY (`proyecto_id`) REFERENCES `proyecto` (`id`);
+ADD CONSTRAINT `objetivo_especifico_ibfk_1` FOREIGN KEY (`proyecto_id`) REFERENCES `proyecto` (`id`);
 
 --
 -- Filtros para la tabla `plan_presupuestal`
 --
 ALTER TABLE `plan_presupuestal`
-  ADD CONSTRAINT `plan_presupuestal_ibfk_1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`);
-
---
--- Filtros para la tabla `pre_forum_board`
---
-ALTER TABLE `pre_forum_board`
-  ADD CONSTRAINT `pre_forum_board_ibfk_2` FOREIGN KEY (`forum_id`) REFERENCES `pre_forum` (`id`);
-
---
--- Filtros para la tabla `pre_forum_broadcast`
---
-ALTER TABLE `pre_forum_broadcast`
-  ADD CONSTRAINT `pre_forum_broadcast_ibfk_1` FOREIGN KEY (`forum_id`) REFERENCES `pre_forum` (`id`),
-  ADD CONSTRAINT `pre_forum_broadcast_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `pre_forum_broadcast_ibfk_3` FOREIGN KEY (`thread_id`) REFERENCES `pre_forum_thread` (`id`);
-
---
--- Filtros para la tabla `pre_forum_follow`
---
-ALTER TABLE `pre_forum_follow`
-  ADD CONSTRAINT `pre_forum_follow_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `pre_forum_follow_ibfk_2` FOREIGN KEY (`forum_id`) REFERENCES `pre_forum` (`id`);
-
---
--- Filtros para la tabla `pre_forum_post`
---
-ALTER TABLE `pre_forum_post`
-  ADD CONSTRAINT `pre_forum_post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `pre_forum_post_ibfk_2` FOREIGN KEY (`thread_id`) REFERENCES `pre_forum_thread` (`id`);
-
---
--- Filtros para la tabla `pre_forum_thread`
---
-ALTER TABLE `pre_forum_thread`
-  ADD CONSTRAINT `pre_forum_thread_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
-
---
--- Filtros para la tabla `pre_home_feed`
---
-ALTER TABLE `pre_home_feed`
-  ADD CONSTRAINT `pre_home_feed_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
-
---
--- Filtros para la tabla `pre_home_post`
---
-ALTER TABLE `pre_home_post`
-  ADD CONSTRAINT `pre_home_post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
-
---
--- Filtros para la tabla `pre_user_data`
---
-ALTER TABLE `pre_user_data`
-  ADD CONSTRAINT `pre_user_data_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
-
---
--- Filtros para la tabla `pre_user_follow`
---
-ALTER TABLE `pre_user_follow`
-  ADD CONSTRAINT `pre_user_follow_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
-
---
--- Filtros para la tabla `pre_user_notice`
---
-ALTER TABLE `pre_user_notice`
-  ADD CONSTRAINT `pre_user_notice_ibfk_1` FOREIGN KEY (`from_user_id`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `pre_user_notice_ibfk_2` FOREIGN KEY (`to_user_id`) REFERENCES `usuario` (`id`);
+ADD CONSTRAINT `plan_presupuestal_ibfk_1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`);
 
 --
 -- Filtros para la tabla `proyecto`
 --
 ALTER TABLE `proyecto`
-  ADD CONSTRAINT `proyecto_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
+ADD CONSTRAINT `proyecto_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `proyecto_copia`
 --
 ALTER TABLE `proyecto_copia`
-  ADD CONSTRAINT `proyecto_copia_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
+ADD CONSTRAINT `proyecto_copia_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `Fkusuario_estudiante` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
+ADD CONSTRAINT `Fkusuario_estudiante` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`);
 
 --
 -- Filtros para la tabla `voto`
 --
 ALTER TABLE `voto`
-  ADD CONSTRAINT `Fkasunto` FOREIGN KEY (`asunto_id`) REFERENCES `asunto` (`id`);
+ADD CONSTRAINT `Fkasunto` FOREIGN KEY (`asunto_id`) REFERENCES `asunto` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -34,7 +34,8 @@ class PlanPresupuestal extends \yii\db\ActiveRecord
     {
         return [
             [['recurso', 'como_conseguirlo', 'cantidad'], 'integer'],
-            [['precio_unitario', 'subtotal'], 'number']
+            [['precio_unitario', 'subtotal'], 'number'],
+            [['recurso_descripcion'], 'string', 'max' => 200],
         ];
     }
 

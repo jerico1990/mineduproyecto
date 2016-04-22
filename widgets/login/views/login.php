@@ -48,6 +48,8 @@ use yii\web\JsExpression;
     <div class="clearfix"></div>
 <?php ActiveForm::end(); ?>
 
+
+
 <script>
     $("#ingresar").click(function(event){
         var error='';
