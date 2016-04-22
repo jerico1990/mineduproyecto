@@ -23,18 +23,18 @@ class AppAsset extends AssetBundle
         //'css/index.css',
         //'css/jquery.fullPage.css'
         //'http://fonts.googleapis.com/css?family=Headland+One|Open+Sans:400italic,400,700',
-        //'AdminLTE/bootstrap/css/bootstrap.min.css',
+        'AdminLTE/bootstrap/css/bootstrap.min.css',
         'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
         //'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'.
         'http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css',
         'AdminLTE/dist/css/AdminLTE.min.css',
         'AdminLTE/dist/css/skins/_all-skins.min.css',
         'AdminLTE/plugins/iCheck/flat/blue.css',
-        //'AdminLTE/plugins/morris/morris.css',
-        //'AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css',
-        //'AdminLTE/plugins/datepicker/datepicker3.css',
-        //'AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css',
-        //'AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'
+        'AdminLTE/plugins/morris/morris.css',
+        'AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css',
+        'AdminLTE/plugins/datepicker/datepicker3.css',
+        'AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css',
+        'AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'
     ];
     public $js = [
         //'AdminLTE/plugins/jQuery/jQuery-2.1.3.min.js',
